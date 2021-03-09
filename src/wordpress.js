@@ -17,7 +17,7 @@ async function fetchAll({ numPages, endPoint, type }) {
   console.debug(`Fetching ${type} content from wordpress via REST API`);
 
   for (let pageNum = 1; pageNum <= numPages; pageNum++) {
-    console.log(`${endPoint}&page=${pageNum}`);
+    // console.log(`${endPoint}&page=${pageNum}`);
     const page = fetch(`${endPoint}&page=${pageNum}`);
     allPages.push(page);
   }
@@ -65,8 +65,6 @@ async function fetchAll({ numPages, endPoint, type }) {
           }
         );
     }
-
-    console.log(json);
 
     allData.push(json);
     allData = allData.flat();
