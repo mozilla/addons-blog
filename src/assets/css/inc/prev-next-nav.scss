@@ -1,0 +1,90 @@
+.prev-next {
+  width: 100%;
+  background: #eee;
+  margin-top: 3em;
+
+  ol {
+    position: relative;
+    margin: 0 auto;
+    text-align: center;
+    padding: 3em 10px;
+    overflow: auto;
+    max-width: $max-content-width;
+  }
+
+  a {
+    display: block;
+    text-decoration: none;
+
+    &:hover {
+      p {
+        color: $link-color;
+        text-decoration: underline;
+      }
+
+      .arrow-right {
+        right: 0;
+      }
+
+      .arrow-left {
+        left: 0;
+      }
+    }
+  }
+
+  li {
+    list-style-type: none;
+    width: 50%;
+    float: left;
+    box-sizing: border-box;
+
+    &:last-of-type {
+      box-shadow: -1px 0px 0px 0px #ccc;
+    }
+
+    &.next:last-of-type:first-of-type {
+      float: right;
+    }
+
+    &.next {
+      padding: 0 3em 0 1em;
+    }
+
+    &.prev {
+      padding: 0 1em 0 3em;
+    }
+  }
+
+  span,
+  time,
+  p {
+    color: $black;
+    margin: 0.35em;
+  }
+
+  p {
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .arrow-left,
+  .arrow-right {
+    width: 30px;
+    height: 50px;
+    position: absolute;
+    top: 50%;
+    margin-top: -25px;
+    -webkit-transition: left 250ms cubic-bezier(0.3, -0.5, 0.6, 1.5),
+      right 250ms cubic-bezier(0.3, -0.5, 0.6, 1.5);
+    transition: left 250ms cubic-bezier(0.3, -0.5, 0.6, 1.5),
+      right 250ms cubic-bezier(0.3, -0.5, 0.6, 1.5);
+  }
+
+  .arrow-left {
+    left: 10px;
+  }
+
+  .arrow-right {
+    right: 10px;
+  }
+}

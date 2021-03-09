@@ -1,0 +1,16 @@
+---
+pagination:
+  data: categories
+  size: 1
+  alias: cat
+permalink: /categories/{{ cat.slug }}/
+layout: base
+---
+<h1>Category “{{ cat.name }}”</h1>
+
+<ol>
+{% set catlist = posts[ cat.id ] %}
+{% for post in catlist | reverse %}
+  <li><a href="{{ post.url | url }}">{{ post.data.title }}</a></li>
+{% endfor %}
+</ol>

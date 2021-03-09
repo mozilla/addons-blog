@@ -1,0 +1,83 @@
+---
+pagination:
+  data: posts
+  size: 1
+  alias: blogpost
+permalink: "blog/{{ blogpost.date | luxon('y/LL/dd') }}/{{ blogpost.slug }}/index.html"
+---
+
+{% extends "../layouts/base.njk" %}
+
+{% set title = blogpost.title.rendered %}
+{% set postData = blogpost.content.rendered %}
+{% set id = blogpost.id %}
+{% set prevPost = posts | getPrevPost(blogpost) %}
+{% set nextPost = posts | getNextPost(blogpost) %}
+
+{% block content %}
+<main aria-label="Content">
+  <h1 class="Post-title">{{ title | safe }}</h1>
+  <div class="Blog-wrapper">
+    <div class="Blog">
+      <div class="Content-wrapper">
+        {{ postData | safe }}</dd>
+      </div>
+    </div>
+    <aside class="Sidebar">
+      <dl class="Meta">
+        <dt class="published">Updated</dt>
+        <dd class="published">{{ blogpost.modified | luxon('LLLL d, kkkk') }}</dd>
+        {% if blogpost.author %}
+        <dt>Author</dt>
+        <dd>
+          <ul class="Authorlist">
+          {% set authorList = authors | postAuthors(blogpost.author) %}
+          {% for author in authorList %}
+            <li class="Author">{{ author.name }}</li>
+          {% endfor %}
+          </ul>
+        </dd>
+        {% endif %}
+
+        {% if blogpost.categories %}
+        <dt>Categories</dt>
+        <dd>
+          <ul class="Catlist">
+          {% set cats = categories | postCategories(blogpost.categories) %}
+          {% for cat in cats %}
+             <li class="Cat"><a href="/categories/{{ cat.slug }}/">{{ cat.name }}</a></li>
+          {% endfor %}
+          </ul>
+        </dd>
+        {% endif %}
+      </dl>
+    </aside>
+  </div>
+</main>
+
+<nav class="prev-next">
+  <ol>
+    {% if prevPost %}
+    <li class="prev">
+      <a href="{{ prevPost.postUrl }}">
+        <span>Previous article</span>
+        <p class="entry-title previous">{{ prevPost.title.rendered | safe }}</p>
+        <time class="date" datetime="{{ prevPost.date }}">{{ prevPost.date | readableDate }}</time>
+        <svg class="arrow-left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23.62 43"><defs><style>.cls-1{fill:none;stroke:#000;stroke-linecap:round;stroke-miterlimit:10;stroke-width:3px;}</style></defs><polyline class="cls-1" points="22.12 1.5 2.12 21.5 22.12 41.5"></polyline></svg>
+      </a>
+    </li>
+    {% endif %}
+    {% if nextPost %}
+    <li class="next">
+      <a href="{{ nextPost.postUrl }}">
+        <span>Next article</span>
+        <p class="entry-title next">{{ nextPost.title.rendered | safe }}</p>
+        <time class="date" datetime="{{ nextPost.date }}">{{ nextPost.date | readableDate }}</time>
+        <svg class="arrow-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23.62 43"><defs><style>.cls-1{fill:none;stroke:#000;stroke-linecap:round;stroke-miterlimit:10;stroke-width:3px;}</style></defs><polyline class="cls-1" points="1.5 1.5 21.5 21.5 1.5 41.5"></polyline></svg>
+      </a>
+    </li>
+    {% endif %}
+  </ol>
+</nav>
+
+{% endblock content %}

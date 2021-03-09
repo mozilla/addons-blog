@@ -1,0 +1,154 @@
+// Normalization, vars, mixins and fonts.
+@import 'normalize.css/normalize';
+@import 'prism-okaidia';
+@import './inc/photon-colors';
+@import './inc/vars';
+@import './inc/mixins';
+@import './inc/fonts';
+@import './inc/icons';
+@import './inc/codehighlighting';
+@import './inc/content';
+@import './inc/prev-next-nav';
+
+@import './header';
+@import './footer';
+
+.visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  color: $body-font-color;
+  background: #fff;
+  font-family: 'Open Sans', sans-serif;
+  font-style: normal;
+  font-size: $font-size-default;
+  line-height: 19px;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  align-self: center;
+  max-width: $max-content-width;
+  flex: 1 0 auto;
+  padding: 24px;
+}
+
+h1.Post-title {
+  font-size: 30px;
+  line-height: 1.2;
+
+  @include respond-to(l) {
+    font-size: 40px;
+    margin: 1.5em 0 0.75em;
+  }
+}
+
+.HeroImage {
+  max-width: 100%;
+}
+
+.Content-wrapper {
+  width: 100%;
+
+  @include respond-to(xl) {
+    max-width: 750px;
+  }
+}
+
+.Blog-wrapper {
+  flex-direction: column;
+  display: flex;
+
+  @include respond-to(xl) {
+    flex-direction: row;
+  }
+}
+
+.Blog {
+  font-size: 16px;
+  line-height: 1.6;
+  width: 100%;
+  order: 2;
+
+  @include respond-to(l) {
+    max-width: 75%;
+  }
+}
+
+.Sidebar {
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 0.5em;
+  @include padding-end(2em);
+
+  @include respond-to(l) {
+    order: 1;
+    flex: 1;
+    max-width: 25%;
+  }
+
+  .Meta {
+    dt,
+    dd {
+      float: left;
+      text-align: left;
+      width: auto;
+      margin: 0;
+    }
+
+    dt {
+      clear: left;
+      @include margin-end(1ex);
+
+      &::after {
+        content: ':';
+      }
+    }
+
+    .published,
+    .updated {
+      text-transform: uppercase;
+      color: $blue-60;
+      font-weight: bold;
+    }
+  }
+
+  .Authorlist,
+  .Catlist,
+  .Taglist {
+    padding: 0;
+  }
+
+  .Author,
+  .Cat,
+  .Tag {
+    list-style-type: none;
+    display: inline;
+
+    &::after {
+      content: ',';
+    }
+
+    &:last-of-type::after {
+      content: '';
+    }
+  }
+}
+
+.Footer {
+  flex-shrink: 0;
+}

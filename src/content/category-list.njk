@@ -1,0 +1,10 @@
+---
+permalink: /categories/
+layout: base
+---
+<h1>Categories</h1>
+
+{% for cat in categories %}
+  {% set catUrl %}/categories/{{ cat.slug }}/{% endset %}
+  <a href="{{ catUrl | url }}" class="post-tag">{{ cat.name }}</a>
+{% endfor %}

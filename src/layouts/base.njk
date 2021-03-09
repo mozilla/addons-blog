@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  {% include "head.njk" %}
+  <body>
+    {% include "header.njk" %}
+
+    {% block content %}
+    <main aria-label="Content">
+      {{ content | safe }}
+    </main>
+    {% endblock content %}
+
+    {% include "footer.njk" %}
+    <script src="/assets/js/bundle.js"></script>
+    {# <script src="/assets/js/basket-client.js"></script> #}
+  </body>
+</html>

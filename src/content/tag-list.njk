@@ -1,0 +1,10 @@
+---
+permalink: /tags/
+layout: base
+---
+<h1>Tags</h1>
+
+{% for tag in tags %}
+  {% set tagUrl %}/tags/{{ tag.slug }}/{% endset %}
+  <a href="{{ tagUrl | url }}" class="post-tag">{{ tag.name }}</a>
+{% endfor %}

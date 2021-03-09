@@ -1,0 +1,324 @@
+.SectionLinks {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0 0 4px;
+}
+
+.SectionLinks-item {
+  display: inline-block;
+}
+
+.SectionLinks-link,
+.SectionLinks-link:link {
+  color: $grey-40;
+  display: inline-block;
+  font-weight: 400;
+  margin: 0 12px;
+  outline: none;
+  padding: 0 0 2px;
+  text-decoration: none;
+
+  &::after {
+    background: transparent;
+    content: '';
+    display: block;
+    height: 3px;
+    margin: auto;
+    transition: width $transition-short ease,
+      background-color $transition-short ease;
+    width: 0;
+  }
+
+  &:focus,
+  &:hover {
+    &::after {
+      background: $grey-40;
+      width: 100%;
+    }
+  }
+
+  &:active {
+    &::after {
+      background-color: $white;
+    }
+  }
+}
+
+.SectionLinks-link--active,
+.SectionLinks-link--active:link {
+  color: $white;
+
+  &,
+  &:active,
+  &:focus,
+  &:hover {
+    &::after {
+      background-color: $white;
+      width: 100%;
+    }
+  }
+}
+
+.SectionLinks-explore,
+.SectionLinks-explore:link {
+  display: none;
+
+  @include respond-to(l) {
+    display: inline-block;
+  }
+}
+
+.SectionLinks-dropdown {
+  padding: 0;
+  white-space: nowrap;
+
+  &,
+  &:active,
+  &:focus,
+  &:hover {
+    &::after {
+      width: 0;
+    }
+  }
+
+  .DropdownMenu-button {
+    margin-top: 2px;
+    outline: none;
+    padding: 0 0 2px;
+  }
+
+  .DropdownMenu-button-text {
+    color: $grey-40;
+    font-size: $font-size-m-smaller;
+  }
+
+  .DropdownMenu-items {
+    top: 22px;
+  }
+}
+
+.Header {
+  background: $ink-80;
+}
+
+.Header-wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, auto) min-content;
+  min-height: 112px;
+  padding: 0 12px;
+
+  @include respond-to(m) {
+    grid-template-columns: 1fr;
+    min-height: 98px;
+    padding: 0 $header-footer-gutter 10px;
+  }
+
+  @include respond-to(xl) {
+    grid-template-columns: max-content 1fr 1fr;
+    grid-template-rows: 46px auto;
+    margin: 0 auto;
+    max-width: $max-content-width;
+    min-height: 112px;
+    padding-bottom: 20px;
+    width: 100%;
+  }
+}
+
+.Header-content {
+  grid-column: 1 / span 4;
+  grid-row: 2 / 4;
+  line-height: 1;
+  margin: 0 0 36px;
+  text-align: center;
+  width: 100%;
+  z-index: 4;
+
+  .Header--loaded-page-is-anonymous & {
+    margin-top: 39px;
+  }
+
+  @include respond-to(m) {
+    @include text-align-start();
+
+    align-self: end;
+    grid-row: 1 / 2;
+    margin: 48px 0 0;
+
+    &,
+    .Header--loaded-page-is-anonymous & {
+      margin: 48px 0 0;
+    }
+  }
+
+  @include respond-to(xl) {
+    @include margin-end(24px);
+
+    align-self: center;
+    grid-column: 1;
+    grid-row: 2 / 2;
+
+    &,
+    .Header--loaded-page-is-anonymous & {
+      margin-top: 0;
+    }
+  }
+}
+
+.Header-title-wrapper {
+  margin: 0;
+}
+
+.Header-title {
+  &,
+  &:link {
+    color: $white;
+  }
+
+  // This is width / height of the source SVG.
+  $aspectRatio: 4.3125;
+  $smallHeight: 48px;
+  $smallWidth: $smallHeight * $aspectRatio;
+  $largeHeight: 64px;
+  $largeWidth: $largeHeight * $aspectRatio;
+
+  background-image: url('/assets/img/logo.svg');
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  background-size: $smallWidth $smallHeight;
+  display: block;
+  height: $smallHeight;
+  margin: 0;
+  width: 100%;
+
+  @include respond-to(m) {
+    background-position: left bottom;
+    width: $smallWidth;
+  }
+
+  @include respond-to(xxl) {
+    background-size: $largeWidth $largeHeight;
+    height: $largeHeight;
+    width: $largeWidth;
+  }
+}
+
+.Header-user-and-external-links {
+  @include text-align-end();
+
+  grid-column: 4;
+  grid-row: 1 / 2;
+  margin-top: 10px;
+
+  @include respond-to(m) {
+    grid-column: 4 / -1;
+    grid-row: 1 / 2;
+  }
+
+  @include respond-to(xl) {
+    grid-column: 2 / -1;
+    grid-row: 1 / 2;
+  }
+}
+
+.Header-button {
+  margin-bottom: 12px;
+  vertical-align: top;
+  white-space: nowrap;
+}
+
+.Header-developer-hub-link,
+.Header-extension-workshop-link {
+  display: none;
+
+  @include respond-to(l) {
+    &,
+    &:link {
+      @include margin-start(12px);
+
+      color: $white;
+      display: inline-block;
+      font-size: $font-size-s;
+      font-weight: normal;
+      padding-top: 4px;
+      text-decoration: none;
+    }
+  }
+}
+
+.Header-download-button {
+  @include margin-start(12px);
+
+  width: auto;
+}
+
+.Header-authenticate-button {
+  @include margin-start(6px);
+
+  white-space: nowrap;
+
+  .DropdownMenu-button {
+    padding: 0;
+  }
+
+  @include respond-to(m) {
+    @include margin-start(12px);
+  }
+}
+
+.Header-SectionLinks {
+  align-items: baseline;
+  grid-column: 1 / span 4;
+  grid-row: 3 / 4;
+  margin: 16px auto 1px;
+  min-height: 28px;
+  z-index: 4;
+
+  .DropdownMenu-button-text {
+    overflow: visible;
+    padding-bottom: 3px;
+  }
+
+  .Icon-inverted-caret {
+    height: 9px;
+  }
+
+  @include respond-to(m) {
+    @include margin-start(-12px);
+
+    align-self: end;
+    grid-column: 1 / 3;
+    grid-row: 2 / 2;
+  }
+
+  @include respond-to(xl) {
+    @include margin-end(12px);
+
+    align-self: center;
+    grid-column: 2;
+    margin: 22px 0 0;
+    padding: 0;
+  }
+}
+
+.Header-search-form {
+  grid-column: 1 / span 3;
+  grid-row: 1 / 3;
+  justify-self: end;
+  margin: 10px 0 0;
+  width: 100%;
+
+  @include respond-to(m) {
+    grid-column: 3 / 3;
+    grid-row: 2 / 2;
+    margin-top: 6px;
+    max-width: 250px;
+  }
+
+  @include respond-to(xl) {
+    align-self: center;
+    margin: 0;
+    max-width: 284px;
+    width: 100%;
+  }
+}
