@@ -3,14 +3,13 @@ pagination:
   data: categories
   size: 1
   alias: cat
-permalink: /categories/{{ cat.slug }}/
+permalink: /blog/categories/{{ cat.slug }}/
 layout: base
 ---
 <h1>Category “{{ cat.name }}”</h1>
-
 <ol>
-{% set catlist = posts[ cat.id ] %}
-{% for post in catlist | reverse %}
-  <li><a href="{{ post.url | url }}">{{ post.data.title }}</a></li>
+{% set postlist = posts | postsWithCategory(cat) %}
+{% for post in postlist | reverse %}
+  <li><a href="{{ post.postUrl | url }}">{{ post.title.rendered | safe }}</a></li>
 {% endfor %}
 </ol>

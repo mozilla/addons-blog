@@ -47,6 +47,15 @@ module.exports = function (eleventyConfig) {
     });
   });
 
+  eleventyConfig.addFilter(
+    'postsWithCategory',
+    (allPosts, category) => {
+      return allPosts.filter((item) => {
+        return item.categories.includes(category.id);
+      });
+    }
+  );
+
   function getPost(allPosts, currentPost, modifier) {
     let postIndex;
     for (let i = 0; i < allPosts.length; i++) {
