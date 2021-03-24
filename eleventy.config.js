@@ -6,7 +6,6 @@ const syntaxHighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
 const xmlFiltersPlugin = require('eleventy-xml-plugin');
 
 const slugify = require('./libs/slugify');
-const md = require('./libs/markdown');
 const nunjucksEnvironment = require('./libs/templates');
 
 const inputDir = path.relative(__dirname, 'src/content');
@@ -18,12 +17,6 @@ module.exports = function (eleventyConfig) {
 
   eleventyConfig.setLibrary('njk', nunjucksEnvironment);
 
-  // Markdown instance in general plus for filter in templates.
-  eleventyConfig.setLibrary('md', md);
-  eleventyConfig.addFilter('markdownify', function (value) {
-    return md.render(value.toString());
-  });
-
   eleventyConfig.addFilter('luxon', (value, format) => {
     return DateTime.fromISO(value).toFormat(format);
   });
@@ -32,29 +25,11 @@ module.exports = function (eleventyConfig) {
     return DateTime.fromISO(value).toFormat('LLLL d, kkkk');
   });
 
-  eleventyConfig.addFilter(
-    'postCategories',
-    (allCategories, postCategories) => {
-      return allCategories.filter((item) => {
-        return postCategories.includes(item.id);
-      });
-    }
-  );
-
   eleventyConfig.addFilter('postAuthors', (allAuthors, postAuthor) => {
     return allAuthors.filter((item) => {
       return postAuthor == item.id;
     });
   });
-
-  eleventyConfig.addFilter(
-    'postsWithCategory',
-    (allPosts, category) => {
-      return allPosts.filter((item) => {
-        return item.categories.includes(category.id);
-      });
-    }
-  );
 
   function getPost(allPosts, currentPost, modifier) {
     let postIndex;
@@ -87,9 +62,6 @@ module.exports = function (eleventyConfig) {
   });
   eleventyConfig.addPassthroughCopy({ './src/assets/img/': 'assets/img/' });
   eleventyConfig.addPassthroughCopy({ './src/assets/fonts/': 'assets/fonts/' });
-  eleventyConfig.addPassthroughCopy({
-    './src/assets/js/basket-client.js': 'assets/js/basket-client.js',
-  });
 
   eleventyConfig.setBrowserSyncConfig({
     callbacks: {
@@ -99,7 +71,6 @@ module.exports = function (eleventyConfig) {
           // Provides the 404 content without redirect.
           res.write(content_404);
           // Add 404 http status code in request header.
-          // res.writeHead(404, { "Content-Type": "text/html" });
           res.writeHead(404);
           res.end();
         });
