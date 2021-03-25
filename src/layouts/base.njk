@@ -11,6 +11,6 @@
     {% endblock content %}
 
     {% include "footer.njk" %}
-    <script src="/assets/js/bundle.js"></script>
+    <script src="{{ config.asset_path|safe }}/assets/js/bundle.js"></script>
   </body>
 </html>

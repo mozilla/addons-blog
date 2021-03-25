@@ -182,7 +182,7 @@
   $largeHeight: 64px;
   $largeWidth: $largeHeight * $aspectRatio;
 
-  background-image: url('/assets/img/logo.svg');
+  background-image: url('../img/logo.svg');
   background-position: center bottom;
   background-repeat: no-repeat;
   background-size: $smallWidth $smallHeight;
