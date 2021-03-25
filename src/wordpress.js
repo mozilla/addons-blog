@@ -74,7 +74,11 @@ async function fetchAll({ numPages, endPoint, type }) {
 }
 
 async function fetchData(type, endPoint) {
-  const url = `${process.env.WORDPRESS_BASE_URL}${endPoint}`;
+  const baseURL =
+    process.env.WORDPRESS_BASE_URL || 'https://mozamo.wpengine.com';
+  console.log(`WordPress base URL: ${baseURL}`);
+
+  const url = `${baseURL}/${endPoint}`;
 
   const cache = flatcache.load(type, path.resolve(__dirname, '../cache'));
   const date = new Date();
