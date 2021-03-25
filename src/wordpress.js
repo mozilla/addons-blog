@@ -74,17 +74,24 @@ async function fetchAll({ numPages, endPoint, type }) {
 }
 
 async function fetchData(type, endPoint) {
+  const baseURL =
+    process.env.WORDPRESS_BASE_URL || 'https://mozamo.wpengine.com';
+  console.log(`WordPress base URL: ${baseURL}`);
+
+  const url = `${baseURL}/${endPoint}`;
+
   const cache = flatcache.load(type, path.resolve(__dirname, '../cache'));
   const date = new Date();
-  // Key set to today's date so at most we should only be fetching everything once per day.
+  // Key set to today's date so at most we should only be fetching everything
+  // once per day.
   const key = `${date.getUTCFullYear()}-${
     date.getUTCMonth() + 1
   }-${date.getUTCDate()}`;
   const cachedData = cache.getKey(key);
 
   if (!cachedData) {
-    const numPages = await getNumPages(endPoint);
-    const allData = await fetchAll({ numPages, endPoint, type });
+    const numPages = await getNumPages(url);
+    const allData = await fetchAll({ numPages, endPoint: url, type });
     cache.setKey(key, allData);
     cache.save();
     return allData;
@@ -94,7 +101,5 @@ async function fetchData(type, endPoint) {
 }
 
 module.exports = {
-  getNumPages,
-  fetchAll,
   fetchData,
 };

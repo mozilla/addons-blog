@@ -3,7 +3,6 @@ npm-debug.log*
 coverage
 .coverage
 
-*.lock
 node_modules
 .DS_Store
 

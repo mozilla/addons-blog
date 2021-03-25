@@ -38,18 +38,6 @@ permalink: "blog/{{ blogpost.date | luxon('y/LL/dd') }}/{{ blogpost.slug }}/inde
           </ul>
         </dd>
         {% endif %}
-
-        {% if blogpost.categories %}
-        <dt>Categories</dt>
-        <dd>
-          <ul class="Catlist">
-          {% set cats = categories | postCategories(blogpost.categories) %}
-          {% for cat in cats %}
-             <li class="Cat"><a href="/blog/categories/{{ cat.slug }}/">{{ cat.name }}</a></li>
-          {% endfor %}
-          </ul>
-        </dd>
-        {% endif %}
       </dl>
     </aside>
   </div>
