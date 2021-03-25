@@ -9,7 +9,10 @@ const slugify = require('./libs/slugify');
 const nunjucksEnvironment = require('./libs/templates');
 
 const inputDir = path.relative(__dirname, 'src/content');
+const wpInputDir = path.relative(__dirname, 'src/wp-content');
 const outputDir = path.relative(__dirname, 'build');
+
+const buildWordpressTheme = process.env.BUILD_WORDPRESS_THEME === '1';
 
 module.exports = function (eleventyConfig) {
   // Tell the config to not use gitignore for ignores.
@@ -63,6 +66,12 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ './src/assets/img/': 'assets/img/' });
   eleventyConfig.addPassthroughCopy({ './src/assets/fonts/': 'assets/fonts/' });
 
+  if (buildWordpressTheme) {
+    eleventyConfig.addPassthroughCopy({
+      [`${wpInputDir}/screenshot.png`]: 'screenshot.png',
+    });
+  }
+
   eleventyConfig.setBrowserSyncConfig({
     callbacks: {
       ready: function (err, bs) {
@@ -84,7 +93,7 @@ module.exports = function (eleventyConfig) {
 
   return {
     dir: {
-      input: inputDir,
+      input: buildWordpressTheme ? wpInputDir : inputDir,
       output: outputDir,
       // The following are relative to the input dir.
       data: '../data/',

@@ -1,0 +1,30 @@
+---
+layout: base.njk
+permalink: index.php
+config:
+  # Luxon format: LLLL d, kkkk
+  readable_date_format: F j, Y
+  asset_path: "<?= get_template_directory_uri() ?>"
+---
+
+{% block content %}
+  <ul class="archive">
+    <?php while (have_posts()) : the_post(); ?>
+      <li>
+        <p>
+          <time class="date" datetime="<?= get_the_time('{{ config.readable_date_format }}') ?>">
+            <?= get_the_time('{{ config.readable_date_format }}') ?>
+          </time>
+        </p>
+        <h2 class="post-title">
+          <a href="<?= get_permalink() ?>" class="postlist-link">
+            <?= get_the_title() ?>
+          </a>
+        </h2>
+        <div class="excerpt">
+          <?= get_the_content() ?>
+        </div>
+      </li>
+    <?php endwhile; ?>
+  </ul>
+{% endblock %}
