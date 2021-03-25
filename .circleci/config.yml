@@ -1,0 +1,40 @@
+version: 2.1
+
+references:
+  restore_build_cache: &restore_build_cache
+    restore_cache:
+      name: restore yarn package cache
+      keys:
+        - yarn-packages-{{ checksum "yarn.lock" }}
+
+  run_yarn_install: &run_yarn_install
+    run:
+      name: install dependencies
+      # See: https://github.com/mozilla/addons-frontend/issues/3034
+      command: yarn install --pure-lockfile
+
+  save_build_cache: &save_build_cache
+    save_cache:
+      name: save yarn package cache
+      key: yarn-packages-{{ checksum "yarn.lock" }}
+      paths:
+        - ~/.cache/yarn
+
+jobs:
+  wptheme:
+    docker:
+      - image: cimg/php:7.4-node
+    steps:
+      - checkout
+      - *restore_build_cache
+      - *run_yarn_install
+      - *save_build_cache
+      - run: yarn build:wptheme
+      - run: yarn lint:php
+      - run: test -f wptheme.zip
+
+workflows:
+  version: 2
+  default-workflow:
+    jobs:
+      - wptheme

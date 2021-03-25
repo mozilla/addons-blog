@@ -22,7 +22,8 @@
     "sass:build": "bin/build-styles",
     "sass:watch": "chokidar 'src/assets/css/**/*.scss' -c 'npm run sass:build'",
     "script:build": "bin/build-script",
-    "script:watch": "chokidar 'src/assets/js/*.js' -c 'npm run script:build'"
+    "script:watch": "chokidar 'src/assets/js/*.js' -c 'npm run script:build'",
+    "lint:php": "find build -name '*.php' -print0 | xargs -0 -n1 -P8 php -l"
   },
   "devDependencies": {
     "@11ty/eleventy": "^0.11.1",
