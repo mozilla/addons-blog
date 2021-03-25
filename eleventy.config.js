@@ -1,12 +1,14 @@
 const path = require('path');
+
 const fs = require('fs-extra');
 const { DateTime } = require('luxon');
-
+const createDOMPurify = require('dompurify');
+const { JSDOM } = require('jsdom');
 const syntaxHighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
 const xmlFiltersPlugin = require('eleventy-xml-plugin');
+const Nunjucks = require('nunjucks');
 
 const slugify = require('./libs/slugify');
-const nunjucksEnvironment = require('./libs/templates');
 
 const inputDir = path.relative(__dirname, 'src/content');
 const wpInputDir = path.relative(__dirname, 'src/wp-content');
@@ -14,11 +16,24 @@ const outputDir = path.relative(__dirname, 'build');
 
 const buildWordpressTheme = process.env.BUILD_WORDPRESS_THEME === '1';
 
+const window = new JSDOM('').window;
+const DOMPurify = createDOMPurify(window);
+const defaultNunjucksEnv = new Nunjucks.Environment();
+
 module.exports = function (eleventyConfig) {
   // Tell the config to not use gitignore for ignores.
   eleventyConfig.setUseGitIgnore(false);
 
-  eleventyConfig.setLibrary('njk', nunjucksEnvironment);
+  // Override the default `safe` Nunjucks filter to run DOMPurify.
+  eleventyConfig.addNunjucksFilter('safe', (value) => {
+    if (!value) {
+      return;
+    }
+
+    return defaultNunjucksEnv.filters.safe(
+      DOMPurify.sanitize(value.toString())
+    );
+  });
 
   eleventyConfig.addFilter('luxon', (value, format) => {
     return DateTime.fromISO(value).toFormat(format);
