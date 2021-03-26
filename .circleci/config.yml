@@ -33,8 +33,19 @@ jobs:
       - run: yarn lint:php
       - run: test -f wptheme.zip
 
+  wptheme:
+    docker:
+      - image: circleci/node:12
+    steps:
+      - checkout
+      - *restore_build_cache
+      - *run_yarn_install
+      - *save_build_cache
+      - run: yarn prettier-ci
+
 workflows:
   version: 2
   default-workflow:
     jobs:
       - wptheme
+      - tests
