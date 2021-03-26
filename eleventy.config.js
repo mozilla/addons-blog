@@ -8,19 +8,17 @@ const syntaxHighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
 const xmlFiltersPlugin = require('eleventy-xml-plugin');
 const Nunjucks = require('nunjucks');
 
-const slugify = require('./libs/slugify');
-
 const inputDir = path.relative(__dirname, 'src/content');
 const wpInputDir = path.relative(__dirname, 'src/wp-content');
 const outputDir = path.relative(__dirname, 'build');
 
 const buildWordpressTheme = process.env.BUILD_WORDPRESS_THEME === '1';
 
-const window = new JSDOM('').window;
+const { window } = new JSDOM('');
 const DOMPurify = createDOMPurify(window);
 const defaultNunjucksEnv = new Nunjucks.Environment();
 
-module.exports = function (eleventyConfig) {
+module.exports = function configure(eleventyConfig) {
   // Tell the config to not use gitignore for ignores.
   eleventyConfig.setUseGitIgnore(false);
 
@@ -30,6 +28,7 @@ module.exports = function (eleventyConfig) {
       return;
     }
 
+    // eslint-disable-next-line consistent-return
     return defaultNunjucksEnv.filters.safe(
       DOMPurify.sanitize(value.toString())
     );
@@ -45,7 +44,7 @@ module.exports = function (eleventyConfig) {
 
   eleventyConfig.addFilter('postAuthors', (allAuthors, postAuthor) => {
     return allAuthors.filter((item) => {
-      return postAuthor == item.id;
+      return postAuthor === item.id;
     });
   });
 
@@ -57,11 +56,14 @@ module.exports = function (eleventyConfig) {
         break;
       }
     }
+
     if (postIndex >= 0 && allPosts && allPosts.length) {
       if (postIndex + modifier >= 0 && postIndex + modifier < allPosts.length) {
         return allPosts[postIndex + modifier];
       }
     }
+
+    return null;
   }
 
   eleventyConfig.addFilter('getPrevPost', (allPosts, currentPost) => {
@@ -71,8 +73,6 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addFilter('getNextPost', (allPosts, currentPost) => {
     return getPost(allPosts, currentPost, 1);
   });
-
-  eleventyConfig.addFilter('slugify', slugify);
 
   // Explicitly copy through the built files needed.
   eleventyConfig.addPassthroughCopy({
@@ -89,7 +89,7 @@ module.exports = function (eleventyConfig) {
 
   eleventyConfig.setBrowserSyncConfig({
     callbacks: {
-      ready: function (err, bs) {
+      ready(err, bs) {
         bs.addMiddleware('*', (req, res) => {
           const content_404 = fs.readFileSync('./build/404.html');
           // Provides the 404 content without redirect.
