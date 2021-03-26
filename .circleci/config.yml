@@ -33,7 +33,7 @@ jobs:
       - run: yarn lint:php
       - run: test -f wptheme.zip
 
-  wptheme:
+  tests:
     docker:
       - image: circleci/node:12
     steps:
