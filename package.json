@@ -23,7 +23,8 @@
     "script:build": "bin/build-script",
     "script:watch": "chokidar 'src/assets/js/*.js' -c 'npm run script:build'",
     "lint:php": "find build -name '*.php' -print0 | xargs -0 -n1 -P8 php -l",
-    "lint:js": "eslint ."
+    "lint:js": "eslint .",
+    "lint:scss": "stylelint --syntax scss **/*.scss"
   },
   "devDependencies": {
     "@11ty/eleventy": "^0.11.1",
