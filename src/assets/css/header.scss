@@ -182,6 +182,9 @@
   $largeHeight: 64px;
   $largeWidth: $largeHeight * $aspectRatio;
 
+  // Important: we use a relative path in order to ease the process of building
+  // the WordPress theme, and we cannot use the `/assets/` prefix in this file
+  // (and other Sass files).
   background-image: url('../img/logo.svg');
   background-position: center bottom;
   background-repeat: no-repeat;

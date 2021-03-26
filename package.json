@@ -10,10 +10,13 @@
     "prettier": "prettier --write '**'",
     "prettier-ci": "prettier -c '**'",
     "prettier-dev": "pretty-quick --branch main",
+    "test": "npm run clean-tests && jest",
+    "test-ci": "npm run test",
     "clean": "rimraf './build/'",
+    "clean-tests": "rimraf './tests/fixtures/dist/**/*!(.gitkeep)'",
     "build": "npm run clean && eleventy --config=./eleventy.config.js && npm run sass:build && npm run script:build",
     "build:debug": "DEBUG=Eleventy* npm run build:serve",
-    "build:production": "ELEVENTY_ENV=production npm run build",
+    "build:production": "ELEVENTY_ENV=production npm run build && bin/asset-pipeline",
     "build:serve": "eleventy --serve --port 8081 --config=./eleventy.config.js",
     "build:wptheme": "BUILD_WORDPRESS_THEME='1' npm run build && cd build/ && zip -r ../wptheme.zip .",
     "start": "npm run clean && npm-run-all -p build:serve sass:* script:*",
@@ -30,6 +33,7 @@
     "@11ty/eleventy": "^0.11.1",
     "@11ty/eleventy-plugin-syntaxhighlight": "^3.0.6",
     "@mozilla-protocol/tokens": "^5.0.5",
+    "acorn-walk": "^8.0.2",
     "chokidar-cli": "^2.1.0",
     "dompurify": "^2.2.6",
     "eleventy-xml-plugin": "^0.1.0",
@@ -47,10 +51,24 @@
     "npm-run-all": "^4.1.5",
     "nunjucks": "^3.2.3",
     "photon-colors": "^3.3.2",
+    "postcss": "8.2.8",
+    "postcss-url": "10.1.1",
+    "posthtml": "0.15.1",
+    "posthtml-beautify": "0.7.0",
+    "posthtml-postcss": "0.5.0",
+    "posthtml-urls": "1.0.0",
     "prettier": "^2.2.1",
     "pretty-quick": "^3.1.0",
     "prismjs": "^1.23.0",
     "stylelint": "^13.11.0",
-    "stylelint-config-standard": "^20.0.0"
-  }
+    "stylelint-config-standard": "^20.0.0",
+    "terser": "5.6.1",
+    "url-parse": "^1.5.1"
+  },
+  "browserslist": [
+    "> 0.5%",
+    "last 2 versions",
+    "Firefox ESR",
+    "not dead"
+  ]
 }

@@ -33,7 +33,7 @@ jobs:
       - run: yarn lint:php
       - run: test -f wptheme.zip
 
-  tests:
+  blog:
     docker:
       - image: circleci/node:12
     steps:
@@ -41,13 +41,20 @@ jobs:
       - *restore_build_cache
       - *run_yarn_install
       - *save_build_cache
+      - run: yarn test-ci
       - run: yarn prettier-ci
       - run: yarn lint:js
       - run: yarn lint:scss
+      - run:
+          name: build assets
+          command: |
+            yarn sass:build
+            yarn script:build
+            bin/asset-pipeline
 
 workflows:
   version: 2
   default-workflow:
     jobs:
       - wptheme
-      - tests
+      - blog

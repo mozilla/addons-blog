@@ -68,4 +68,23 @@ This compiles the JavaScript files and generates a `bundle.js` file.
 
 This starts a watcher to rebuild the JS files automatically.
 
+## Production builds
+
+The Eleventy process and the JS and CSS builds happen in series. Then a 3rd `asset-pipeline` process initiates and takes the built content from `./build` directory and runs it through various optimizations.
+
+During these optimizations, the following takes place:
+
+- Binary files are versioned with hashes in the file names.
+- References to these file in CSS and JS are updated.
+- CSS and JS are minified.
+- The HTML is processed to update the references to the assets new hash-based filenames.
+
+All of this means that we can serve the site with far-future `Expires` headers. If the resource is in the browser's cache, the browser won't even make a request for it. To break the cache, the resource's URL needs to change. When something is updated and the script is re-run, the hash in the filename will change, so the new filename won't be cached and the browser will know to fetch it. This helps the site be fast.
+
+Whilst the `asset-pipline` script is custom, it leverages a lot of existing libs where possible, these include Terser, postHTML, postCSS, and various plugins.
+
+### Asset paths
+
+For the `asset-pipeline` script to do its thing, all you need to do is refer to all assets with a path beginning with `/assets/`. If you do that, everything else is handled for you ✨
+
 [prettier]: https://prettier.io/
