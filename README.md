@@ -52,6 +52,10 @@ This starts a web server to serve the blog on local port `8081` as well as watch
 
 This is similar to `yarn start` but with Eleventy debug logs turned on.
 
+### `yarn start:nocache`
+
+This is similar to `yarn start` but the WordPress API results won't be cached locally.
+
 ### `yarn sass:build`
 
 This compiles the Sass files and generates a `styles.css` file.

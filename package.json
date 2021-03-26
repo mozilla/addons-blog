@@ -21,6 +21,7 @@
     "build:wptheme": "BUILD_WORDPRESS_THEME='1' npm run build && cd build/ && zip -r ../wptheme.zip .",
     "start": "npm run clean && npm-run-all -p build:serve sass:* script:*",
     "start:debug": "npm run clean && npm-run-all -p build:debug sass:* script:*",
+    "start:nocache": "NO_CACHE='1' npm run start",
     "sass:build": "bin/build-styles",
     "sass:watch": "chokidar 'src/assets/css/**/*.scss' -c 'npm run sass:build'",
     "script:build": "bin/build-script",
