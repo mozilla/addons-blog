@@ -10,10 +10,7 @@ const fetch = require('node-fetch');
 const fs = require('fs-extra');
 const isProduction = process.env.ELEVENTY_ENV;
 
-const inputFiles = [
-  'node_modules/dompurify/dist/purify.js',
-  'src/assets/js/new-tab-links.js',
-];
+const inputFiles = ['src/assets/js/new-tab-links.js'];
 
 const outputFile = './build/assets/js/bundle.js';
 

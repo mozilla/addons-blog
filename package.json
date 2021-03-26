@@ -34,6 +34,7 @@
     "eslint": "^7.21.0",
     "flat-cache": "^3.0.4",
     "fs-extra": "^9.1.0",
+    "jsdom": "^16.5.1",
     "luxon": "^1.26.0",
     "markdown-it-container": "^3.0.0",
     "node-fetch": "^2.6.1",
