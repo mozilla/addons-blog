@@ -2,36 +2,36 @@ const path = require('path');
 
 const fs = require('fs-extra');
 const { DateTime } = require('luxon');
-const createDOMPurify = require('dompurify');
-const { JSDOM } = require('jsdom');
 const xmlFiltersPlugin = require('eleventy-xml-plugin');
 const Nunjucks = require('nunjucks');
 
-const inputDir = path.relative(__dirname, 'src/content');
-const wpInputDir = path.relative(__dirname, 'src/wp-content');
-const outputDir = path.relative(__dirname, 'build');
+const { makeBetterSafe } = require('./src/filters');
+
+const cwd = process.env.ELEVENTY_CWD
+  ? path.resolve(process.env.ELEVENTY_CWD)
+  : __dirname;
+
+const inputDir = path.relative(__dirname, path.join(cwd, 'src/content'));
+const wpInputDir = path.join(cwd, 'src/wp-content');
+const outputDir = path.join(cwd, 'build');
+const includeDirName = 'includes';
 
 const buildWordpressTheme = process.env.BUILD_WORDPRESS_THEME === '1';
 
-const { window } = new JSDOM('');
-const DOMPurify = createDOMPurify(window);
-const defaultNunjucksEnv = new Nunjucks.Environment();
+const nunjucksEnvironment = new Nunjucks.Environment(
+  new Nunjucks.FileSystemLoader([path.join('src', includeDirName), cwd]),
+  { autoescape: true }
+);
+const { safe: markAsSafe } = nunjucksEnvironment.filters;
 
 module.exports = function configure(eleventyConfig) {
   // Tell the config to not use gitignore for ignores.
   eleventyConfig.setUseGitIgnore(false);
 
-  // Override the default `safe` Nunjucks filter to run DOMPurify.
-  eleventyConfig.addNunjucksFilter('safe', (value) => {
-    if (!value) {
-      return;
-    }
+  eleventyConfig.setLibrary('njk', nunjucksEnvironment);
 
-    // eslint-disable-next-line consistent-return
-    return defaultNunjucksEnv.filters.safe(
-      DOMPurify.sanitize(value.toString())
-    );
-  });
+  // Override the default `safe` Nunjucks filter to run DOMPurify.
+  eleventyConfig.addNunjucksFilter('safe', makeBetterSafe({ markAsSafe }));
 
   eleventyConfig.addFilter('luxon', (value, format) => {
     return DateTime.fromISO(value).toFormat(format);
@@ -73,33 +73,37 @@ module.exports = function configure(eleventyConfig) {
     return getPost(allPosts, currentPost, 1);
   });
 
-  // Explicitly copy through the built files needed.
-  eleventyConfig.addPassthroughCopy({
-    './src/content/robots.txt': 'robots.txt',
-  });
-  eleventyConfig.addPassthroughCopy({ './src/assets/img/': 'assets/img/' });
-  eleventyConfig.addPassthroughCopy({ './src/assets/fonts/': 'assets/fonts/' });
-
-  if (buildWordpressTheme) {
+  if (process.env.NODE_ENV !== 'test') {
+    // Explicitly copy through the built files needed.
     eleventyConfig.addPassthroughCopy({
-      [`${wpInputDir}/screenshot.png`]: 'screenshot.png',
+      './src/content/robots.txt': 'robots.txt',
+    });
+    eleventyConfig.addPassthroughCopy({ './src/assets/img/': 'assets/img/' });
+    eleventyConfig.addPassthroughCopy({
+      './src/assets/fonts/': 'assets/fonts/',
+    });
+
+    if (buildWordpressTheme) {
+      eleventyConfig.addPassthroughCopy({
+        [`${wpInputDir}/screenshot.png`]: 'screenshot.png',
+      });
+    }
+
+    eleventyConfig.setBrowserSyncConfig({
+      callbacks: {
+        ready(err, bs) {
+          bs.addMiddleware('*', (req, res) => {
+            const content_404 = fs.readFileSync('./build/404.html');
+            // Provides the 404 content without redirect.
+            res.write(content_404);
+            // Add 404 http status code in request header.
+            res.writeHead(404);
+            res.end();
+          });
+        },
+      },
     });
   }
-
-  eleventyConfig.setBrowserSyncConfig({
-    callbacks: {
-      ready(err, bs) {
-        bs.addMiddleware('*', (req, res) => {
-          const content_404 = fs.readFileSync('./build/404.html');
-          // Provides the 404 content without redirect.
-          res.write(content_404);
-          // Add 404 http status code in request header.
-          res.writeHead(404);
-          res.end();
-        });
-      },
-    },
-  });
 
   // Plugins
   eleventyConfig.addPlugin(xmlFiltersPlugin);
@@ -110,7 +114,7 @@ module.exports = function configure(eleventyConfig) {
       output: outputDir,
       // The following are relative to the input dir.
       data: '../data/',
-      includes: '../includes/',
+      includes: `../${includeDirName}/`,
       layouts: '../layouts/',
     },
   };
