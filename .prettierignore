@@ -1,7 +1,5 @@
 # exclude everything by default
 *.*
-# exclude these files
-Dockerfile
 # exclude these directories
 /node_modules/
 /build/
@@ -13,3 +11,4 @@ cache
 # Allow files we want to process
 !*.js
 !*.scss
+!*.md
