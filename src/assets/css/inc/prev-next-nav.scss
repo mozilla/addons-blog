@@ -39,7 +39,7 @@
     box-sizing: border-box;
 
     &:last-of-type {
-      box-shadow: -1px 0px 0px 0px #ccc;
+      box-shadow: -1px 0 0 0 #ccc;
     }
 
     &.next:last-of-type:first-of-type {

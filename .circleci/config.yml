@@ -43,6 +43,7 @@ jobs:
       - *save_build_cache
       - run: yarn prettier-ci
       - run: yarn lint:js
+      - run: yarn lint:scss
 
 workflows:
   version: 2
