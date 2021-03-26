@@ -6,10 +6,45 @@ const fetch = require('node-fetch');
 const flatcache = require('flat-cache');
 const { DateTime } = require('luxon');
 
+const AMO_BLOG_BASE_URL = 'https://addons.mozilla.org/blog';
+const DEFAULT_WORDPRESS_BASE_URL = 'https://mozamo.wpengine.com';
+
 async function getNumPages(endPoint) {
   const result = await fetch(endPoint, { method: 'HEAD' });
   return result.headers.get('x-wp-totalpages') || 1;
 }
+
+const fixInternalURLs = (content) => {
+  return content.replace(
+    /https?:\/\/mozamo\.wpengine\.com/g,
+    AMO_BLOG_BASE_URL
+  );
+};
+
+const createPost = ({
+  author,
+  id,
+  slug,
+  title,
+  excerpt,
+  date,
+  modified,
+  content,
+  yoast_head,
+}) => {
+  return {
+    author,
+    id,
+    slug,
+    title: title.rendered,
+    excerpt: fixInternalURLs(excerpt.rendered),
+    date,
+    modified,
+    content: fixInternalURLs(content.rendered),
+    permalink: `/blog/${DateTime.fromISO(date).toFormat('y/LL/dd')}/${slug}/`,
+    seoHead: fixInternalURLs(yoast_head),
+  };
+};
 
 async function fetchAll({ numPages, endPoint, type }) {
   const allPages = [];
@@ -28,44 +63,13 @@ async function fetchAll({ numPages, endPoint, type }) {
   for (const result of results) {
     let json = await result.json();
 
-    // Filter post data and only cache what we care about.
-    // This could be completely factored out if we can use
-    // the graphql wordpress plugin.
+    // Filter post data and only keep/cache what we care about.
     if (type === 'posts') {
       json = json
         .filter((item) => {
           return item.status === 'publish' && item.slug;
         })
-        .map(
-          ({
-            author,
-            id,
-            slug,
-            title,
-            excerpt,
-            date,
-            modified,
-            tags,
-            content,
-            categories,
-          }) => {
-            return {
-              author,
-              id,
-              slug,
-              title,
-              excerpt,
-              date,
-              modified,
-              tags,
-              content,
-              categories,
-              postUrl: `/blog/${DateTime.fromISO(date).toFormat(
-                'y/LL/dd'
-              )}/${slug}/`,
-            };
-          }
-        );
+        .map(createPost);
     }
 
     allData.push(json);
@@ -76,12 +80,11 @@ async function fetchAll({ numPages, endPoint, type }) {
 }
 
 async function fetchData(type, endPoint) {
-  const baseURL =
-    process.env.WORDPRESS_BASE_URL || 'https://mozamo.wpengine.com';
-  // eslint-disable-next-line no-console
-  console.debug(`WordPress base URL: ${baseURL}`);
+  const baseURL = process.env.WORDPRESS_BASE_URL || DEFAULT_WORDPRESS_BASE_URL;
 
-  const url = `${baseURL}/${endPoint}`;
+  const url = `${baseURL}${endPoint}`;
+  // eslint-disable-next-line no-console
+  console.debug(`URL for ${type}: ${url}`);
 
   const cache = flatcache.load(type, path.resolve(__dirname, '../cache'));
   const date = new Date();
@@ -104,5 +107,8 @@ async function fetchData(type, endPoint) {
 }
 
 module.exports = {
+  AMO_BLOG_BASE_URL,
+  DEFAULT_WORDPRESS_BASE_URL,
   fetchData,
+  createPost,
 };
