@@ -1,8 +1,9 @@
 // Based on fetching + caching in https://github.com/samikeijonen/11ty-wp ❤️
 
+const path = require('path');
+
 const fetch = require('node-fetch');
 const flatcache = require('flat-cache');
-const path = require('path');
 const { DateTime } = require('luxon');
 
 async function getNumPages(endPoint) {
@@ -14,6 +15,7 @@ async function fetchAll({ numPages, endPoint, type }) {
   const allPages = [];
   let allData = [];
 
+  // eslint-disable-next-line no-console
   console.debug(`Fetching ${type} content from wordpress via REST API`);
 
   for (let pageNum = 1; pageNum <= numPages; pageNum++) {
@@ -23,7 +25,7 @@ async function fetchAll({ numPages, endPoint, type }) {
   }
 
   const results = await Promise.all(allPages);
-  for (result of results) {
+  for (const result of results) {
     let json = await result.json();
 
     // Filter post data and only cache what we care about.
@@ -76,7 +78,8 @@ async function fetchAll({ numPages, endPoint, type }) {
 async function fetchData(type, endPoint) {
   const baseURL =
     process.env.WORDPRESS_BASE_URL || 'https://mozamo.wpengine.com';
-  console.log(`WordPress base URL: ${baseURL}`);
+  // eslint-disable-next-line no-console
+  console.debug(`WordPress base URL: ${baseURL}`);
 
   const url = `${baseURL}/${endPoint}`;
 
