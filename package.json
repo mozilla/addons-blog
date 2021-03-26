@@ -28,7 +28,6 @@
   },
   "devDependencies": {
     "@11ty/eleventy": "^0.11.1",
-    "@11ty/eleventy-plugin-syntaxhighlight": "^3.0.6",
     "@mozilla-protocol/tokens": "^5.0.5",
     "chokidar-cli": "^2.1.0",
     "dompurify": "^2.2.6",

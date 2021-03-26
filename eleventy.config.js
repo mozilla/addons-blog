@@ -4,7 +4,6 @@ const fs = require('fs-extra');
 const { DateTime } = require('luxon');
 const createDOMPurify = require('dompurify');
 const { JSDOM } = require('jsdom');
-const syntaxHighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
 const xmlFiltersPlugin = require('eleventy-xml-plugin');
 const Nunjucks = require('nunjucks');
 
@@ -104,7 +103,6 @@ module.exports = function configure(eleventyConfig) {
 
   // Plugins
   eleventyConfig.addPlugin(xmlFiltersPlugin);
-  eleventyConfig.addPlugin(syntaxHighlight);
 
   return {
     dir: {
