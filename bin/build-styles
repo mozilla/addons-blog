@@ -13,7 +13,7 @@ const isProduction = process.env.ELEVENTY_ENV;
 const buildSass = async function () {
   const { css } = await renderSass({
     file: inputFile,
-    includePaths: ['node_modules/prismjs/themes', 'node_modules/'],
+    includePaths: ['node_modules/'],
     outputStyle: isProduction ? 'compressed' : 'nested',
   });
 
