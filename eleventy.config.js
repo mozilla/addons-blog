@@ -30,8 +30,12 @@ module.exports = function configure(eleventyConfig) {
 
   eleventyConfig.setLibrary('njk', nunjucksEnvironment);
 
-  // Override the default `safe` Nunjucks filter to run DOMPurify.
-  eleventyConfig.addNunjucksFilter('safe', makeBetterSafe({ markAsSafe }));
+  // For the WordPress theme, we don't want to override the `safe` filter
+  // because we output PHP code that would get removed by DOMPurify otherwise.
+  if (!buildWordpressTheme) {
+    // Override the default `safe` Nunjucks filter to run DOMPurify.
+    eleventyConfig.addNunjucksFilter('safe', makeBetterSafe({ markAsSafe }));
+  }
 
   eleventyConfig.addFilter('luxon', (value, format) => {
     return DateTime.fromISO(value).toFormat(format);
@@ -73,13 +77,13 @@ module.exports = function configure(eleventyConfig) {
     return getPost(allPosts, currentPost, 1);
   });
 
+  // We have integration tests that rely on a test project and it doesn't have
+  // the files listed below so we don't copy those when executing the tests.
   if (process.env.NODE_ENV !== 'test') {
     // Explicitly copy through the built files needed.
     eleventyConfig.addPassthroughCopy({
       './src/content/robots.txt': 'robots.txt',
-    });
-    eleventyConfig.addPassthroughCopy({ './src/assets/img/': 'assets/img/' });
-    eleventyConfig.addPassthroughCopy({
+      './src/assets/img/': 'assets/img/',
       './src/assets/fonts/': 'assets/fonts/',
     });
 
