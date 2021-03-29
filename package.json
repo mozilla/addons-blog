@@ -33,6 +33,7 @@
   "devDependencies": {
     "@11ty/eleventy": "^0.12.0",
     "@mozilla-protocol/tokens": "^5.0.5",
+    "@willdurand/addons-frontend-card": "^1.0.0",
     "acorn-walk": "^8.0.2",
     "chokidar-cli": "^2.1.0",
     "dompurify": "^2.2.6",

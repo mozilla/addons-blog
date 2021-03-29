@@ -10,7 +10,8 @@
     </main>
     {% endblock content %}
 
-    {% include "footer.njk" %}
+    {{ markup.footer | safe }}
+
     <script src="{{ config.asset_path|safe }}/assets/js/bundle.js"></script>
   </body>
 </html>

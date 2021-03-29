@@ -10,7 +10,6 @@
 @import './inc/prev-next-nav';
 
 @import './header';
-@import './footer';
 
 .visually-hidden {
   border: 0;
@@ -148,6 +147,5 @@ h1.Post-title {
   }
 }
 
-.Footer {
-  flex-shrink: 0;
-}
+// Import at the end to avoid side-effects caused by the CSS in this project.
+@import '@willdurand/addons-frontend-card/style';
