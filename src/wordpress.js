@@ -83,6 +83,12 @@ async function fetchData(type, endPoint) {
 
   const url = `${baseURL}/${endPoint}`;
 
+  const noCache = process.env.NO_CACHE === '1';
+  if (noCache) {
+    // eslint-disable-next-line no-console
+    console.debug('Cache is disabled');
+  }
+
   const cache = flatcache.load(type, path.resolve(__dirname, '../cache'));
   const date = new Date();
   // Key set to today's date so at most we should only be fetching everything
@@ -92,7 +98,7 @@ async function fetchData(type, endPoint) {
   }-${date.getUTCDate()}`;
   const cachedData = cache.getKey(key);
 
-  if (!cachedData) {
+  if (noCache || !cachedData) {
     const numPages = await getNumPages(url);
     const allData = await fetchAll({ numPages, endPoint: url, type });
     cache.setKey(key, allData);
