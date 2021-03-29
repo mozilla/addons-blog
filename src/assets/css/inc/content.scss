@@ -23,7 +23,9 @@ main {
   a:visited,
   a:hover,
   a:active {
-    color: $link-color;
+    &:not(.Button) {
+      color: $link-color;
+    }
   }
 
   hr {

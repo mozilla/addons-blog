@@ -1,4 +1,4 @@
-const { makeBetterSafe } = require('../src/filters');
+const { makeBetterSafe, makeBuildStaticAddonCards } = require('../src/filters');
 
 describe(__filename, () => {
   describe('makeBetterSafe', () => {
@@ -179,6 +179,96 @@ describe(__filename, () => {
           expect(betterSafe(markup, { isHeadMarkup: true })).toEqual('');
         }
       });
+    });
+  });
+
+  describe('makeBuildStaticAddonCards', () => {
+    const STATIC_ADDON_CARD = '<!-- static add-on card -->';
+
+    it('returns a function', () => {
+      expect(makeBuildStaticAddonCards()).toBeInstanceOf(Function);
+    });
+
+    it('handles content without an add-on card', async () => {
+      const content = 'some content';
+      const callback = jest.fn();
+      const _buildStaticAddonCard = jest.fn();
+
+      await makeBuildStaticAddonCards({ _buildStaticAddonCard })(
+        content,
+        callback
+      );
+
+      expect(callback).toHaveBeenCalledWith(null, content);
+      expect(_buildStaticAddonCard).not.toHaveBeenCalled();
+    });
+
+    it('calls the card library to generate a card', async () => {
+      const addonId = '1234';
+      const content = `<div class="addon-card" data-addon-id="${addonId}"></div>`;
+      const callback = jest.fn();
+      const _buildStaticAddonCard = jest
+        .fn()
+        .mockReturnValue(STATIC_ADDON_CARD);
+
+      await makeBuildStaticAddonCards({ _buildStaticAddonCard })(
+        content,
+        callback
+      );
+
+      expect(callback).toHaveBeenCalledWith(null, STATIC_ADDON_CARD);
+      expect(_buildStaticAddonCard).toHaveBeenCalledWith({ addonId });
+    });
+
+    it('can replace multiple add-on cards', async () => {
+      const addonIds = ['12', '34', '56'];
+      const content = addonIds
+        .map(
+          (addonId) =>
+            `<div class="addon-card" data-addon-id="${addonId}"></div>`
+        )
+        .join('\n');
+      const callback = jest.fn();
+      const _buildStaticAddonCard = jest
+        .fn()
+        .mockReturnValue(STATIC_ADDON_CARD);
+
+      await makeBuildStaticAddonCards({ _buildStaticAddonCard })(
+        content,
+        callback
+      );
+
+      expect(callback).toHaveBeenCalledWith(
+        null,
+        [STATIC_ADDON_CARD, STATIC_ADDON_CARD, STATIC_ADDON_CARD].join('\n')
+      );
+      for (const addonId of addonIds) {
+        expect(_buildStaticAddonCard).toHaveBeenCalledWith({ addonId });
+      }
+    });
+
+    it('handles errors coming from the addons-frontend-card library', async () => {
+      const addonId = '1';
+      const content = [
+        'content before',
+        `<div class="addon-card" data-addon-id="${addonId}"></div>`,
+        'content after',
+      ].join('\n');
+      const callback = jest.fn();
+      const _buildStaticAddonCard = jest.fn().mockImplementation(() => {
+        throw new Error('error coming from the addons-frontend-card library');
+      });
+
+      await makeBuildStaticAddonCards({ _buildStaticAddonCard })(
+        content,
+        callback
+      );
+
+      expect(callback).toHaveBeenCalledWith(
+        null,
+        'content before\n\ncontent after'
+      );
+      expect(_buildStaticAddonCard).toHaveBeenCalledWith({ addonId });
     });
   });
 });
