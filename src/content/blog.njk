@@ -16,9 +16,9 @@ pagination:
           <time class="date" datetime="{{ post.date | readableDate }}">{{ post.date | readableDate }}</time>
         </p>
         <h2 class="post-title">
-          <a class="" href="{{ post.postUrl }}" class="postlist-link">{% if post.title.rendered %}{{ post.title.rendered | safe }}{% else %}{{ post.slug }}{% endif %}</a>
+          <a class="" href="{{ post.permalink }}" class="postlist-link">{% if post.title %}{{ post.title | safe }}{% else %}{{ post.slug }}{% endif %}</a>
         </h2>
-        <div class="excerpt">{{ post.excerpt.rendered | safe }}</div>
+        <div class="excerpt">{{ post.excerpt | safe }}</div>
       </li>
     {%- endfor -%}
   </ul>

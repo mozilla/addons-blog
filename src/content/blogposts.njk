@@ -8,9 +8,7 @@ permalink: "blog/{{ blogpost.date | luxon('y/LL/dd') }}/{{ blogpost.slug }}/inde
 
 {% extends "../layouts/base.njk" %}
 
-{% set title = blogpost.title.rendered %}
-{% set postData = blogpost.content.rendered %}
-{% set id = blogpost.id %}
+{% set title = blogpost.title %}
 {% set prevPost = posts | getPrevPost(blogpost) %}
 {% set nextPost = posts | getNextPost(blogpost) %}
 
@@ -20,7 +18,7 @@ permalink: "blog/{{ blogpost.date | luxon('y/LL/dd') }}/{{ blogpost.slug }}/inde
   <div class="Blog-wrapper">
     <div class="Blog">
       <div class="Content-wrapper">
-        {{ postData | safe }}</dd>
+        {{ blogpost.content | safe }}</dd>
       </div>
     </div>
     <aside class="Sidebar">
@@ -47,9 +45,9 @@ permalink: "blog/{{ blogpost.date | luxon('y/LL/dd') }}/{{ blogpost.slug }}/inde
   <ol>
     {% if prevPost %}
     <li class="prev">
-      <a href="{{ prevPost.postUrl }}">
+      <a href="{{ prevPost.permalink }}">
         <span>Previous article</span>
-        <p class="entry-title previous">{{ prevPost.title.rendered | safe }}</p>
+        <p class="entry-title previous">{{ prevPost.title | safe }}</p>
         <time class="date" datetime="{{ prevPost.date }}">{{ prevPost.date | readableDate }}</time>
         <svg class="arrow-left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23.62 43"><defs><style>.cls-1{fill:none;stroke:#000;stroke-linecap:round;stroke-miterlimit:10;stroke-width:3px;}</style></defs><polyline class="cls-1" points="22.12 1.5 2.12 21.5 22.12 41.5"></polyline></svg>
       </a>
@@ -57,9 +55,9 @@ permalink: "blog/{{ blogpost.date | luxon('y/LL/dd') }}/{{ blogpost.slug }}/inde
     {% endif %}
     {% if nextPost %}
     <li class="next">
-      <a href="{{ nextPost.postUrl }}">
+      <a href="{{ nextPost.permalink }}">
         <span>Next article</span>
-        <p class="entry-title next">{{ nextPost.title.rendered | safe }}</p>
+        <p class="entry-title next">{{ nextPost.title | safe }}</p>
         <time class="date" datetime="{{ nextPost.date }}">{{ nextPost.date | readableDate }}</time>
         <svg class="arrow-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23.62 43"><defs><style>.cls-1{fill:none;stroke:#000;stroke-linecap:round;stroke-miterlimit:10;stroke-width:3px;}</style></defs><polyline class="cls-1" points="1.5 1.5 21.5 21.5 1.5 41.5"></polyline></svg>
       </a>
