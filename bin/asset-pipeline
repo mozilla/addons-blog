@@ -162,7 +162,7 @@ class AssetPipeline {
 
   async rewriteJS(origPath, key, assetMap = this.assetMap) {
     let code = await fs.readFile(origPath, 'utf8');
-    const ast = acorn.parse(code, { ecmaVersion: 6 });
+    const ast = acorn.parse(code, { ecmaVersion: 9 }); // 2018
     const pathNodes = [];
     const self = this;
     walk.simple(ast, {
