@@ -51,6 +51,15 @@ const makeBetterSafe = ({ markAsSafe }) => {
           if (node.getAttribute('type') !== 'application/ld+json') {
             node.remove();
           }
+
+          try {
+            // eslint-disable-next-line no-param-reassign
+            node.textContent = JSON.stringify(JSON.parse(node.textContent));
+          } catch (e) {
+            // Remove invalid content if it cannot be parsed as JSON.
+            // eslint-disable-next-line no-param-reassign
+            node.textContent = '';
+          }
         }
       });
 
