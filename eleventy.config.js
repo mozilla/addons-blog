@@ -12,7 +12,7 @@ const cwd = process.env.ELEVENTY_CWD
   : __dirname;
 
 const inputDir = path.relative(__dirname, path.join(cwd, 'src/content'));
-const wpInputDir = path.join(cwd, 'src/wp-content');
+const wpInputDir = path.relative(__dirname, path.join(cwd, 'src/wp-content'));
 const outputDir = path.join(cwd, 'build');
 const includeDirName = 'includes';
 

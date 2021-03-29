@@ -2,22 +2,11 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ seo.title }}</title>
+  <title>{% if title %}{{ title }} - {% endif %}{{ markup.siteTitle }}</title>
 
-  <link rel="canonical" href="{{ seo.canonicalURL }}" />
-  <meta name="description" content="{{ seo.description }}" />
-
-  <meta property="og:description" content="{{ seo.description }}" />
-  <meta property="og:locale" content="en_US" />
-  <meta property="og:site_name" content="{{ site.title }}" />
-  <meta property="og:title" content="{{ title }}" />
-  <meta property="og:url" content="{{ seo.canonicalURL }}" />
-  <meta property="article:published_time" content="{{ fileDate.published }}" />
-
-  <script type="application/ld+json">{{ seo.jsonLD }}</script>
+  {{ blogpost.seoHead | safe({ isHeadMarkup: true }) }}
 
   <link rel="apple-touch-icon" href="{{ config.asset_path|safe }}/assets/img/favicon.png">
   <link rel="shortcut icon" href="{{ config.asset_path|safe }}/assets/img/favicon.ico">
   <link rel="stylesheet" href="{{ config.asset_path|safe }}/assets/css/styles.css">
 </head>
-
