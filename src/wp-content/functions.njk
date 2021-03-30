@@ -1,0 +1,12 @@
+---
+permalink: functions.php
+---
+<?php
+
+if (!function_exists('addonsblog_theme_setup')) {
+  function addonsblog_theme_setup() {
+    add_theme_support('post-thumbnails', ['post']);
+  }
+}
+
+add_action('after_setup_theme', 'addonsblog_theme_setup');
