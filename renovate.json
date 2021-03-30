@@ -14,7 +14,8 @@
     {
       "depTypeList": [
         "engines",
-        "devDependencies"
+        "devDependencies",
+        "require-dev"
       ],
       "rangeStrategy": "replace"
     }
