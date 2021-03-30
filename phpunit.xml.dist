@@ -1,0 +1,7 @@
+<phpunit colors="true" bootstrap="tests/php/bootstrap.php">
+  <testsuites>
+    <testsuite name="AMO Blog Test Suite">
+      <directory>tests/php/</directory>
+    </testsuite>
+  </testsuites>
+</phpunit>

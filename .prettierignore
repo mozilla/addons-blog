@@ -1,14 +1,17 @@
 # exclude everything by default
 *.*
 # exclude these directories
-/node_modules/
 /build/
-/dist/
+/cache/
 /coverage/
+/dist/
+/node_modules/
+/tests/fixtures/
+/vendor/
+# exclude these files
 *.lock
-tests/fixtures/
-cache
 # Allow files we want to process
 !*.js
 !*.scss
 !*.md
+!*.php
