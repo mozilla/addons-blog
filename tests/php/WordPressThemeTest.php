@@ -44,6 +44,31 @@ final class WordPressThemeTest extends DOMTestCase
         );
     }
 
+    public function testFunctions(): void
+    {
+        function add_theme_support($featureName, $options)
+        {
+            if ($featureName !== 'post-thumbnails') {
+                throw new \InvalidArgumentException('invalid feature name');
+            }
+
+            if ($options !== ['post']) {
+                throw new \InvalidArgumentException(
+                    'invalid options for "post-thumbnails"'
+                );
+            }
+        }
+
+        function add_action($hookName, $funcName)
+        {
+            $funcName();
+        }
+
+        require __DIR__ . '/../../build/functions.php';
+
+        $this->expectNotToPerformAssertions();
+    }
+
     private function render($template, $posts = 0): string
     {
         global $nb_posts;
