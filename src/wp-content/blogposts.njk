@@ -8,10 +8,12 @@ config:
 
 {% extends "../layouts/base.njk" %}
 
+{% set title = '<?= get_the_title() ?>' | safe %}
+{% set featuredImage = '<?= get_the_post_thumbnail_url(get_the_id(), "full") ?>' | safe %}
+
 {% block content %}
 <main aria-label="Content">
   <?php while (have_posts()) : the_post(); ?>
-    <h1 class="Post-title"><?= get_the_title() ?></h1>
     <div class="Blog-wrapper">
       <div class="Blog">
         <div class="Content-wrapper">

@@ -46,3 +46,13 @@ function get_permalink(): string
 {
     return '/blog/some-post';
 }
+
+function get_the_post_thumbnail_url(): string
+{
+    return 'thumbnail.jpg';
+}
+
+function get_the_id(): string
+{
+    return 'post-id';
+}

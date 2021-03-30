@@ -21,7 +21,14 @@ final class WordPressThemeTest extends DOMTestCase
     {
         $html = $this->render('single.php', 1);
 
-        $this->assertSelectEquals('.Post-title', 'some title', 1, $html);
+        $this->assertStringContainsString(
+            '<title>some title - Mozilla Add-ons Blog</title>',
+            $html
+        );
+        $this->assertStringContainsString(
+            "url('thumbnail.jpg') no-repeat",
+            $html
+        );
         $this->assertSelectEquals('.Content-wrapper', 'some content', 1, $html);
         $this->assertSelectEquals('.Author', 'some author', 1, $html);
         $this->assertSelectCount('.Footer', 1, $html);
@@ -35,6 +42,10 @@ final class WordPressThemeTest extends DOMTestCase
     {
         $html = $this->render('index.php', 2);
 
+        $this->assertStringContainsString(
+            '<title>Mozilla Add-ons Blog</title>',
+            $html
+        );
         $this->assertSelectEquals('.post-title', 'some title', 2, $html);
         $this->assertSelectEquals('.excerpt', 'some content', 2, $html);
         $this->assertSelectCount('.Footer', 1, $html);
