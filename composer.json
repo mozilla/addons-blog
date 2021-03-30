@@ -1,0 +1,10 @@
+{
+    "name": "mozilla/addons-blog",
+    "description": "The AMO blog.",
+    "type": "project",
+    "license": "MPL-2",
+    "require-dev": {
+        "phpunit/phpunit": "^9.5",
+        "phpunit/phpunit-dom-assertions": "^2.5"
+    }
+}

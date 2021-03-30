@@ -8,32 +8,30 @@ config:
 ---
 
 {% block content %}
-  <?php while (have_posts()) : the_post(); ?>
-  <main aria-label="Content">
-    <h1 class="Post-title"><?= get_the_title() ?></h1>
-    <div class="Blog-wrapper">
-      <div class="Blog">
-        <div class="Content-wrapper">
-          <?= get_the_content() ?>
-        </div>
+<?php while (have_posts()) : the_post(); ?>
+  <h1 class="Post-title"><?= get_the_title() ?></h1>
+  <div class="Blog-wrapper">
+    <div class="Blog">
+      <div class="Content-wrapper">
+        <?= get_the_content() ?>
       </div>
-      <aside class="Sidebar">
-        <dl class="Meta">
-          <dt class="published">
-            Updated
-          </dt>
-          <dd class="published">
-            <?= get_the_time('{{ config.readable_date_format }}') ?>
-          </dd>
-          <dt>Author</dt>
-          <dd>
-            <ul class="Authorlist">
-              <li class="Author"><?= get_the_author() ?></li>
-            </ul>
-          </dd>
-        </dl>
-      </aside>
     </div>
-  </main>
-  <?php endwhile; ?>
+    <aside class="Sidebar">
+      <dl class="Meta">
+        <dt class="published">
+          Updated
+        </dt>
+        <dd class="published">
+          <?= get_the_time('{{ config.readable_date_format }}') ?>
+        </dd>
+        <dt>Author</dt>
+        <dd>
+          <ul class="Authorlist">
+            <li class="Author"><?= get_the_author() ?></li>
+          </ul>
+        </dd>
+      </dl>
+    </aside>
+  </div>
+<?php endwhile; ?>
 {% endblock content %}

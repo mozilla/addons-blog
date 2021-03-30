@@ -31,8 +31,12 @@ jobs:
       - *save_build_cache
       - run: yarn build:wptheme
       - run: yarn lint:php
+      - run:
+          name: run phpunit
+          command: |
+            composer install
+            ./vendor/bin/phpunit
       - run: test -f wptheme.zip
-      - run: grep "get_template_directory_uri" build/single.php
 
   blog:
     docker:
