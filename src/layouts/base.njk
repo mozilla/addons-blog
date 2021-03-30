@@ -16,7 +16,15 @@
     {% endblock %}
   </head>
   <body>
-    {% include "header.njk" %}
+    <header
+      class="Header"
+      style="background: #20123a url('{{ featuredImage }}') no-repeat center;">
+      <a class="Header-title" href="/">
+        <span class="visually-hidden">Firefox Browser Add-ons</span>
+      </a>
+
+      <h1>{% if title %}{{ title }}{% else %}{{ markup.siteTitle }}{% endif %}</h1>
+    </header>
 
     {% block content %}
     <main aria-label="Content">

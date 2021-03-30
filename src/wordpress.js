@@ -31,6 +31,7 @@ const createPost = ({
   modified,
   content,
   yoast_head,
+  featured_media,
 }) => {
   return {
     author,
@@ -42,7 +43,8 @@ const createPost = ({
     modified,
     content: fixInternalURLs(content.rendered),
     permalink: `/blog/${DateTime.fromISO(date).toFormat('y/LL/dd')}/${slug}/`,
-    seoHead: fixInternalURLs(yoast_head),
+    seoHead: fixInternalURLs(yoast_head || ''),
+    featuredImage: featured_media || null,
   };
 };
 
@@ -112,9 +114,18 @@ async function fetchData(type, endPoint) {
   return cachedData;
 }
 
+const getMediaSize = ({ media, size }) => {
+  if (!media || !media.media_details || !media.media_details.sizes) {
+    return null;
+  }
+
+  return media.media_details.sizes[size] || null;
+};
+
 module.exports = {
   AMO_BLOG_BASE_URL,
   DEFAULT_WORDPRESS_BASE_URL,
   fetchData,
   createPost,
+  getMediaSize,
 };

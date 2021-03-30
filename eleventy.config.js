@@ -6,6 +6,7 @@ const xmlFiltersPlugin = require('eleventy-xml-plugin');
 const Nunjucks = require('nunjucks');
 
 const { makeBetterSafe, makeBuildStaticAddonCards } = require('./src/filters');
+const { getMediaSize } = require('./src/wordpress');
 
 const cwd = process.env.ELEVENTY_CWD
   ? path.resolve(process.env.ELEVENTY_CWD)
@@ -54,6 +55,15 @@ module.exports = function configure(eleventyConfig) {
     return allAuthors.filter((item) => {
       return postAuthor === item.id;
     });
+  });
+
+  eleventyConfig.addFilter('mediaGetFullURL', (allMedia, featuredMediaId) => {
+    const media = allMedia.find((item) => {
+      return featuredMediaId === item.id;
+    });
+    const size = getMediaSize(media, 'full');
+
+    return size ? size.source_url : '';
   });
 
   function getPost(allPosts, currentPost, modifier) {
