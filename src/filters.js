@@ -1,5 +1,7 @@
 const createDOMPurify = require('dompurify');
 const { JSDOM } = require('jsdom');
+const { buildStaticAddonCard } = require('@willdurand/addons-frontend-card');
+const stringReplaceAsync = require('string-replace-async');
 
 const ALLOWED_ATTRS_BY_TAG_FOR_HEAD_MARKUP = {
   meta: ['name', 'content', 'property'],
@@ -76,6 +78,36 @@ const makeBetterSafe = ({ markAsSafe }) => {
   };
 };
 
+const makeBuildStaticAddonCards = ({
+  _buildStaticAddonCard = buildStaticAddonCard,
+} = {}) => async (value, callback) => {
+  const regexp = /<div class="addon-card" data-addon-id="(\d+)"><\/div>/g;
+
+  const content = await stringReplaceAsync(
+    value.toString(),
+    regexp,
+    async (_, addonId) => {
+      let html = '';
+
+      try {
+        html = await _buildStaticAddonCard({ addonId });
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(
+          `Error while trying to build card for addonId=${addonId}: ${
+            e.message || e
+          }`
+        );
+      }
+
+      return html;
+    }
+  );
+
+  callback(null, content);
+};
+
 module.exports = {
   makeBetterSafe,
+  makeBuildStaticAddonCards,
 };

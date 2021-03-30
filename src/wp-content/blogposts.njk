@@ -1,11 +1,12 @@
 ---
-layout: base.njk
 permalink: single.php
 config:
   # Luxon format: LLLL d, kkkk
   readable_date_format: F j, Y
   asset_path: "<?= get_template_directory_uri() ?>"
 ---
+
+{% extends "../layouts/base.njk" %}
 
 {% block content %}
 <?php while (have_posts()) : the_post(); ?>
@@ -35,3 +36,14 @@ config:
   </div>
 <?php endwhile; ?>
 {% endblock content %}
+
+{% block stylesheets %}
+{{ super() }}
+<link rel="stylesheet" href="{{ config.asset_path|safe }}/assets/css/addons-frontend-card.css">
+{% endblock %}
+
+{% block javascripts %}
+{{ super() }}
+<script src="{{ config.asset_path|safe }}/assets/js/addons-frontend-card.js"></script>
+<script src="{{ config.asset_path|safe }}/assets/js/addon-cards.js"></script>
+{% endblock %}

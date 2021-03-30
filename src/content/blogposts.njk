@@ -18,7 +18,7 @@ permalink: "blog/{{ blogpost.date | luxon('y/LL/dd') }}/{{ blogpost.slug }}/inde
   <div class="Blog-wrapper">
     <div class="Blog">
       <div class="Content-wrapper">
-        {{ blogpost.content | safe }}</dd>
+        {{ blogpost.content | buildStaticAddonCards | safe }}</dd>
       </div>
     </div>
     <aside class="Sidebar">

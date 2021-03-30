@@ -5,7 +5,7 @@ const { DateTime } = require('luxon');
 const xmlFiltersPlugin = require('eleventy-xml-plugin');
 const Nunjucks = require('nunjucks');
 
-const { makeBetterSafe } = require('./src/filters');
+const { makeBetterSafe, makeBuildStaticAddonCards } = require('./src/filters');
 
 const cwd = process.env.ELEVENTY_CWD
   ? path.resolve(process.env.ELEVENTY_CWD)
@@ -44,6 +44,11 @@ module.exports = function configure(eleventyConfig) {
   eleventyConfig.addFilter('readableDate', (value) => {
     return DateTime.fromISO(value).toFormat('LLLL d, kkkk');
   });
+
+  eleventyConfig.addNunjucksAsyncFilter(
+    'buildStaticAddonCards',
+    makeBuildStaticAddonCards()
+  );
 
   eleventyConfig.addFilter('postAuthors', (allAuthors, postAuthor) => {
     return allAuthors.filter((item) => {
@@ -88,8 +93,15 @@ module.exports = function configure(eleventyConfig) {
     });
 
     if (buildWordpressTheme) {
+      const addonsFrontendCardPath =
+        './node_modules/@willdurand/addons-frontend-card';
+
       eleventyConfig.addPassthroughCopy({
         [`${wpInputDir}/screenshot.png`]: 'screenshot.png',
+        // These assets are used to build static add-on cards in WordPress.
+        [`${wpInputDir}/addon-cards.js`]: 'assets/js/addon-cards.js',
+        [`${addonsFrontendCardPath}/web.js`]: 'assets/js/addons-frontend-card.js',
+        [`${addonsFrontendCardPath}/style.css`]: 'assets/css/addons-frontend-card.css',
       });
     }
 
