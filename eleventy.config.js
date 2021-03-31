@@ -2,7 +2,6 @@ const path = require('path');
 
 const fs = require('fs-extra');
 const { DateTime } = require('luxon');
-const xmlFiltersPlugin = require('eleventy-xml-plugin');
 const Nunjucks = require('nunjucks');
 
 const {
@@ -144,7 +143,6 @@ module.exports = function configure(eleventyConfig) {
   }
 
   // Plugins
-  eleventyConfig.addPlugin(xmlFiltersPlugin);
 
   return {
     dir: {
