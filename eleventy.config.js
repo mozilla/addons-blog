@@ -1,16 +1,19 @@
 const path = require('path');
 
 const fs = require('fs-extra');
-const { DateTime } = require('luxon');
 const Nunjucks = require('nunjucks');
 const pluginRss = require('@11ty/eleventy-plugin-rss');
 
 const {
+  convertToJsDate,
+  getAuthor,
+  getNextPost,
+  getPrevPost,
+  lastModifiedDate,
   makeBetterSafe,
   makeBuildStaticAddonCards,
   mediaGetFullURL,
-  convertToJsDate,
-  lastModifiedDate,
+  readableDate,
 } = require('./src/filters');
 
 const cwd = process.env.ELEVENTY_CWD
@@ -43,55 +46,18 @@ module.exports = function configure(eleventyConfig) {
     eleventyConfig.addNunjucksFilter('safe', makeBetterSafe({ markAsSafe }));
   }
 
-  eleventyConfig.addFilter('luxon', (value, format) => {
-    return DateTime.fromISO(value).toFormat(format);
-  });
-
-  eleventyConfig.addFilter('readableDate', (value) => {
-    return DateTime.fromISO(value).toFormat('LLLL d, kkkk');
-  });
-
-  eleventyConfig.addFilter('convertToJsDate', convertToJsDate);
-  eleventyConfig.addFilter('lastModifiedDate', lastModifiedDate);
-
   eleventyConfig.addNunjucksAsyncFilter(
     'buildStaticAddonCards',
     makeBuildStaticAddonCards()
   );
 
-  eleventyConfig.addFilter('postAuthors', (allAuthors, postAuthor) => {
-    return allAuthors.filter((item) => {
-      return postAuthor === item.id;
-    });
-  });
-
+  eleventyConfig.addFilter('convertToJsDate', convertToJsDate);
+  eleventyConfig.addFilter('getAuthor', getAuthor);
+  eleventyConfig.addFilter('getNextPost', getNextPost);
+  eleventyConfig.addFilter('getPrevPost', getPrevPost);
+  eleventyConfig.addFilter('lastModifiedDate', lastModifiedDate);
   eleventyConfig.addFilter('mediaGetFullURL', mediaGetFullURL);
-
-  function getPost(allPosts, currentPost, modifier) {
-    let postIndex;
-    for (let i = 0; i < allPosts.length; i++) {
-      if (allPosts[i].id === currentPost.id) {
-        postIndex = i;
-        break;
-      }
-    }
-
-    if (postIndex >= 0 && allPosts && allPosts.length) {
-      if (postIndex + modifier >= 0 && postIndex + modifier < allPosts.length) {
-        return allPosts[postIndex + modifier];
-      }
-    }
-
-    return null;
-  }
-
-  eleventyConfig.addFilter('getPrevPost', (allPosts, currentPost) => {
-    return getPost(allPosts, currentPost, -1);
-  });
-
-  eleventyConfig.addFilter('getNextPost', (allPosts, currentPost) => {
-    return getPost(allPosts, currentPost, 1);
-  });
+  eleventyConfig.addFilter('readableDate', readableDate);
 
   // We have integration tests that rely on a test project and it doesn't have
   // the files listed below so we don't copy those when executing the tests.

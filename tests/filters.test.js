@@ -1,9 +1,13 @@
 const {
+  convertToJsDate,
+  getAuthor,
+  getNextPost,
+  getPrevPost,
+  lastModifiedDate,
   makeBetterSafe,
   makeBuildStaticAddonCards,
   mediaGetFullURL,
-  convertToJsDate,
-  lastModifiedDate,
+  readableDate,
 } = require('../src/filters');
 const apiPost = require('./fixtures/apiPost');
 
@@ -378,6 +382,63 @@ describe(__filename, () => {
 
     it('handles no posts', () => {
       expect(lastModifiedDate([])).toEqual(null);
+    });
+  });
+
+  describe('readableDate', () => {
+    it('formats a date', () => {
+      const date = '2021-03-01';
+
+      expect(readableDate(date)).toEqual('March 1, 2021');
+    });
+  });
+
+  describe('getAuthor', () => {
+    it('returns the author of a given post', () => {
+      const allAuthors = [
+        { id: 1, name: 'author-1' },
+        { id: 2, name: 'author-2' },
+      ];
+
+      expect(getAuthor(allAuthors, 1)).toEqual(allAuthors[0]);
+      expect(getAuthor(allAuthors, 2)).toEqual(allAuthors[1]);
+    });
+
+    it('returns null when the author is not found', () => {
+      expect(getAuthor([], 1)).toEqual(null);
+    });
+  });
+
+  describe('getPrevPost/getNextPost', () => {
+    const allPosts = [
+      { ...apiPost, id: 5 },
+      { ...apiPost, id: 4 },
+      { ...apiPost, id: 3 },
+      { ...apiPost, id: 2 },
+    ];
+
+    describe('getPrevPost', () => {
+      it('returns the previous post', () => {
+        expect(getPrevPost(allPosts, allPosts[1])).toEqual(allPosts[0]);
+        expect(getPrevPost(allPosts, allPosts[2])).toEqual(allPosts[1]);
+        expect(getPrevPost(allPosts, allPosts[3])).toEqual(allPosts[2]);
+      });
+
+      it('returns null when there is no previous post', () => {
+        expect(getPrevPost(allPosts, allPosts[0])).toEqual(null);
+      });
+    });
+
+    describe('getNextPost', () => {
+      it('returns the next post', () => {
+        expect(getNextPost(allPosts, allPosts[0])).toEqual(allPosts[1]);
+        expect(getNextPost(allPosts, allPosts[1])).toEqual(allPosts[2]);
+        expect(getNextPost(allPosts, allPosts[2])).toEqual(allPosts[3]);
+      });
+
+      it('returns null when there is no next post', () => {
+        expect(getNextPost(allPosts, allPosts[3])).toEqual(null);
+      });
     });
   });
 });

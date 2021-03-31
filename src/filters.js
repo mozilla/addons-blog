@@ -137,10 +137,52 @@ const lastModifiedDate = (allPosts) => {
   return convertToJsDate(posts[0].modified);
 };
 
+const readableDate = (value) => {
+  return DateTime.fromISO(value).toFormat('LLLL d, kkkk');
+};
+
+const getPost = (allPosts, currentPost, modifier) => {
+  let postIndex;
+  for (let i = 0; i < allPosts.length; i++) {
+    if (allPosts[i].id === currentPost.id) {
+      postIndex = i;
+      break;
+    }
+  }
+
+  if (postIndex >= 0 && allPosts && allPosts.length) {
+    if (postIndex + modifier >= 0 && postIndex + modifier < allPosts.length) {
+      return allPosts[postIndex + modifier];
+    }
+  }
+
+  return null;
+};
+
+const getPrevPost = (allPosts, currentPost) => {
+  return getPost(allPosts, currentPost, -1);
+};
+
+const getNextPost = (allPosts, currentPost) => {
+  return getPost(allPosts, currentPost, 1);
+};
+
+const getAuthor = (allAuthors, postAuthor) => {
+  const author = allAuthors.find((item) => {
+    return postAuthor === item.id;
+  });
+
+  return author || null;
+};
+
 module.exports = {
+  convertToJsDate,
+  getAuthor,
+  getNextPost,
+  getPrevPost,
+  lastModifiedDate,
   makeBetterSafe,
   makeBuildStaticAddonCards,
   mediaGetFullURL,
-  convertToJsDate,
-  lastModifiedDate,
+  readableDate,
 };
