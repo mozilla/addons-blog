@@ -5,8 +5,11 @@ const { DateTime } = require('luxon');
 const xmlFiltersPlugin = require('eleventy-xml-plugin');
 const Nunjucks = require('nunjucks');
 
-const { makeBetterSafe, makeBuildStaticAddonCards } = require('./src/filters');
-const { getMediaSize } = require('./src/wordpress');
+const {
+  makeBetterSafe,
+  makeBuildStaticAddonCards,
+  mediaGetFullURL,
+} = require('./src/filters');
 
 const cwd = process.env.ELEVENTY_CWD
   ? path.resolve(process.env.ELEVENTY_CWD)
@@ -57,14 +60,7 @@ module.exports = function configure(eleventyConfig) {
     });
   });
 
-  eleventyConfig.addFilter('mediaGetFullURL', (allMedia, featuredMediaId) => {
-    const media = allMedia.find((item) => {
-      return featuredMediaId === item.id;
-    });
-    const size = getMediaSize(media, 'full');
-
-    return size ? size.source_url : '';
-  });
+  eleventyConfig.addFilter('mediaGetFullURL', mediaGetFullURL);
 
   function getPost(allPosts, currentPost, modifier) {
     let postIndex;
