@@ -118,7 +118,7 @@ module.exports = function configure(eleventyConfig) {
       });
     }
 
-    eleventyConfig.setBrowserSyncConfig({
+    let browserSyncConfig = {
       callbacks: {
         ready(err, bs) {
           bs.addMiddleware('*', (req, res) => {
@@ -131,7 +131,20 @@ module.exports = function configure(eleventyConfig) {
           });
         },
       },
-    });
+    };
+
+    if (process.env.USE_HTTPS === '1') {
+      browserSyncConfig = {
+        ...browserSyncConfig,
+        host: 'example.com',
+        https: {
+          key: './example.com-key.pem',
+          cert: './example.com.pem',
+        },
+      };
+    }
+
+    eleventyConfig.setBrowserSyncConfig(browserSyncConfig);
   }
 
   // Plugins
