@@ -2,6 +2,7 @@ const createDOMPurify = require('dompurify');
 const { JSDOM } = require('jsdom');
 const { buildStaticAddonCard } = require('@willdurand/addons-frontend-card');
 const stringReplaceAsync = require('string-replace-async');
+const { DateTime } = require('luxon');
 
 const { getMediaSize } = require('./wordpress');
 
@@ -118,8 +119,28 @@ const mediaGetFullURL = (allMedia, featuredMediaId) => {
   return size ? size.source_url : '';
 };
 
+const convertToJsDate = (value) => {
+  return DateTime.fromISO(value).toJSDate();
+};
+
+const lastModifiedDate = (allPosts) => {
+  if (!allPosts.length) {
+    return null;
+  }
+
+  const posts = [...allPosts];
+
+  posts.sort((a, b) => {
+    return convertToJsDate(b.modified) - convertToJsDate(a.modified);
+  });
+
+  return convertToJsDate(posts[0].modified);
+};
+
 module.exports = {
   makeBetterSafe,
   makeBuildStaticAddonCards,
   mediaGetFullURL,
+  convertToJsDate,
+  lastModifiedDate,
 };

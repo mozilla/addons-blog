@@ -1,0 +1,25 @@
+---
+permalink: feed.xml
+---
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>{{ markup.siteTitle }}</title>
+  <link href="{{ markup.baseURL }}/feed.xml" rel="self" />
+  <link href="{{ markup.baseURL }}/" />
+  <updated>{{ posts | lastModifiedDate | dateToRfc3339 }}</updated>
+  <id>{{ markup.baseURL }}/</id>
+  {%- for post in posts %}
+  {% set absolutePostURL %}{{ post.permalink | url | absoluteUrl(markup.baseURL) }}{% endset %}
+  {% set authorList = authors | postAuthors(post.author) %}
+  <entry>
+    <title>{{ post.title }}</title>
+    <link href="{{ absolutePostURL }}" />
+    <updated>{{ post.modified | convertToJsDate | dateToRfc3339 }}</updated>
+    <id>{{ absolutePostURL }}</id>
+    {%- for author in authorList %}
+    <author><name>{{ author.name }}</name></author>
+    {%- endfor %}
+    <content type="html">{{ post.content | htmlToAbsoluteUrls(absolutePostURL) }}</content>
+  </entry>
+  {%- endfor %}
+</feed>

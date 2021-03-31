@@ -11,9 +11,13 @@
     <link rel="apple-touch-icon" href="{{ config.asset_path|safe }}/assets/img/favicon.png">
     <link rel="shortcut icon" href="{{ config.asset_path|safe }}/assets/img/favicon.ico">
 
+    {%- if not config.no_atom_feed %}
+    <link rel="alternate" type="application/atom+xml" title="{{ markup.siteTitle }} RSS Feed"" href="/feed.xml">
+    {%- endif %}
+
     {% block stylesheets %}
     <link rel="stylesheet" href="{{ config.asset_path|safe }}/assets/css/styles.css">
-    {% endblock %}
+    {%- endblock %}
   </head>
   <body>
     <header
