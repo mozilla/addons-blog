@@ -97,7 +97,6 @@ module.exports = function configure(eleventyConfig) {
   if (process.env.NODE_ENV !== 'test') {
     // Explicitly copy through the built files needed.
     eleventyConfig.addPassthroughCopy({
-      './src/content/robots.txt': 'robots.txt',
       './src/assets/img/': 'assets/img/',
       './src/assets/fonts/': 'assets/fonts/',
     });
@@ -112,6 +111,10 @@ module.exports = function configure(eleventyConfig) {
         [`${wpInputDir}/addon-cards.js`]: 'assets/js/addon-cards.js',
         [`${addonsFrontendCardPath}/web.js`]: 'assets/js/addons-frontend-card.js',
         [`${addonsFrontendCardPath}/style.css`]: 'assets/css/addons-frontend-card.css',
+      });
+    } else {
+      eleventyConfig.addPassthroughCopy({
+        './src/content/robots.txt': 'robots.txt',
       });
     }
 
