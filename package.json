@@ -22,6 +22,7 @@
     "start": "npm run clean && npm-run-all -p build:serve sass:* script:*",
     "start:debug": "npm run clean && npm-run-all -p build:debug sass:* script:*",
     "start:nocache": "NO_CACHE='1' npm run start",
+    "start:https": "USE_HTTPS='1' npm run start",
     "sass:build": "bin/build-styles",
     "sass:watch": "chokidar 'src/assets/css/**/*.scss' -c 'npm run sass:build'",
     "script:build": "bin/build-script",

@@ -56,6 +56,20 @@ This is similar to `yarn start` but with Eleventy debug logs turned on.
 
 This is similar to `yarn start` but the WordPress API results won't be cached locally.
 
+### `yarn start:https`
+
+This is similar to `yarn start` but it configures [browsersync][] to serve the blog using the `example.com` domain and with HTTPS enabled. This is useful when one wants to interact with the `mozAddonManager` locally (note: the `extensions.webapi.testing` pref should be set to `true`).
+
+**Important:** you need to generate development certificates with [mkcert][]:
+
+```
+mkcert example.com
+```
+
+Note: if you never used `mkcert` before, you also need to install the local CA with `mkcert -install`
+
+The site is available at: https://example.com:8081/
+
 ### `yarn sass:build`
 
 This compiles the Sass files and generates a `styles.css` file.
@@ -92,3 +106,5 @@ Whilst the `asset-pipline` script is custom, it leverages a lot of existing libs
 For the `asset-pipeline` script to do its thing, all you need to do is refer to all assets with a path beginning with `/assets/`. If you do that, everything else is handled for you ✨
 
 [prettier]: https://prettier.io/
+[browsersync]: https://browsersync.io/
+[mkcert]: https://github.com/FiloSottile/mkcert
