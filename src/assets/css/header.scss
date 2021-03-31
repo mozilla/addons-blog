@@ -1,19 +1,21 @@
-.Header {
+.header {
+  background-color: #20123a;
+  background-repeat: no-repeat;
+  background-size: cover;
   min-height: 80vh;
-  padding: 1em;
 }
 
-.Header h1 {
-  color: white;
-  font-size: 45px;
-  line-height: 1.2;
-  margin-top: 30vh;
-  text-align: center;
-  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-  text-transform: uppercase;
+.header-overlay {
+  background-color: transparentize(#000, 0.5);
+  height: 100%;
 }
 
-.Header-title {
+.header-wrapper {
+  height: 100%;
+  padding-top: 44px;
+}
+
+.header-logo {
   // This is width / height of the source SVG.
   $aspectRatio: 4.3125;
   $smallHeight: 48px;
@@ -29,6 +31,29 @@
   background-size: $smallWidth $smallHeight;
   display: block;
   height: $smallHeight;
-  margin: 0;
-  width: 100%;
+  margin: 20px auto;
+  width: $smallWidth;
+
+  @include respond-to(l) {
+    margin-left: 48px;
+    margin-top: 0;
+  }
+}
+
+.header-title {
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  font-size: 44px;
+  height: 60vh;
+  justify-content: center;
+  line-height: 1.2;
+  margin: 0 auto;
+  text-align: center;
+  text-transform: uppercase;
+  width: 70%;
+
+  @include respond-to(l) {
+    font-size: 64px;
+  }
 }

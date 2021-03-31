@@ -20,14 +20,18 @@
     {%- endblock %}
   </head>
   <body>
-    <header
-      class="Header"
-      style="background: #20123a url('{{ featuredImage }}') no-repeat center;">
-      <a class="Header-title" href="/">
-        <span class="visually-hidden">Firefox Browser Add-ons</span>
-      </a>
+    <header class="header" style="background-image: url('{{ featuredImage }}');">
+      <div class="header-overlay">
+        <div class="header-wrapper">
+          <a class="header-logo" href="/">
+            <span class="visually-hidden">Firefox Browser Add-ons</span>
+          </a>
 
-      <h1>{% if title %}{{ title }}{% else %}{{ markup.siteTitle }}{% endif %}</h1>
+          <h1 class="header-title">
+            {% if title %}{{ title }}{% else %}{{ markup.siteTitle }}{% endif %}
+          </h1>
+        </div>
+      </div>
     </header>
 
     {% block content %}
