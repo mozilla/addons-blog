@@ -2,7 +2,10 @@ const {
   makeBetterSafe,
   makeBuildStaticAddonCards,
   mediaGetFullURL,
+  convertToJsDate,
+  lastModifiedDate,
 } = require('../src/filters');
+const apiPost = require('./fixtures/apiPost');
 
 describe(__filename, () => {
   describe('makeBetterSafe', () => {
@@ -329,6 +332,52 @@ describe(__filename, () => {
       const sourceURL = mediaGetFullURL(allMedia, featuredImage);
 
       expect(sourceURL).toEqual(expectedSourceURL);
+    });
+  });
+
+  describe('convertToJsDate', () => {
+    it('returns a Date instance', () => {
+      const date = convertToJsDate('2021-01-01');
+
+      expect(date).toBeInstanceOf(Date);
+    });
+
+    it('supports datetime values', () => {
+      const date = convertToJsDate('2021-03-30T19:56:07+00:00');
+
+      expect(date).toBeInstanceOf(Date);
+    });
+  });
+
+  describe('lastModifiedDate', () => {
+    it('returns the most recent modified date', () => {
+      const allPosts = [
+        {
+          ...apiPost,
+          modified: '2021-03-23T22:04:41',
+        },
+        {
+          ...apiPost,
+          modified: '2021-03-22T22:04:41',
+        },
+        {
+          ...apiPost,
+          // This is the most recent modified date.
+          modified: '2021-03-24T22:04:41',
+        },
+        {
+          ...apiPost,
+          modified: '2021-03-19T22:04:41',
+        },
+      ];
+
+      expect(lastModifiedDate(allPosts)).toEqual(
+        new Date(allPosts[2].modified)
+      );
+    });
+
+    it('handles no posts', () => {
+      expect(lastModifiedDate([])).toEqual(null);
     });
   });
 });

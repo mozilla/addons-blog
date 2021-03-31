@@ -3,11 +3,14 @@ const path = require('path');
 const fs = require('fs-extra');
 const { DateTime } = require('luxon');
 const Nunjucks = require('nunjucks');
+const pluginRss = require('@11ty/eleventy-plugin-rss');
 
 const {
   makeBetterSafe,
   makeBuildStaticAddonCards,
   mediaGetFullURL,
+  convertToJsDate,
+  lastModifiedDate,
 } = require('./src/filters');
 
 const cwd = process.env.ELEVENTY_CWD
@@ -47,6 +50,9 @@ module.exports = function configure(eleventyConfig) {
   eleventyConfig.addFilter('readableDate', (value) => {
     return DateTime.fromISO(value).toFormat('LLLL d, kkkk');
   });
+
+  eleventyConfig.addFilter('convertToJsDate', convertToJsDate);
+  eleventyConfig.addFilter('lastModifiedDate', lastModifiedDate);
 
   eleventyConfig.addNunjucksAsyncFilter(
     'buildStaticAddonCards',
@@ -143,6 +149,7 @@ module.exports = function configure(eleventyConfig) {
   }
 
   // Plugins
+  eleventyConfig.addPlugin(pluginRss);
 
   return {
     dir: {

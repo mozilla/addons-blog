@@ -40,6 +40,7 @@ final class WordPressThemeTest extends DOMTestCase
             'src="/path/to/template/dir/assets/js/bundle.js',
             $html
         );
+        $this->assertStringNotContainsString('application/atom+xml', $html);
     }
 
     public function testIndexPage(): void
@@ -57,6 +58,7 @@ final class WordPressThemeTest extends DOMTestCase
             'src="/path/to/template/dir/assets/js/bundle.js',
             $html
         );
+        $this->assertStringNotContainsString('application/atom+xml', $html);
     }
 
     public function testFunctions(): void
