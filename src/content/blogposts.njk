@@ -3,7 +3,7 @@ pagination:
   data: posts
   size: 1
   alias: blogpost
-permalink: "blog/{{ blogpost.date | luxon('y/LL/dd') }}/{{ blogpost.slug }}/index.html"
+permalink: "{{ blogpost.permalink }}index.html"
 ---
 
 {% extends "../layouts/base.njk" %}
@@ -24,15 +24,13 @@ permalink: "blog/{{ blogpost.date | luxon('y/LL/dd') }}/{{ blogpost.slug }}/inde
     <aside class="Sidebar">
       <dl class="Meta">
         <dt class="published">Updated</dt>
-        <dd class="published">{{ blogpost.modified | luxon('LLLL d, kkkk') }}</dd>
+        <dd class="published">{{ blogpost.modified | readableDate }}</dd>
         {% if blogpost.author %}
         <dt>Author</dt>
         <dd>
           <ul class="Authorlist">
-          {% set authorList = authors | postAuthors(blogpost.author) %}
-          {% for author in authorList %}
+            {% set author = authors | getAuthor(blogpost.author) %}
             <li class="Author">{{ author.name }}</li>
-          {% endfor %}
           </ul>
         </dd>
         {% endif %}

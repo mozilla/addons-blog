@@ -10,15 +10,13 @@ permalink: feed.xml
   <id>{{ markup.baseURL }}/</id>
   {%- for post in posts %}
   {% set absolutePostURL %}{{ post.permalink | url | absoluteUrl(markup.baseURL) }}{% endset %}
-  {% set authorList = authors | postAuthors(post.author) %}
+  {% set author = authors | getAuthor(post.author) %}
   <entry>
     <title>{{ post.title }}</title>
     <link href="{{ absolutePostURL }}" />
     <updated>{{ post.modified | convertToJsDate | dateToRfc3339 }}</updated>
     <id>{{ absolutePostURL }}</id>
-    {%- for author in authorList %}
     <author><name>{{ author.name }}</name></author>
-    {%- endfor %}
     <content type="html">{{ post.content | htmlToAbsoluteUrls(absolutePostURL) }}</content>
   </entry>
   {%- endfor %}
