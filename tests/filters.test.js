@@ -1,4 +1,8 @@
-const { makeBetterSafe, makeBuildStaticAddonCards } = require('../src/filters');
+const {
+  makeBetterSafe,
+  makeBuildStaticAddonCards,
+  mediaGetFullURL,
+} = require('../src/filters');
 
 describe(__filename, () => {
   describe('makeBetterSafe', () => {
@@ -269,6 +273,62 @@ describe(__filename, () => {
         'content before\n\ncontent after'
       );
       expect(_buildStaticAddonCard).toHaveBeenCalledWith({ addonId });
+    });
+  });
+
+  describe('mediaGetFullURL', () => {
+    it('returns an empty string when the feature image does not exist', () => {
+      const allMedia = [];
+
+      const sourceURL = mediaGetFullURL(allMedia, 123);
+
+      expect(sourceURL).toEqual('');
+    });
+
+    it('returns an empty string when the feature image does not have media details', () => {
+      const featuredImage = 123;
+      const allMedia = [{ id: featuredImage }];
+
+      const sourceURL = mediaGetFullURL(allMedia, featuredImage);
+
+      expect(sourceURL).toEqual('');
+    });
+
+    it('returns an empty string when the feature image does not have sizes', () => {
+      const featuredImage = 123;
+      const allMedia = [{ id: featuredImage, media_details: {} }];
+
+      const sourceURL = mediaGetFullURL(allMedia, featuredImage);
+
+      expect(sourceURL).toEqual('');
+    });
+
+    it('returns an empty string when the feature image does not have a "full" size', () => {
+      const featuredImage = 123;
+      const allMedia = [{ id: featuredImage, media_details: { sizes: {} } }];
+
+      const sourceURL = mediaGetFullURL(allMedia, featuredImage);
+
+      expect(sourceURL).toEqual('');
+    });
+
+    it('returns the source URL of the featured image (full size)', () => {
+      const featuredImage = 123;
+      const expectedSourceURL = 'https://example.com/full.png';
+      const allMedia = [
+        {
+          id: featuredImage,
+          media_details: {
+            sizes: {
+              full: { source_url: expectedSourceURL },
+            },
+          },
+        },
+      ];
+
+      const sourceURL = mediaGetFullURL(allMedia, featuredImage);
+
+      expect(sourceURL).toEqual(expectedSourceURL);
     });
   });
 });

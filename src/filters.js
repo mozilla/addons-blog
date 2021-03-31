@@ -3,6 +3,8 @@ const { JSDOM } = require('jsdom');
 const { buildStaticAddonCard } = require('@willdurand/addons-frontend-card');
 const stringReplaceAsync = require('string-replace-async');
 
+const { getMediaSize } = require('./wordpress');
+
 const ALLOWED_ATTRS_BY_TAG_FOR_HEAD_MARKUP = {
   meta: ['name', 'content', 'property'],
   link: ['rel', 'href'],
@@ -107,7 +109,17 @@ const makeBuildStaticAddonCards = ({
   callback(null, content);
 };
 
+const mediaGetFullURL = (allMedia, featuredMediaId) => {
+  const media = allMedia.find((item) => {
+    return featuredMediaId === item.id;
+  });
+  const size = getMediaSize({ media, size: 'full' });
+
+  return size ? size.source_url : '';
+};
+
 module.exports = {
   makeBetterSafe,
   makeBuildStaticAddonCards,
+  mediaGetFullURL,
 };
