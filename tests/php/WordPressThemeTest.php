@@ -6,9 +6,13 @@ use PHPUnit\Framework\DOMTestCase;
 
 final class WordPressThemeTest extends DOMTestCase
 {
+    private static $BUILD_DIR;
+
     public static function setUpBeforeClass(): void
     {
-        if (!is_file(__DIR__ . '/../../build/style.css')) {
+        self::$BUILD_DIR = realpath(__DIR__ . '/../../build/');
+
+        if (!is_file(self::$BUILD_DIR . '/style.css')) {
             throw new \RuntimeException(
                 'You should run `yarn build:wptheme` first'
             );
@@ -80,13 +84,18 @@ final class WordPressThemeTest extends DOMTestCase
         $this->expectNotToPerformAssertions();
     }
 
+    public function testNoRobotsTxt(): void
+    {
+        $this->assertNotTrue(is_file(self::$BUILD_DIR . '/robots.txt'));
+    }
+
     private function render($template, $posts = 0): string
     {
         global $nb_posts;
         $nb_posts = $posts;
 
         ob_start();
-        @include __DIR__ . '/../../build/' . $template;
+        @include self::$BUILD_DIR . '/' . $template;
 
         return ob_get_clean();
     }
