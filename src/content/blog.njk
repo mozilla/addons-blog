@@ -1,33 +1,17 @@
 ---
 layout: base.njk
-pagination:
-  data: posts
-  size: 5
 ---
 
 {% block content %}
-	{% set allArticles = pagination.items %}
+<ul class="blog-articles">
+  {%- for post in posts -%}
+    {%- set postFeaturedImage = media | mediaGetMediumURL(post.featuredImage) -%}
+    {%- set postPermalink = post.permalink -%}
+    {%- set postTitle = post.title -%}
+    {%- set postDate = post.date | readableDate -%}
+    {%- set postExcerpt = post.excerpt -%}
 
-  <ul class="archive">
-    {%- for post in allArticles -%}
-      <li>
-        <p class="">
-          <time class="date" datetime="{{ post.date | readableDate }}">{{ post.date | readableDate }}</time>
-        </p>
-        <h2 class="post-title">
-          <a class="" href="{{ post.permalink }}" class="postlist-link">{% if post.title %}{{ post.title | safe }}{% else %}{{ post.slug }}{% endif %}</a>
-        </h2>
-        <div class="excerpt">{{ post.excerpt | safe }}</div>
-      </li>
-    {%- endfor -%}
-  </ul>
-
-	{% if pagination.pages.length > 1 %}
-    <nav aria-labelledby="my-pagination">
-      <ul>
-        <li>{% if pagination.href.previous %}<a href="{{ pagination.href.previous }}">Previous</a>{% else %}Previous{% endif %}</li>
-        <li>{% if pagination.href.next %}<a href="{{ pagination.href.next }}">Next</a>{% else %}Next{% endif %}</li>
-      </ul>
-    </nav>
-	{% endif %}
+    {%- include 'blog-article.njk' -%}
+  {%- endfor -%}
+</ul>
 {% endblock %}

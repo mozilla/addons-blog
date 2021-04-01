@@ -13,6 +13,7 @@ const {
   makeBetterSafe,
   makeBuildStaticAddonCards,
   mediaGetFullURL,
+  mediaGetMediumURL,
   readableDate,
 } = require('./src/filters');
 
@@ -57,6 +58,7 @@ module.exports = function configure(eleventyConfig) {
   eleventyConfig.addFilter('getPrevPost', getPrevPost);
   eleventyConfig.addFilter('lastModifiedDate', lastModifiedDate);
   eleventyConfig.addFilter('mediaGetFullURL', mediaGetFullURL);
+  eleventyConfig.addFilter('mediaGetMediumURL', mediaGetMediumURL);
   eleventyConfig.addFilter('readableDate', readableDate);
 
   // We have integration tests that rely on a test project and it doesn't have

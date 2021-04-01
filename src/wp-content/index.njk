@@ -2,30 +2,22 @@
 layout: base.njk
 permalink: index.php
 config:
-  # Luxon format: LLLL d, kkkk
-  readable_date_format: F j, Y
   asset_path: "<?= get_template_directory_uri() ?>"
   no_atom_feed: true
 ---
 
 {% block content %}
-  <ul class="archive">
-    <?php while (have_posts()) : the_post(); ?>
-      <li>
-        <p>
-          <time class="date" datetime="<?= get_the_time('{{ config.readable_date_format }}') ?>">
-            <?= get_the_time('{{ config.readable_date_format }}') ?>
-          </time>
-        </p>
-        <h2 class="post-title">
-          <a href="<?= get_permalink() ?>" class="postlist-link">
-            <?= get_the_title() ?>
-          </a>
-        </h2>
-        <div class="excerpt">
-          <?= get_the_content() ?>
-        </div>
-      </li>
-    <?php endwhile; ?>
-  </ul>
+<ul class="blog-articles">
+  <?php while (have_posts()) : the_post(); ?>
+    {%- set postFeaturedImage = "<?= get_the_post_thumbnail_url(get_the_id(), 'full') ?>" | safe -%}
+    {%- set postPermalink = "<?= get_permalink() ?>" | safe -%}
+    {%- set postTitle = "<?= get_the_title() ?>" | safe -%}
+    {# The format used below is equivalent to the following Luxon format: LLLL d, kkkk #}
+    {%- set postDate = "<?= get_the_time('F j, Y') ?>" | safe -%}
+    {# The WordPress API returns an excerpt inside `<p>` tags, so we mimic this behavior below. #}
+    {%- set postExcerpt = "<p><?= get_the_excerpt() ?></p>" | safe -%}
+
+    {%- include 'blog-article.njk' -%}
+  <?php endwhile; ?>
+</ul>
 {% endblock %}
