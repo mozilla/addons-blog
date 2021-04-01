@@ -8,6 +8,10 @@
 .header-overlay {
   background-color: transparentize(#000, 0.5);
   height: 100%;
+
+  .header--no-featured-image & {
+    background-color: transparent;
+  }
 }
 
 .header-wrapper {

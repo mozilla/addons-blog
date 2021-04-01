@@ -20,7 +20,11 @@
     {%- endblock %}
   </head>
   <body>
+    {% if featuredImage %}
     <header class="header" style="background-image: url('{{ featuredImage }}');">
+    {% else %}
+    <header class="header header--no-featured-image">
+    {% endif %}
       <div class="header-overlay">
         <div class="header-wrapper">
           <a class="header-logo" href="/">
