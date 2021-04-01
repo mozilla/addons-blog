@@ -1,0 +1,67 @@
+.blogpost-wrapper {
+  display: flex;
+  flex-direction: column;
+
+  @include respond-to(xl) {
+    flex-direction: row;
+  }
+}
+
+.blogpost-content {
+  font-size: 16px;
+  line-height: 1.6;
+  width: 100%;
+  order: 2;
+
+  @include respond-to(l) {
+    max-width: 75%;
+  }
+}
+
+.blogpost-content-wrapper {
+  width: 100%;
+
+  @include respond-to(xl) {
+    max-width: 750px;
+  }
+}
+
+.blogpost-sidebar {
+  @include padding-end(2em);
+
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 0.5em;
+
+  @include respond-to(l) {
+    flex: 1;
+    max-width: 25%;
+    order: 1;
+  }
+}
+
+.blogpost-meta {
+  dt,
+  dd {
+    float: left;
+    margin: 0;
+    text-align: left;
+    width: auto;
+  }
+
+  dt {
+    @include margin-end(1ex);
+
+    clear: left;
+
+    &::after {
+      content: ':';
+    }
+  }
+
+  .updated {
+    text-transform: uppercase;
+    color: $blue-60;
+    font-weight: bold;
+  }
+}

@@ -15,29 +15,21 @@ config:
 {% block content %}
 <main aria-label="Content">
   <?php while (have_posts()) : the_post(); ?>
-    <div class="Blog-wrapper">
-      <div class="Blog">
-        <div class="Content-wrapper">
-          <?= get_the_content() ?>
-        </div>
+  <div class="blogpost-wrapper">
+    <div class="blogpost-content">
+      <div class="blogpost-content-wrapper">
+        <?= get_the_content() ?>
       </div>
-      <aside class="Sidebar">
-        <dl class="Meta">
-          <dt class="published">
-            Updated
-          </dt>
-          <dd class="published">
-            <?= get_the_time('{{ config.readable_date_format }}') ?>
-          </dd>
-          <dt>Author</dt>
-          <dd>
-            <ul class="Authorlist">
-              <li class="Author"><?= get_the_author() ?></li>
-            </ul>
-          </dd>
-        </dl>
-      </aside>
     </div>
+    <aside class="blogpost-sidebar">
+      <dl class="blogpost-meta">
+        <dt class="updated">Updated</dt>
+        <dd class="updated"><?= get_the_time('{{ config.readable_date_format }}') ?></dd>
+        <dt class="author">Author</dt>
+        <dd class="author"><?= get_the_author() ?></dd>
+      </dl>
+    </aside>
+  </div>
   <?php endwhile; ?>
 </main>
 {% endblock content %}

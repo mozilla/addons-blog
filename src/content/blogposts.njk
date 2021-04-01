@@ -15,24 +15,20 @@ permalink: "{{ blogpost.permalink }}index.html"
 
 {% block content %}
 <main aria-label="Content">
-  <div class="Blog-wrapper">
-    <div class="Blog">
-      <div class="Content-wrapper">
+  <div class="blogpost-wrapper">
+    <div class="blogpost-content">
+      <div class="blogpost-content-wrapper">
         {{ blogpost.content | buildStaticAddonCards | safe }}</dd>
       </div>
     </div>
-    <aside class="Sidebar">
-      <dl class="Meta">
-        <dt class="published">Updated</dt>
-        <dd class="published">{{ blogpost.modified | readableDate }}</dd>
+    <aside class="blogpost-sidebar">
+      <dl class="blogpost-meta">
+        <dt class="updated">Updated</dt>
+        <dd class="updated">{{ blogpost.modified | readableDate }}</dd>
         {% if blogpost.author %}
-        <dt>Author</dt>
-        <dd>
-          <ul class="Authorlist">
-            {% set author = authors | getAuthor(blogpost.author) %}
-            <li class="Author">{{ author.name }}</li>
-          </ul>
-        </dd>
+        {% set author = authors | getAuthor(blogpost.author) %}
+        <dt class="author">Author</dt>
+        <dd class="author">{{ author.name }}</dd>
         {% endif %}
       </dl>
     </aside>
