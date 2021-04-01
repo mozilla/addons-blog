@@ -1,0 +1,42 @@
+$white: #fff;
+$black: #000;
+$light-gray: #eee;
+
+$link-color: $blue-60;
+
+$max-content-width: 1366px;
+
+// See: https://mozilla.design/firefox/typography/
+$body-sm-font-size: 14px;
+$body-sm-line-height: 22px;
+
+// No "small" breakpoint is defined here because we are mobile-first.
+//
+// Instead of adding a rule for only mobile, add a mobile rule and override it
+// with `@include respond-to(m) { [...] }`.
+$breakpoints: (
+  m-only: only screen and
+    (
+      min-width: 500px,
+    )
+    and
+    (
+      max-width: 719px,
+    ),
+  m: only screen and
+    (
+      min-width: 500px,
+    ),
+  l: only screen and
+    (
+      min-width: 720px,
+    ),
+  xl: only screen and
+    (
+      min-width: 900px,
+    ),
+  xxl: only screen and
+    (
+      min-width: 1150px,
+    ),
+);

@@ -33,8 +33,13 @@ final class WordPressThemeTest extends DOMTestCase
             "background-image: url('thumbnail.jpg');",
             $html
         );
-        $this->assertSelectEquals('.Content-wrapper', 'some content', 1, $html);
-        $this->assertSelectEquals('.Author', 'some author', 1, $html);
+        $this->assertSelectEquals(
+            '.blogpost-content-wrapper',
+            'some content',
+            1,
+            $html
+        );
+        $this->assertSelectEquals('.author', 'some author', 1, $html);
         $this->assertSelectCount('.Footer', 1, $html);
         $this->assertStringContainsString(
             'src="/path/to/template/dir/assets/js/bundle.js',
