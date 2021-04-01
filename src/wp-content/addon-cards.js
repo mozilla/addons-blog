@@ -1,8 +1,8 @@
-/* global document, AddonsFrontendCard */
-(function addonCards(document, AddonsFrontendCard) {
-  if (typeof AddonsFrontendCard === 'undefined') {
+/* global document, AddonsFrontendBlogUtils */
+(function addonCards(document, AddonsFrontendBlogUtils) {
+  if (typeof AddonsFrontendBlogUtils === 'undefined') {
     // eslint-disable-next-line no-console
-    console.log(`AddonsFrontendCard does not exist.`);
+    console.log(`AddonsFrontendBlogUtils does not exist.`);
     return;
   }
 
@@ -15,7 +15,7 @@
 
     try {
       // eslint-disable-next-line no-param-reassign
-      card.outerHTML = await AddonsFrontendCard.buildStaticAddonCard({
+      card.outerHTML = await AddonsFrontendBlogUtils.buildStaticAddonCard({
         addonId,
       });
     } catch (e) {
@@ -27,4 +27,4 @@
       );
     }
   });
-})(document, AddonsFrontendCard);
+})(document, AddonsFrontendBlogUtils);

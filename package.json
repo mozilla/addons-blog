@@ -36,7 +36,7 @@
     "@11ty/eleventy-plugin-rss": "^1.1.1",
     "@mozilla-protocol/tokens": "^5.0.5",
     "@prettier/plugin-php": "^0.16.2",
-    "@willdurand/addons-frontend-card": "^1.0.0",
+    "@willdurand/addons-frontend-card": "^1.1.0",
     "acorn-walk": "^8.0.2",
     "chokidar-cli": "^2.1.0",
     "dompurify": "^2.2.6",
