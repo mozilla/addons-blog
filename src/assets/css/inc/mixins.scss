@@ -19,7 +19,14 @@
   @include font-family-inter();
 
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300;
+}
+
+@mixin font-bold() {
+  @include font-family-inter();
+
+  font-style: normal;
+  font-weight: 600;
 }
 
 @mixin padding-end($val) {

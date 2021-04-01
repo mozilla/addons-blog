@@ -1,12 +1,12 @@
 .header {
-  background-color: #20123a;
+  background-color: $dark-blue;
   background-repeat: no-repeat;
   background-size: cover;
   min-height: 80vh;
 }
 
 .header-overlay {
-  background-color: transparentize(#000, 0.5);
+  background-color: transparentize($black, 0.5);
   height: 100%;
 
   .header--no-featured-image & {
@@ -45,7 +45,7 @@
 }
 
 .header-title {
-  color: #fff;
+  color: $white;
   display: flex;
   flex-direction: column;
   font-size: 44px;
