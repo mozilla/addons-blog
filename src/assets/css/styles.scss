@@ -22,6 +22,10 @@
   width: 1px;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 html,
 body {
   height: 100%;

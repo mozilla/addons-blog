@@ -30,7 +30,7 @@ final class WordPressThemeTest extends DOMTestCase
             $html
         );
         $this->assertStringContainsString(
-            "url('thumbnail.jpg') no-repeat",
+            "background-image: url('thumbnail.jpg');",
             $html
         );
         $this->assertSelectEquals('.Content-wrapper', 'some content', 1, $html);
