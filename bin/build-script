@@ -8,7 +8,7 @@
 
 const fetch = require('node-fetch');
 const fs = require('fs-extra');
-const isProduction = process.env.ELEVENTY_ENV;
+const isProduction = process.env.ELEVENTY_ENV === 'production';
 
 const inputFiles = ['src/assets/js/new-tab-links.js'];
 

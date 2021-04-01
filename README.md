@@ -86,6 +86,19 @@ This compiles the JavaScript files and generates a `bundle.js` file.
 
 This starts a watcher to rebuild the JS files automatically.
 
+## Environment variables
+
+This project relies on the following environment variables for configuration:
+
+- `AMO_BLOG_BASE_URL`: the base URL of the blog (default: `https://addons.mozilla.org/blog`)
+- `BUILD_WORDPRESS_THEME`: build the WordPress theme instead of the blog when set to `'1'` (default: unset)
+- `DONT_FIX_INTERNAL_URLS`: do not rewrite internal URLs when set to `'1'` (default: unset)
+- `ELEVENTY_CWD`: the current working directory for Eleventy (default: the project's root directory)
+- `ELEVENTY_ENV`: the Eleventy environment, used by the build scripts
+- `NO_CACHE`: skip cache when set to `'1'` (default: unset)
+- `USE_HTTPS`: serves the blog using HTTPS locally when set to `'1'` (default: unset)
+- `WORDPRESS_BASE_URL`: the base URL of the WordPress instance (default: `https://mozamo.wpengine.com`)
+
 ## Production builds
 
 The Eleventy process and the JS and CSS builds happen in series. Then a 3rd `asset-pipeline` process initiates and takes the built content from `./build` directory and runs it through various optimizations.
