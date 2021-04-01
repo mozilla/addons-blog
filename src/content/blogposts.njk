@@ -27,7 +27,7 @@ permalink: "{{ blogpost.permalink }}index.html"
         <dd class="updated">{{ blogpost.modified | readableDate }}</dd>
         {% if blogpost.author %}
         {% set author = authors | getAuthor(blogpost.author) %}
-        <dt class="author">Author</dt>
+        <dt class="author">By</dt>
         <dd class="author">{{ author.name }}</dd>
         {% endif %}
       </dl>

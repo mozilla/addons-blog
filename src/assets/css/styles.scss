@@ -7,9 +7,8 @@
 @import './inc/mixins';
 @import './inc/prev-next-nav';
 
-@import './blogposts';
-@import './content';
 @import './header';
+@import './blogposts';
 
 * {
   box-sizing: border-box;
@@ -34,7 +33,7 @@ main {
   align-self: center;
   max-width: $max-content-width;
   flex: 1 0 auto;
-  padding: 24px;
+  padding: $default-padding;
 }
 
 .visually-hidden {
@@ -46,20 +45,6 @@ main {
   padding: 0;
   position: absolute;
   width: 1px;
-}
-
-h1.Post-title {
-  font-size: 30px;
-  line-height: 1.2;
-
-  @include respond-to(l) {
-    font-size: 40px;
-    margin: 1.5em 0 0.75em;
-  }
-}
-
-.HeroImage {
-  max-width: 100%;
 }
 
 // Import at the end to avoid side-effects caused by the CSS in this project.

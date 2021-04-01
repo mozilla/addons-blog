@@ -2,24 +2,66 @@
   display: flex;
   flex-direction: column;
 
-  @include respond-to(xl) {
+  @include respond-to(l) {
     flex-direction: row;
   }
 }
 
 .blogpost-content {
-  font-size: 16px;
-  line-height: 1.6;
   width: 100%;
-  order: 2;
 
   @include respond-to(l) {
     max-width: 75%;
+    order: 2;
   }
 }
 
 .blogpost-content-wrapper {
   width: 100%;
+
+  & > *:first-child {
+    margin-top: 0;
+  }
+
+  h2 {
+    font-size: $heading-md-font-size;
+    line-height: $heading-md-line-height;
+    margin-bottom: 0;
+  }
+
+  h3 {
+    font-size: $heading-sm-font-size;
+    line-height: $heading-sm-line-height;
+    margin-bottom: 0;
+  }
+
+  h4 {
+    font-size: $heading-xs-font-size;
+    line-height: $heading-xs-line-height;
+    margin-bottom: 0;
+  }
+
+  h5 {
+    font-size: $heading-xxs-font-size;
+    line-height: $heading-xxs-line-height;
+  }
+
+  li {
+    margin: $default-margin 0;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  a:link,
+  a:visited,
+  a:hover,
+  a:active {
+    &:not(.Button) {
+      color: $link-color;
+    }
+  }
 
   @include respond-to(xl) {
     max-width: 750px;
@@ -27,12 +69,6 @@
 }
 
 .blogpost-sidebar {
-  @include padding-end(2em);
-
-  font-size: 14px;
-  line-height: 1.6;
-  padding-top: 0.5em;
-
   @include respond-to(l) {
     flex: 1;
     max-width: 25%;
@@ -41,6 +77,8 @@
 }
 
 .blogpost-meta {
+  margin: 0;
+
   dt,
   dd {
     float: left;
@@ -53,15 +91,9 @@
     @include margin-end(1ex);
 
     clear: left;
-
-    &::after {
-      content: ':';
-    }
   }
 
   .updated {
-    text-transform: uppercase;
-    color: $blue-60;
     font-weight: bold;
   }
 }

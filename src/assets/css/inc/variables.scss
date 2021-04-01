@@ -3,12 +3,24 @@ $black: #000;
 $light-gray: #eee;
 
 $link-color: $blue-60;
+$dark-blue: #20123a;
+
+$default-padding: 16px;
+$default-margin: $default-padding;
 
 $max-content-width: 1366px;
 
 // See: https://mozilla.design/firefox/typography/
 $body-sm-font-size: 14px;
 $body-sm-line-height: 22px;
+$heading-xxs-font-size: 20px;
+$heading-xxs-line-height: 24px;
+$heading-xs-font-size: 24px;
+$heading-xs-line-height: 28px;
+$heading-sm-font-size: 32px;
+$heading-sm-line-height: 36px;
+$heading-md-font-size: 40px;
+$heading-md-line-height: 44px;
 
 // No "small" breakpoint is defined here because we are mobile-first.
 //
