@@ -16,6 +16,12 @@ references:
         sudo pip install --upgrade pip
         sudo pip install --upgrade awscli
 
+  persist_build_workspace: &persist_build_workspace
+    persist_to_workspace:
+      root: ./
+      paths:
+        - ./*
+
   restore_build_cache: &restore_build_cache
     restore_cache:
       name: restore yarn package cache
@@ -71,6 +77,7 @@ jobs:
             yarn sass:build
             yarn script:build
             bin/asset-pipeline
+      - *persist_build_workspace
 
   deploy-unpublished:
     <<: *deployment_container
