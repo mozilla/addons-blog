@@ -1,6 +1,21 @@
 version: 2.1
 
 references:
+  attach_deploy_workspace: &attach_deploy_workspace
+    attach_workspace:
+      at: .
+
+  deployment_container: &deployment_container
+    docker:
+      - image: circleci/python:3.9-node
+
+  install_aws_cli: &install_aws_cli
+    run:
+      name: Install AWS CLI
+      command: |
+        sudo pip install --upgrade pip
+        sudo pip install --upgrade awscli
+
   restore_build_cache: &restore_build_cache
     restore_cache:
       name: restore yarn package cache
@@ -57,9 +72,23 @@ jobs:
             yarn script:build
             bin/asset-pipeline
 
+  deploy-unpublished:
+    <<: *deployment_container
+    steps:
+      - *attach_deploy_workspace
+      - *install_aws_cli
+      - run:
+          name: addons-blog deployment (unpublished)
+          command: |
+            AWS_ACCESS_KEY_ID="${DEV_AWS_ACCESS_KEY_ID}"          \
+            AWS_SECRET_ACCESS_KEY="${DEV_AWS_SECRET_ACCESS_KEY}"  \
+            ADDONS_BLOG_BUCKET="${DEV_ADDONS_BLOG_BUCKET}"        \
+            ./bin/deploy.sh
+
 workflows:
   version: 2
   default-workflow:
     jobs:
       - wptheme
       - blog
+      - deploy-unpublished
