@@ -92,6 +92,6 @@ workflows:
     jobs:
       - wptheme
       - blog
-      - deploy-unpublished
+      - deploy-unpublished:
           requires:
             - blog
