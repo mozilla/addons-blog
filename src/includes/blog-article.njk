@@ -1,24 +1,24 @@
 <li class="blog-article">
-	<div class="blog-article-featured-image">
-		<img src="{{ postFeaturedImage }}">
-	</div>
+  <div class="blog-article-featured-image">
+    <img src="{{ postFeaturedImage }}">
+  </div>
 
-	<h2 class="blog-article-title">
-		<a href="{{ postPermalink }}">{{ postTitle }}</a>
-	</h2>
+  <h2 class="blog-article-title">
+    <a href="{{ postPermalink }}">{{ postTitle }}</a>
+  </h2>
 
-	<p class="blog-article-date">
-		<time datetime="{{ postDate }}">{{ postDate }}</time>
-	</p>
+  <p class="blog-article-date">
+  <time datetime="{{ postDate }}">{{ postDate }}</time>
+  </p>
 
-	<div class="blog-article-excerpt">
-		{{ postExcerpt | safe }}
+  <div class="blog-article-excerpt">
+    {{ postExcerpt | safe }}
 
-		<p class="blog-article-read-more">
-			<a class="blog-article-read-more-link" href="{{ postPermalink }}">
-				Read more
-			</a>
-			&nbsp;<span class="blog-article-read-more-arrow">▸</span>
-		</p>
-	</div>
+    <p class="blog-article-read-more">
+    <a class="blog-article-read-more-link" href="{{ postPermalink }}">
+      Read more
+    </a>
+    &nbsp;<span class="blog-article-read-more-arrow">▸</span>
+    </p>
+  </div>
 </li>
