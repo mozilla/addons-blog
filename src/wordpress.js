@@ -89,6 +89,10 @@ async function fetchAll({ numPages, endPoint, type }) {
 }
 
 async function fetchData(type, endPoint) {
+  if (!endPoint.startsWith('/')) {
+    throw new Error(`endPoint="${endPoint}" must start with a slash`);
+  }
+
   const url = `${WORDPRESS_BASE_URL}${endPoint}`;
   // eslint-disable-next-line no-console
   console.debug(`URL for ${type}: ${url}`);
