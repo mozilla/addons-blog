@@ -17,6 +17,7 @@ config:
     {%- set postModifiedDate = "<?= get_the_modified_date('F j, Y') ?>" | safe -%}
     {%- set postContent = "<?= get_the_content() ?>" | safe -%}
     {%- set postAuthor = "<?= get_the_author() ?>" | safe -%}
+    {%- set postAuthorAvatar = "<?= get_avatar_url(get_the_id(), ['size' => 96]) ?>" | safe -%}
 
     {%- include 'blogpost.njk' -%}
   <?php endwhile; ?>

@@ -53,11 +53,18 @@
   justify-content: center;
   line-height: 1.2;
   margin: 0 auto;
+  max-width: 1100px;
   text-align: center;
   text-transform: uppercase;
   width: 70%;
 
   @include respond-to(l) {
-    font-size: 64px;
+    font-size: 54px;
+    width: 90%;
+  }
+
+  @include respond-to(xxl) {
+    font-size: 72px;
+    width: 100%;
   }
 }

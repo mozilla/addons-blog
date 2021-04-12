@@ -19,6 +19,7 @@ permalink: "{{ blogpost.permalink }}index.html"
   {%- set postModifiedDate = blogpost.modified | readableDate -%}
   {%- set postContent = blogpost.content | buildStaticAddonCards | safe -%}
   {%- set postAuthor = author.name -%}
+  {%- set postAuthorAvatar = author.avatar_urls[96] -%}
 
   {%- include 'blogpost.njk' -%}
 </main>

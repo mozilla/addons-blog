@@ -1,18 +1,20 @@
 .blogpost {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  width: 100%;
 
-  @include respond-to(l) {
-    flex-direction: row;
+  @include respond-to(xl) {
+    grid-template-columns: minmax(30%, 335px) minmax(auto, 765px);
+    max-width: 1100px;
   }
 }
 
 .blogpost-content {
-  width: 100%;
+  grid-column: 1;
+  grid-row: 1;
 
-  @include respond-to(l) {
-    max-width: 75%;
-    order: 2;
+  @include respond-to(xl) {
+    grid-column: 2;
+    padding: 0 $default-margin;
   }
 }
 
@@ -64,37 +66,46 @@
     }
   }
 
-  @include respond-to(xl) {
-    max-width: 750px;
+  @include respond-to(l) {
+    max-width: 665px;
   }
 }
 
 .blogpost-sidebar {
-  @include respond-to(l) {
-    flex: 1;
-    max-width: 25%;
-    order: 1;
+  grid-column: 1;
+  grid-row: 2;
+  margin: $default-margin auto;
+  width: 100%;
+
+  @include respond-to(xl) {
+    grid-row: 1;
+    margin: 0 auto;
+    padding: 0 $default-padding;
   }
 }
 
 .blogpost-meta {
-  margin: 0;
-
-  dt,
-  dd {
-    float: left;
-    margin: 0;
-    text-align: left;
-    width: auto;
-  }
-
-  dt {
-    @include margin-end(1ex);
-
-    clear: left;
-  }
+  text-align: center;
 
   .updated {
     font-weight: bold;
+    margin: 0;
+  }
+
+  .author {
+    margin-top: 0;
+    margin-bottom: 6px;
+  }
+
+  .author-avatar {
+    margin-top: 0;
+
+    img {
+      border-radius: 100px;
+    }
+  }
+
+  @include respond-to(xxl) {
+    text-align: left;
   }
 }

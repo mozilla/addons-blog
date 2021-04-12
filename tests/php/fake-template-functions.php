@@ -66,3 +66,16 @@ function get_the_modified_date($format): string
 {
     return (new \DateTime())->format($format);
 }
+
+function get_avatar_url($id, $args = []): string
+{
+    if ($id !== get_the_id()) {
+        throw new \RuntimeException('invalid ID');
+    }
+
+    if (!isset($args['size'])) {
+        throw new \RuntimeException('missing "size" option');
+    }
+
+    return 'some avatar url';
+}
