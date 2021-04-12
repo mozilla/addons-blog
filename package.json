@@ -19,7 +19,7 @@
     "build:production": "ELEVENTY_ENV=production npm run build && bin/asset-pipeline",
     "build:serve": "eleventy --serve --port 8081 --config=./eleventy.config.js",
     "build:wptheme": "BUILD_WORDPRESS_THEME='1' npm run build && cd build/ && zip -r ../wptheme.zip .",
-    "start": "npm run clean && npm-run-all -p build:serve sass:* script:*",
+    "start": "npm run clean && DONT_FIX_INTERNAL_URLS='1' npm-run-all -p build:serve sass:* script:*",
     "start:debug": "npm run clean && npm-run-all -p build:debug sass:* script:*",
     "start:nocache": "NO_CACHE='1' npm run start",
     "start:https": "USE_HTTPS='1' npm run start",
