@@ -56,3 +56,8 @@ function get_the_id(): string
 {
     return 'post-id';
 }
+
+function get_the_excerpt(): string
+{
+    return 'some excerpt';
+}
