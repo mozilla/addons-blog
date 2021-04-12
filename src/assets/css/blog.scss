@@ -99,8 +99,8 @@ $excerpt-margin: 13px;
     white-space: nowrap;
   }
 
-  &:hover:after,
-  &:focus:after {
+  &:hover::after,
+  &:focus::after {
     margin-left: 4px;
   }
 }
