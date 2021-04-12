@@ -16,7 +16,7 @@ permalink: "{{ blogpost.permalink }}index.html"
 
 {% block content %}
 <main aria-label="Content">
-  {%- set postDate = blogpost.modified | readableDate -%}
+  {%- set postModifiedDate = blogpost.modified | readableDate -%}
   {%- set postContent = blogpost.content | buildStaticAddonCards | safe -%}
   {%- set postAuthor = author.name -%}
 
