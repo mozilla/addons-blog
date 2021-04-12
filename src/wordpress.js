@@ -6,17 +6,24 @@ const fetch = require('node-fetch');
 const flatcache = require('flat-cache');
 const { DateTime } = require('luxon');
 
-const AMO_BLOG_BASE_URL = 'https://addons.mozilla.org/blog';
-const DEFAULT_WORDPRESS_BASE_URL = 'https://mozamo.wpengine.com';
+const AMO_BLOG_BASE_URL =
+  process.env.AMO_BLOG_BASE_URL || 'https://addons.mozilla.org/blog';
+const WORDPRESS_BASE_URL =
+  process.env.WORDPRESS_BASE_URL || 'https://mozamo.wpengine.com';
 
 async function getNumPages(endPoint) {
   const result = await fetch(endPoint, { method: 'HEAD' });
   return result.headers.get('x-wp-totalpages') || 1;
 }
 
-const fixInternalURLs = (content) => {
+const fixInternalURLs = (content, { baseURL = WORDPRESS_BASE_URL } = {}) => {
+  if (process.env.DONT_FIX_INTERNAL_URLS === '1') {
+    return content;
+  }
+
   return content.replace(
-    /https?:\/\/mozamo\.wpengine\.com/g,
+    // Make sure the URL pattern accepts both http:// and https://.
+    new RegExp(baseURL.replace(/^https?:/, 'https?:'), 'g'),
     AMO_BLOG_BASE_URL
   );
 };
@@ -82,9 +89,11 @@ async function fetchAll({ numPages, endPoint, type }) {
 }
 
 async function fetchData(type, endPoint) {
-  const baseURL = process.env.WORDPRESS_BASE_URL || DEFAULT_WORDPRESS_BASE_URL;
+  if (!endPoint.startsWith('/')) {
+    throw new Error(`endPoint="${endPoint}" must start with a slash`);
+  }
 
-  const url = `${baseURL}${endPoint}`;
+  const url = `${WORDPRESS_BASE_URL}${endPoint}`;
   // eslint-disable-next-line no-console
   console.debug(`URL for ${type}: ${url}`);
 
@@ -124,8 +133,9 @@ const getMediaSize = ({ media, size }) => {
 
 module.exports = {
   AMO_BLOG_BASE_URL,
-  DEFAULT_WORDPRESS_BASE_URL,
-  fetchData,
+  WORDPRESS_BASE_URL,
   createPost,
+  fetchData,
+  fixInternalURLs,
   getMediaSize,
 };

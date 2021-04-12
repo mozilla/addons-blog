@@ -2,8 +2,9 @@ const { DateTime } = require('luxon');
 
 const {
   AMO_BLOG_BASE_URL,
-  DEFAULT_WORDPRESS_BASE_URL,
+  WORDPRESS_BASE_URL,
   createPost,
+  fixInternalURLs,
   getMediaSize,
 } = require('../src/wordpress');
 const apiPost = require('./fixtures/apiPost');
@@ -49,17 +50,17 @@ describe(__filename, () => {
       const post = createPost({
         ...apiPost,
         excerpt: {
-          rendered: `some <a href="${DEFAULT_WORDPRESS_BASE_URL}/foo">link</a>`,
+          rendered: `some <a href="${WORDPRESS_BASE_URL}/foo">link</a>`,
         },
         content: {
           rendered:
-            `some <a href="${DEFAULT_WORDPRESS_BASE_URL}/foo">link</a>` +
-            ` and non-HTTPS URL: ${DEFAULT_WORDPRESS_BASE_URL.replace(
+            `some <a href="${WORDPRESS_BASE_URL}/foo">link</a>` +
+            ` and non-HTTPS URL: ${WORDPRESS_BASE_URL.replace(
               'https',
               'http'
             )}/bar`,
         },
-        yoast_head: `<meta content="${DEFAULT_WORDPRESS_BASE_URL}/2021/03/24/blog-post-lorem-ipsum-001/" property="og:url">`,
+        yoast_head: `<meta content="${WORDPRESS_BASE_URL}/2021/03/24/blog-post-lorem-ipsum-001/" property="og:url">`,
       });
 
       expect(post.excerpt).toEqual(
@@ -71,6 +72,42 @@ describe(__filename, () => {
       );
       expect(post.seoHead).toEqual(
         `<meta content="${AMO_BLOG_BASE_URL}/2021/03/24/blog-post-lorem-ipsum-001/" property="og:url">`
+      );
+    });
+  });
+
+  describe('fixInternalURLs', () => {
+    let env;
+
+    beforeEach(() => {
+      env = { ...process.env };
+    });
+
+    afterEach(() => {
+      process.env = env;
+    });
+
+    it('does not replace internal URLs when DONT_FIX_INTERNAL_URL is set', () => {
+      process.env.DONT_FIX_INTERNAL_URLS = '1';
+
+      expect(fixInternalURLs(apiPost.excerpt.rendered)).toEqual(
+        apiPost.excerpt.rendered
+      );
+    });
+
+    it('replaces the WORDPRESS_BASE_URL with the AMO_BLOG_BASE_URL', () => {
+      expect(
+        fixInternalURLs(
+          `${WORDPRESS_BASE_URL}/foo // ${WORDPRESS_BASE_URL}/bar`
+        )
+      ).toEqual(`${AMO_BLOG_BASE_URL}/foo // ${AMO_BLOG_BASE_URL}/bar`);
+    });
+
+    it('replaces non-HTTPS URLs', () => {
+      const baseURL = 'http://example.com';
+
+      expect(fixInternalURLs(`link: ${baseURL}/foo`, { baseURL })).toEqual(
+        `link: ${AMO_BLOG_BASE_URL}/foo`
       );
     });
   });
