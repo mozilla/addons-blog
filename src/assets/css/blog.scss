@@ -11,7 +11,7 @@ $date-font-size: 12px;
 
 $excerpt-margin: 13px;
 
-.blog-articles {
+.blog-entries {
   display: grid;
   grid-gap: 22px;
   list-style-type: none;
@@ -27,11 +27,11 @@ $excerpt-margin: 13px;
   }
 }
 
-.blog-article {
+.blog-entry {
   margin-bottom: 13px;
 }
 
-.blog-article-featured-image {
+.blog-entry-featured-image {
   img {
     height: 200px;
     object-fit: cover;
@@ -44,13 +44,13 @@ $excerpt-margin: 13px;
   }
 }
 
-.blog-article-title,
-.blog-article-excerpt,
-.blog-article-date {
+.blog-entry-title,
+.blog-entry-excerpt,
+.blog-entry-date {
   padding: 0 $article-padding 0;
 }
 
-.blog-article-title {
+.blog-entry-title {
   font-size: $heading-xs-font-size;
   margin-bottom: 7px;
 
@@ -62,14 +62,14 @@ $excerpt-margin: 13px;
   }
 }
 
-.blog-article-date {
+.blog-entry-date {
   color: $date-color;
   font-size: $date-font-size;
   font-weight: 600;
   margin: 0;
 }
 
-.blog-article-excerpt {
+.blog-entry-excerpt {
   font-size: $body-sm-font-size;
   line-height: $body-sm-line-height;
   margin-top: $excerpt-margin;
@@ -79,11 +79,11 @@ $excerpt-margin: 13px;
   }
 }
 
-.blog-article-read-more {
+.blog-entry-read-more {
   margin: $excerpt-margin 0 0;
 }
 
-.blog-article-read-more-link {
+.blog-entry-read-more-link {
   border-bottom: 3px solid $link-color;
   color: $link-color;
   font-weight: 600;

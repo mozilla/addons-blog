@@ -56,14 +56,9 @@ final class WordPressThemeTest extends DOMTestCase
             '<title>Mozilla Add-ons Blog</title>',
             $html
         );
+        $this->assertSelectEquals('.blog-entry-title', 'some title', 2, $html);
         $this->assertSelectEquals(
-            '.blog-article-title',
-            'some title',
-            2,
-            $html
-        );
-        $this->assertSelectEquals(
-            '.blog-article-excerpt',
+            '.blog-entry-excerpt',
             'some excerpt',
             2,
             $html

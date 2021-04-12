@@ -7,7 +7,7 @@ config:
 ---
 
 {% block content %}
-<ul class="blog-articles">
+<ul class="blog-entries">
   <?php while (have_posts()) : the_post(); ?>
     {%- set postFeaturedImage = "<?= get_the_post_thumbnail_url(get_the_id(), 'full') ?>" | safe -%}
     {%- set postPermalink = "<?= get_permalink() ?>" | safe -%}
@@ -17,7 +17,7 @@ config:
     {# The WordPress API returns an excerpt inside `<p>` tags, so we mimic this behavior below. #}
     {%- set postExcerpt = "<p><?= get_the_excerpt() ?></p>" | safe -%}
 
-    {%- include 'blog-article.njk' -%}
+    {%- include 'blog-entry.njk' -%}
   <?php endwhile; ?>
 </ul>
 {% endblock %}

@@ -3,7 +3,7 @@ layout: base.njk
 ---
 
 {% block content %}
-<ul class="blog-articles">
+<ul class="blog-entries">
   {%- for post in posts -%}
     {%- set postFeaturedImage = media | mediaGetMediumURL(post.featuredImage) -%}
     {%- set postPermalink = post.permalink -%}
@@ -11,7 +11,7 @@ layout: base.njk
     {%- set postDate = post.date | readableDate -%}
     {%- set postExcerpt = post.excerpt -%}
 
-    {%- include 'blog-article.njk' -%}
+    {%- include 'blog-entry.njk' -%}
   {%- endfor -%}
 </ul>
 {% endblock %}
