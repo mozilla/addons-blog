@@ -5,7 +5,7 @@ $light-gray: #eee;
 $link-color: $blue-60;
 $dark-blue: #20123a;
 
-$default-padding: 16px;
+$default-padding: 24px;
 $default-margin: $default-padding;
 
 $max-content-width: 1366px;
@@ -27,14 +27,6 @@ $heading-md-line-height: 44px;
 // Instead of adding a rule for only mobile, add a mobile rule and override it
 // with `@include respond-to(m) { [...] }`.
 $breakpoints: (
-  m-only: only screen and
-    (
-      min-width: 500px,
-    )
-    and
-    (
-      max-width: 719px,
-    ),
   m: only screen and
     (
       min-width: 500px,
@@ -49,6 +41,6 @@ $breakpoints: (
     ),
   xxl: only screen and
     (
-      min-width: 1150px,
+      min-width: $max-content-width,
     ),
 );

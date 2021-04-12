@@ -7,6 +7,7 @@ const {
   makeBetterSafe,
   makeBuildStaticAddonCards,
   mediaGetFullURL,
+  mediaGetMediumURL,
   readableDate,
 } = require('../src/filters');
 const apiPost = require('./fixtures/apiPost');
@@ -284,7 +285,7 @@ describe(__filename, () => {
   });
 
   describe('mediaGetFullURL', () => {
-    it('returns an empty string when the feature image does not exist', () => {
+    it('returns an empty string when the featured image does not exist', () => {
       const allMedia = [];
 
       const sourceURL = mediaGetFullURL(allMedia, 123);
@@ -292,7 +293,7 @@ describe(__filename, () => {
       expect(sourceURL).toEqual('');
     });
 
-    it('returns an empty string when the feature image does not have media details', () => {
+    it('returns an empty string when the featured image does not have media details', () => {
       const featuredImage = 123;
       const allMedia = [{ id: featuredImage }];
 
@@ -301,7 +302,7 @@ describe(__filename, () => {
       expect(sourceURL).toEqual('');
     });
 
-    it('returns an empty string when the feature image does not have sizes', () => {
+    it('returns an empty string when the featured image does not have sizes', () => {
       const featuredImage = 123;
       const allMedia = [{ id: featuredImage, media_details: {} }];
 
@@ -310,7 +311,7 @@ describe(__filename, () => {
       expect(sourceURL).toEqual('');
     });
 
-    it('returns an empty string when the feature image does not have a "full" size', () => {
+    it('returns an empty string when the featured image does not have a "full" size', () => {
       const featuredImage = 123;
       const allMedia = [{ id: featuredImage, media_details: { sizes: {} } }];
 
@@ -334,6 +335,62 @@ describe(__filename, () => {
       ];
 
       const sourceURL = mediaGetFullURL(allMedia, featuredImage);
+
+      expect(sourceURL).toEqual(expectedSourceURL);
+    });
+  });
+
+  describe('mediaGetMediumURL', () => {
+    it('returns an empty string when the featured image does not exist', () => {
+      const allMedia = [];
+
+      const sourceURL = mediaGetMediumURL(allMedia, 123);
+
+      expect(sourceURL).toEqual('');
+    });
+
+    it('returns an empty string when the featured image does not have media details', () => {
+      const featuredImage = 123;
+      const allMedia = [{ id: featuredImage }];
+
+      const sourceURL = mediaGetMediumURL(allMedia, featuredImage);
+
+      expect(sourceURL).toEqual('');
+    });
+
+    it('returns an empty string when the featured image does not have sizes', () => {
+      const featuredImage = 123;
+      const allMedia = [{ id: featuredImage, media_details: {} }];
+
+      const sourceURL = mediaGetMediumURL(allMedia, featuredImage);
+
+      expect(sourceURL).toEqual('');
+    });
+
+    it('returns an empty string when the featured image does not have a "medium" size', () => {
+      const featuredImage = 123;
+      const allMedia = [{ id: featuredImage, media_details: { sizes: {} } }];
+
+      const sourceURL = mediaGetMediumURL(allMedia, featuredImage);
+
+      expect(sourceURL).toEqual('');
+    });
+
+    it('returns the source URL of the featured image (medium_large size)', () => {
+      const featuredImage = 123;
+      const expectedSourceURL = 'https://example.com/medium.png';
+      const allMedia = [
+        {
+          id: featuredImage,
+          media_details: {
+            sizes: {
+              medium_large: { source_url: expectedSourceURL },
+            },
+          },
+        },
+      ];
+
+      const sourceURL = mediaGetMediumURL(allMedia, featuredImage);
 
       expect(sourceURL).toEqual(expectedSourceURL);
     });

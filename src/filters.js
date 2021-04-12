@@ -110,13 +110,21 @@ const makeBuildStaticAddonCards = ({
   callback(null, content);
 };
 
-const mediaGetFullURL = (allMedia, featuredMediaId) => {
+const mediaGetURL = (allMedia, featuredMediaId, size) => {
   const media = allMedia.find((item) => {
     return featuredMediaId === item.id;
   });
-  const size = getMediaSize({ media, size: 'full' });
+  const mediaSize = getMediaSize({ media, size });
 
-  return size ? size.source_url : '';
+  return mediaSize ? mediaSize.source_url : '';
+};
+
+const mediaGetFullURL = (allMedia, featuredMediaId) => {
+  return mediaGetURL(allMedia, featuredMediaId, 'full');
+};
+
+const mediaGetMediumURL = (allMedia, featuredMediaId) => {
+  return mediaGetURL(allMedia, featuredMediaId, 'medium_large');
 };
 
 const convertToJsDate = (value) => {
@@ -184,5 +192,6 @@ module.exports = {
   makeBetterSafe,
   makeBuildStaticAddonCards,
   mediaGetFullURL,
+  mediaGetMediumURL,
   readableDate,
 };
