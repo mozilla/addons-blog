@@ -1,6 +1,6 @@
 const createDOMPurify = require('dompurify');
 const { JSDOM } = require('jsdom');
-const { buildStaticAddonCard } = require('@willdurand/addons-frontend-card');
+const { buildStaticAddonCard } = require('addons-frontend-blog-utils');
 const stringReplaceAsync = require('string-replace-async');
 const { DateTime } = require('luxon');
 

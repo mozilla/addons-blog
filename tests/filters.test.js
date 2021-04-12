@@ -259,7 +259,7 @@ describe(__filename, () => {
       }
     });
 
-    it('handles errors coming from the addons-frontend-card library', async () => {
+    it('handles errors coming from the addons-frontend-blog-utils library', async () => {
       const addonId = '1';
       const content = [
         'content before',
@@ -268,7 +268,9 @@ describe(__filename, () => {
       ].join('\n');
       const callback = jest.fn();
       const _buildStaticAddonCard = jest.fn().mockImplementation(() => {
-        throw new Error('error coming from the addons-frontend-card library');
+        throw new Error(
+          'error coming from the addons-frontend-blog-utils library'
+        );
       });
 
       await makeBuildStaticAddonCards({ _buildStaticAddonCard })(

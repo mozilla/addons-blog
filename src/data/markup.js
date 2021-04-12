@@ -1,4 +1,4 @@
-const { buildFooter } = require('@willdurand/addons-frontend-card');
+const { buildFooter } = require('addons-frontend-blog-utils');
 
 const { AMO_BLOG_BASE_URL } = require('../wordpress');
 
