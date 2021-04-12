@@ -1,35 +1,24 @@
 ---
 permalink: single.php
 config:
-  # Luxon format: LLLL d, kkkk
-  readable_date_format: F j, Y
   asset_path: "<?= get_template_directory_uri() ?>"
   no_atom_feed: true
 ---
 
 {% extends "../layouts/base.njk" %}
 
-{% set title = '<?= get_the_title() ?>' | safe %}
-{% set featuredImage = '<?= get_the_post_thumbnail_url(get_the_id(), "full") ?>' | safe %}
+{% set title = "<?= get_the_title() ?>" | safe %}
+{% set featuredImage = "<?= get_the_post_thumbnail_url(get_the_id(), 'full') ?>" | safe %}
 
 {% block content %}
 <main aria-label="Content">
   <?php while (have_posts()) : the_post(); ?>
-  <div class="blogpost-wrapper">
-    <div class="blogpost-content">
-      <div class="blogpost-content-wrapper">
-        <?= get_the_content() ?>
-      </div>
-    </div>
-    <aside class="blogpost-sidebar">
-      <dl class="blogpost-meta">
-        <dt class="updated">Updated</dt>
-        <dd class="updated"><?= get_the_time('{{ config.readable_date_format }}') ?></dd>
-        <dt class="author">By</dt>
-        <dd class="author"><?= get_the_author() ?></dd>
-      </dl>
-    </aside>
-  </div>
+    {# The format used below is equivalent to the following Luxon format: LLLL d, kkkk #}
+    {%- set postDate = "<?= get_the_time('F j, Y') ?>" | safe -%}
+    {%- set postContent = "<?= get_the_content() ?>" | safe -%}
+    {%- set postAuthor = "<?= get_the_author() ?>" | safe -%}
+
+    {%- include 'blogpost.njk' -%}
   <?php endwhile; ?>
 </main>
 {% endblock content %}

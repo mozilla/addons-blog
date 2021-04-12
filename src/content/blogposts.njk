@@ -10,29 +10,17 @@ permalink: "{{ blogpost.permalink }}index.html"
 
 {% set title = blogpost.title %}
 {% set featuredImage = media | mediaGetFullURL(blogpost.featuredImage) %}
+{% set author = authors | getAuthor(blogpost.author) %}
 {% set prevPost = posts | getPrevPost(blogpost) %}
 {% set nextPost = posts | getNextPost(blogpost) %}
 
 {% block content %}
 <main aria-label="Content">
-  <div class="blogpost-wrapper">
-    <div class="blogpost-content">
-      <div class="blogpost-content-wrapper">
-        {{ blogpost.content | buildStaticAddonCards | safe }}</dd>
-      </div>
-    </div>
-    <aside class="blogpost-sidebar">
-      <dl class="blogpost-meta">
-        <dt class="updated">Updated</dt>
-        <dd class="updated">{{ blogpost.modified | readableDate }}</dd>
-        {% if blogpost.author %}
-        {% set author = authors | getAuthor(blogpost.author) %}
-        <dt class="author">By</dt>
-        <dd class="author">{{ author.name }}</dd>
-        {% endif %}
-      </dl>
-    </aside>
-  </div>
+  {%- set postDate = blogpost.modified | readableDate -%}
+  {%- set postContent = blogpost.content | buildStaticAddonCards | safe -%}
+  {%- set postAuthor = author.name -%}
+
+  {%- include 'blogpost.njk' -%}
 </main>
 
 <nav class="prev-next">
