@@ -1,0 +1,17 @@
+<div class="blogpost">
+  <div class="blogpost-content">
+    <div class="blogpost-content-wrapper">
+      {{ postContent }}
+    </div>
+  </div>
+  <aside class="blogpost-sidebar">
+    <dl class="blogpost-meta">
+      <dt class="updated">Updated</dt>
+      <dd class="updated">{{ postDate }}</dd>
+      {% if postAuthor %}
+      <dt class="author">By</dt>
+      <dd class="author">{{ postAuthor }}</dd>
+      {% endif %}
+    </dl>
+  </aside>
+</div>
