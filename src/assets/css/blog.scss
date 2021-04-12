@@ -88,10 +88,19 @@ $excerpt-margin: 13px;
   color: $link-color;
   font-weight: 600;
   text-decoration: none;
-}
 
-.blog-article-read-more-arrow {
-  color: $link-color;
-  font-size: 16px;
-  vertical-align: middle;
+  &::after {
+    content: '\00A0\25B8';
+    display: inline-block;
+    font-size: 19px;
+    margin-top: 2px;
+    position: absolute;
+    transition: margin 150ms cubic-bezier(0.3, -0.5, 0.6, 1.5);
+    white-space: nowrap;
+  }
+
+  &:hover:after,
+  &:focus:after {
+    margin-left: 4px;
+  }
 }
