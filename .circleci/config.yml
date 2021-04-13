@@ -79,7 +79,7 @@ jobs:
             bin/asset-pipeline
       - *persist_build_workspace
 
-  deploy-unpublished:
+  deploy-dev:
     <<: *deployment_container
     steps:
       - *attach_deploy_workspace
