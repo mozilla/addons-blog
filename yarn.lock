@@ -2252,7 +2252,7 @@ domutils@^1.5.1:
     dom-serializer "0"
     domelementtype "1"
 
-domutils@^2.4.2:
+domutils@^2.4.2, domutils@^2.5.2:
   version "2.5.2"
   resolved "https://registry.yarnpkg.com/domutils/-/domutils-2.5.2.tgz#37ef8ba087dff1a17175e7092e8a042e4b050e6c"
   integrity sha512-MHTthCb1zj8f1GVfRpeZUbohQf/HdBos0oX5gZcQFepOZPLLRyj6Wn7XS7EMnY7CVpwv8863u2vyE83Hfu28HQ==
@@ -3443,6 +3443,16 @@ htmlparser2@^5.0.1:
     domelementtype "^2.0.1"
     domhandler "^3.3.0"
     domutils "^2.4.2"
+    entities "^2.0.0"
+
+htmlparser2@^6.0.0:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/htmlparser2/-/htmlparser2-6.1.0.tgz#c4d762b6c3371a05dbe65e94ae43a9f845fb8fb7"
+  integrity sha512-gyyPk6rgonLFEDGoeRgQNaEUvdJ4ktTmmUh/h2t7s+M8oPpIPxgNACWa+6ESR57kXstwqPiCut0V8NRpcwgU7A==
+  dependencies:
+    domelementtype "^2.0.1"
+    domhandler "^4.0.0"
+    domutils "^2.5.2"
     entities "^2.0.0"
 
 http-equiv-refresh@^1.0.0:
@@ -6048,6 +6058,13 @@ posthtml-parser@^0.6.0:
   dependencies:
     htmlparser2 "^5.0.1"
 
+posthtml-parser@^0.7.2:
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/posthtml-parser/-/posthtml-parser-0.7.2.tgz#3fba3375544d824bb1c8504f0d69f6e0b95774db"
+  integrity sha512-LjEEG/3fNcWZtBfsOE3Gbyg1Li4CmsZRkH1UmbMR7nKdMXVMYI3B4/ZMiCpaq8aI1Aym4FRMMW9SAOLSwOnNsQ==
+  dependencies:
+    htmlparser2 "^6.0.0"
+
 posthtml-postcss@0.5.0:
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/posthtml-postcss/-/posthtml-postcss-0.5.0.tgz#3b8bca3f7ca7219eb4b56fbbbf05dbf53a150a61"
@@ -6056,7 +6073,7 @@ posthtml-postcss@0.5.0:
     postcss "^8.0.0"
     postcss-load-config "^2.1.2"
 
-posthtml-render@^1.2.2, posthtml-render@^1.2.3:
+posthtml-render@^1.2.2, posthtml-render@^1.2.3, posthtml-render@^1.3.1:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/posthtml-render/-/posthtml-render-1.3.1.tgz#260f15bc43cdf7ea008bf0cc35253fb27e4d03fd"
   integrity sha512-eSToKjNLu0FiF76SSGMHjOFXYzAc/CJqi677Sq6hYvcvFCBtD6de/W5l+0IYPf7ypscqAfjCttxvTdMJt5Gj8Q==
@@ -6071,7 +6088,15 @@ posthtml-urls@1.0.0:
     parse-srcset "^1.0.2"
     promise-each "^2.2.0"
 
-posthtml@0.15.1, posthtml@^0.15.1:
+posthtml@0.15.2:
+  version "0.15.2"
+  resolved "https://registry.yarnpkg.com/posthtml/-/posthtml-0.15.2.tgz#739cf0d3ffec70868b87121dc7393478e1898c9c"
+  integrity sha512-YugEJ5ze/0DLRIVBjCpDwANWL4pPj1kHJ/2llY8xuInr0nbkon3qTiMPe5LQa+cCwNjxS7nAZZTp+1M+6mT4Zg==
+  dependencies:
+    posthtml-parser "^0.7.2"
+    posthtml-render "^1.3.1"
+
+posthtml@^0.15.1:
   version "0.15.1"
   resolved "https://registry.yarnpkg.com/posthtml/-/posthtml-0.15.1.tgz#1848064f48a1cca0e0323752b1d26fed32e180b8"
   integrity sha512-QSnUnvnnRv+wt7T9igqNG7GPcc+ZsbX93X+9aPldzgiuQfqIXTbnD47FY8pAtq4gjB9QZrDadDuG8jusmOPpYA==
