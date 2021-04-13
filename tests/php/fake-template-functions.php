@@ -79,3 +79,13 @@ function get_avatar_url($id, $args = []): string
 
     return 'some avatar url';
 }
+
+function get_previous_post()
+{
+    return null;
+}
+
+function get_next_post()
+{
+    return null;
+}

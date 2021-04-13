@@ -11,8 +11,8 @@ config:
 {% set featuredImage = "<?= get_the_post_thumbnail_url(get_the_id(), 'full') ?>" | safe %}
 
 {% block content %}
+<?php while (have_posts()) : the_post(); ?>
 <main aria-label="Content">
-  <?php while (have_posts()) : the_post(); ?>
     {# The format used below is equivalent to the following Luxon format: LLLL d, kkkk #}
     {%- set postModifiedDate = "<?= get_the_modified_date('F j, Y') ?>" | safe -%}
     {%- set postContent = "<?= get_the_content() ?>" | safe -%}
@@ -20,8 +20,35 @@ config:
     {%- set postAuthorAvatar = "<?= get_avatar_url(get_the_id(), ['size' => 96]) ?>" | safe -%}
 
     {%- include 'blogpost.njk' -%}
-  <?php endwhile; ?>
 </main>
+
+<?php $prevPost = get_previous_post(); ?>
+<?php $nextPost = get_next_post(); ?>
+
+<nav class="blogpost-nav">
+  <ol>
+    <?php if ($prevPost) : ?>
+      {% set prevPostPermalink = "<?= get_permalink($prevPost->ID) ?>" | safe %}
+      {% set prevPostTitle = "<?= get_the_title($prevPost->ID) ?>" | safe %}
+      {% set prevPostDate = "<?= get_the_time(DateTime::ISO8601, $prevPost) ?>" | safe %}
+      {% set prevPostReadableDate = "<?= get_the_time('F j, Y', $prevPost) ?>" |safe %}
+      {% set prevExtraClass = "<?= empty($nextPost) ? ' blogpost-nav-no-next' : '' ?>" | safe %}
+
+      {% include 'blogpost-nav-prev.njk' %}
+    <?php endif; ?>
+
+    <?php if ($nextPost) : ?>
+      {% set nextPostPermalink = "<?= get_permalink($nextPost->ID) ?>" | safe %}
+      {% set nextPostTitle = "<?= get_the_title($nextPost->ID) ?>" | safe %}
+      {% set nextPostDate = "<?= get_the_time(DateTime::ISO8601, $nextPost) ?>" | safe %}
+      {% set nextPostReadableDate = "<?= get_the_time('F j, Y', $nextPost) ?>" |safe %}
+      {% set nextExtraClass = "<?= empty($prevPost) ? ' blogpost-nav-no-prev' : '' ?>" | safe %}
+
+      {% include 'blogpost-nav-next.njk' %}
+    <?php endif; ?>
+  </ol>
+</nav>
+<?php endwhile; ?>
 {% endblock content %}
 
 {% block stylesheets %}

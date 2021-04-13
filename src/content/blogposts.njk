@@ -11,8 +11,6 @@ permalink: "{{ blogpost.permalink }}index.html"
 {% set title = blogpost.title %}
 {% set featuredImage = media | mediaGetFullURL(blogpost.featuredImage) %}
 {% set author = authors | getAuthor(blogpost.author) %}
-{% set prevPost = posts | getPrevPost(blogpost) %}
-{% set nextPost = posts | getNextPost(blogpost) %}
 
 {% block content %}
 <main aria-label="Content">
@@ -24,29 +22,34 @@ permalink: "{{ blogpost.permalink }}index.html"
   {%- include 'blogpost.njk' -%}
 </main>
 
-<nav class="prev-next">
+{% set prevPost = posts | getPrevPost(blogpost) %}
+{% set nextPost = posts | getNextPost(blogpost) %}
+
+<nav class="blogpost-nav">
   <ol>
     {% if prevPost %}
-    <li class="prev">
-      <a href="{{ prevPost.permalink }}">
-        <span>Previous article</span>
-        <p class="entry-title previous">{{ prevPost.title | safe }}</p>
-        <time class="date" datetime="{{ prevPost.date }}">{{ prevPost.date | readableDate }}</time>
-        <svg class="arrow-left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23.62 43"><defs><style>.cls-1{fill:none;stroke:#000;stroke-linecap:round;stroke-miterlimit:10;stroke-width:3px;}</style></defs><polyline class="cls-1" points="22.12 1.5 2.12 21.5 22.12 41.5"></polyline></svg>
-      </a>
-    </li>
+      {% set prevPostPermalink = prevPost.permalink %}
+      {% set prevPostTitle = prevPost.title %}
+      {% set prevPostDate = prevPost.date %}
+      {% set prevPostReadableDate = prevPost.date | readableDate %}
+      {% if not nextPost %}
+      {% set prevExtraClass = ' blogpost-nav-no-next' %}
+      {% endif %}
+
+      {% include 'blogpost-nav-prev.njk' %}
     {% endif %}
+
     {% if nextPost %}
-    <li class="next">
-      <a href="{{ nextPost.permalink }}">
-        <span>Next article</span>
-        <p class="entry-title next">{{ nextPost.title | safe }}</p>
-        <time class="date" datetime="{{ nextPost.date }}">{{ nextPost.date | readableDate }}</time>
-        <svg class="arrow-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23.62 43"><defs><style>.cls-1{fill:none;stroke:#000;stroke-linecap:round;stroke-miterlimit:10;stroke-width:3px;}</style></defs><polyline class="cls-1" points="1.5 1.5 21.5 21.5 1.5 41.5"></polyline></svg>
-      </a>
-    </li>
+      {% set nextPostPermalink = nextPost.permalink %}
+      {% set nextPostTitle = nextPost.title %}
+      {% set nextPostDate = nextPost.date %}
+      {% set nextPostReadableDate = nextPost.date | readableDate %}
+      {% if not prevPost %}
+      {% set nextExtraClass = ' blogpost-nav-no-prev' %}
+      {% endif %}
+
+      {% include 'blogpost-nav-next.njk' %}
     {% endif %}
   </ol>
 </nav>
-
 {% endblock content %}
