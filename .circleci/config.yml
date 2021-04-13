@@ -85,7 +85,7 @@ jobs:
       - *attach_deploy_workspace
       - *install_aws_cli
       - run:
-          name: addons-blog deployment (unpublished)
+          name: addons-blog deployment (dev)
           command: |
             pwd && ls -l
             AWS_ACCESS_KEY_ID="${DEV_AWS_ACCESS_KEY_ID}"          \
