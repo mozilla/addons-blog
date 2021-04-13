@@ -69,7 +69,7 @@ function get_the_modified_date($format): string
 
 function get_avatar_url($id, $args = []): string
 {
-    if ($id !== get_the_id()) {
+    if ($id !== get_the_author_meta('ID')) {
         throw new \RuntimeException('invalid ID');
     }
 
@@ -88,4 +88,14 @@ function get_previous_post()
 function get_next_post()
 {
     return null;
+}
+
+function get_the_author_meta($field): int
+{
+    switch ($field) {
+        case 'ID':
+            return 123;
+        default:
+            throw new \RuntimeException('unexpected field');
+    }
 }
