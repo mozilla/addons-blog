@@ -61,3 +61,8 @@ function get_the_excerpt(): string
 {
     return 'some excerpt';
 }
+
+function get_the_modified_date($format): string
+{
+    return (new \DateTime())->format($format);
+}

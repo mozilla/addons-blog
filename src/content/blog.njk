@@ -8,7 +8,8 @@ layout: base.njk
     {%- set postFeaturedImage = media | mediaGetMediumURL(post.featuredImage) -%}
     {%- set postPermalink = post.permalink -%}
     {%- set postTitle = post.title -%}
-    {%- set postDate = post.date | readableDate -%}
+    {%- set postDate = post.date -%}
+    {%- set postHumanReadableDate = post.date | readableDate -%}
     {%- set postExcerpt = post.excerpt -%}
 
     {%- include 'blog-entry.njk' -%}

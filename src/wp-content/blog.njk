@@ -12,8 +12,9 @@ config:
     {%- set postFeaturedImage = "<?= get_the_post_thumbnail_url(get_the_id(), 'full') ?>" | safe -%}
     {%- set postPermalink = "<?= get_permalink() ?>" | safe -%}
     {%- set postTitle = "<?= get_the_title() ?>" | safe -%}
+    {%- set postDate = "<?= get_the_time(DateTime::ISO8601) ?>" | safe -%}
     {# The format used below is equivalent to the following Luxon format: LLLL d, kkkk #}
-    {%- set postDate = "<?= get_the_time('F j, Y') ?>" | safe -%}
+    {%- set postHumanReadableDate = "<?= get_the_time('F j, Y') ?>" | safe -%}
     {# The WordPress API returns an excerpt inside `<p>` tags, so we mimic this behavior below. #}
     {%- set postExcerpt = "<p><?= get_the_excerpt() ?></p>" | safe -%}
 

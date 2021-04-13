@@ -14,7 +14,7 @@ config:
 <main aria-label="Content">
   <?php while (have_posts()) : the_post(); ?>
     {# The format used below is equivalent to the following Luxon format: LLLL d, kkkk #}
-    {%- set postDate = "<?= get_the_time('F j, Y') ?>" | safe -%}
+    {%- set postModifiedDate = "<?= get_the_modified_date('F j, Y') ?>" | safe -%}
     {%- set postContent = "<?= get_the_content() ?>" | safe -%}
     {%- set postAuthor = "<?= get_the_author() ?>" | safe -%}
 
