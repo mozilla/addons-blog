@@ -5,12 +5,21 @@
     </div>
   </div>
   <aside class="blogpost-sidebar">
-    <div class="blogpost-meta">
-      <p class="updated">Updated {{ postModifiedDate }}</p>
+    <dl class="blogpost-meta">
+      <div>
+        <dt class="updated">Updated</dt>
+        <dd class="updated">{{ postModifiedDate }}</dd>
+      </div>
       {% if postAuthor %}
-      <p class="author">By {{ postAuthor }}</p>
-      <p class="author-avatar"><img src="{{ postAuthorAvatar }}"></p>
+      <div>
+        <dt class="author">By</dt>
+        <dd class="author">{{ postAuthor }}</dd>
+      </div>
+      <div>
+        <dt class="author-avatar visually-hidden">Avatar</dt>
+        <dd class="author-avatar"><img src="{{ postAuthorAvatar }}"></dd>
+      </div>
       {% endif %}
-    </div>
+    </dl>
   </aside>
 </div>

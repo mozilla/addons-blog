@@ -85,7 +85,15 @@
 }
 
 .blogpost-meta {
+  margin: 0;
   text-align: center;
+
+  dt,
+  dd {
+    display: inline-block;
+    margin: 0;
+    width: auto;
+  }
 
   .updated {
     font-weight: bold;
@@ -105,7 +113,7 @@
     }
   }
 
-  @include respond-to(xxl) {
+  @include respond-to(xl) {
     text-align: left;
   }
 }
