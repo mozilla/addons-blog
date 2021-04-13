@@ -6,11 +6,19 @@
   </div>
   <aside class="blogpost-sidebar">
     <dl class="blogpost-meta">
-      <dt class="updated">Updated</dt>
-      <dd class="updated">{{ postModifiedDate }}</dd>
+      <div>
+        <dt class="updated">Updated</dt>
+        <dd class="updated">{{ postModifiedDate }}</dd>
+      </div>
       {% if postAuthor %}
-      <dt class="author">By</dt>
-      <dd class="author">{{ postAuthor }}</dd>
+      <div>
+        <dt class="author">By</dt>
+        <dd class="author">{{ postAuthor }}</dd>
+      </div>
+      <div>
+        <dt class="author-avatar visually-hidden">Avatar</dt>
+        <dd class="author-avatar"><img src="{{ postAuthorAvatar }}"></dd>
+      </div>
       {% endif %}
     </dl>
   </aside>
