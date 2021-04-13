@@ -89,6 +89,14 @@ async function fetchAll({ numPages, endPoint, type }) {
 }
 
 async function fetchData(type, endPoint) {
+  if (process.env.BUILD_WORDPRESS_THEME === '1') {
+    // eslint-disable-next-line no-console
+    console.debug(
+      "Not fetching any data because BUILD_WORDPRESS_THEME is set to '1'"
+    );
+    return {};
+  }
+
   if (!endPoint.startsWith('/')) {
     throw new Error(`endPoint="${endPoint}" must start with a slash`);
   }
