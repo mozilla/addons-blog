@@ -35,14 +35,13 @@ CSPSTATIC="\"content-security-policy\": \"default-src 'none'; "\
 # DO NOT REMOVE the locale from the newsletter form url. See #476.
 CSP="\"content-security-policy\": \"default-src 'none'; "\
 "base-uri 'self'; "\
-"connect-src 'self' https://blog.mozilla.org/addons/feed/ https://www.mozilla.org/en-US/newsletter/ https://www.google-analytics.com/; "\
+"connect-src 'self' https://www.google-analytics.com/; "\
 "font-src 'self'; "\
-"form-action 'self' https://www.mozilla.org/en-US/newsletter/; "\
+"form-action 'none'; "\
 "frame-ancestors 'none'; "\
-"frame-src https://www.youtube.com/embed/; "\
-"img-src 'self' data:; "\
+"img-src 'self'; "\
 "object-src 'none'; "\
-"script-src 'self' https://www.youtube.com/iframe_api https://www.youtube.com/s/player/ 'sha256-cEol3PeVsUqXLYFr6jKFJdNafMQx9RDvCSi6+kCHa6U=' https://www.google-analytics.com/analytics.js; "\
+"script-src 'self' https://www.google-analytics.com/analytics.js; "\
 "style-src 'self' 'unsafe-inline'\""
 HSTS="\"strict-transport-security\": \"max-age=${ONE_YEAR}; includeSubDomains; preload\""
 TYPE="\"x-content-type-options\": \"nosniff\""
@@ -124,4 +123,3 @@ for fn in $(find dist -name 'index.html' -not -path 'dist/index.html'); do
     --acl "public-read" \
     $fn s3://${ADDONS_BLOG_BUCKET}/${s3path}
 done
-
