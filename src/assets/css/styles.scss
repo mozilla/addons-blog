@@ -12,6 +12,8 @@
 
 * {
   box-sizing: border-box;
+  // This is needed for Safari, which does not support `anywhere`.
+  overflow-wrap: break-word;
   overflow-wrap: anywhere;
 }
 
