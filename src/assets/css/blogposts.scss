@@ -93,13 +93,13 @@ $pull-quote-color: #4e1a6a;
       float: right;
       margin-bottom: 24px;
       margin-left: 36px;
-      margin-right: -76px;
+      margin-right: -115px;
       width: 450px;
     }
   }
 
   @include respond-to(l) {
-    max-width: 665px;
+    max-width: 625px;
   }
 }
 
