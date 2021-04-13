@@ -1,3 +1,5 @@
+$pull-quote-color: #4e1a6a;
+
 .blogpost {
   display: grid;
   width: 100%;
@@ -63,6 +65,34 @@
   a:active {
     &:not(.Button) {
       color: $link-color;
+    }
+  }
+
+  .wp-block-pullquote {
+    @include font-bold();
+
+    border-left: 3px solid $pull-quote-color;
+    color: $pull-quote-color;
+    font-size: $heading-xs-font-size;
+    line-height: $heading-xs-line-height;
+    margin: 16px 0;
+    padding-left: 8px;
+    text-transform: uppercase;
+
+    blockquote {
+      margin: 0;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    @include respond-to(xxl) {
+      float: right;
+      margin-bottom: 24px;
+      margin-left: 36px;
+      margin-right: -76px;
+      width: 450px;
     }
   }
 
