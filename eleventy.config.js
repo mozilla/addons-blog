@@ -71,15 +71,14 @@ module.exports = function configure(eleventyConfig) {
     });
 
     if (buildWordpressTheme) {
-      const addonsFrontendCardPath =
-        './node_modules/@willdurand/addons-frontend-card';
+      const blogUtils = './node_modules/addons-frontend-blog-utils';
 
       eleventyConfig.addPassthroughCopy({
         [`${wpInputDir}/screenshot.png`]: 'screenshot.png',
         // These assets are used to build static add-on cards in WordPress.
         [`${wpInputDir}/addon-cards.js`]: 'assets/js/addon-cards.js',
-        [`${addonsFrontendCardPath}/web.js`]: 'assets/js/addons-frontend-card.js',
-        [`${addonsFrontendCardPath}/style.css`]: 'assets/css/addons-frontend-card.css',
+        [`${blogUtils}/web.js`]: 'assets/js/addons-frontend-blog-utils.js',
+        [`${blogUtils}/style.css`]: 'assets/css/addons-frontend-blog-utils.css',
       });
     } else {
       eleventyConfig.addPassthroughCopy({

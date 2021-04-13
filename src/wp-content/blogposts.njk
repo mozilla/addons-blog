@@ -25,11 +25,11 @@ config:
 
 {% block stylesheets %}
 {{ super() }}
-<link rel="stylesheet" href="{{ config.asset_path|safe }}/assets/css/addons-frontend-card.css">
+<link rel="stylesheet" href="{{ config.asset_path|safe }}/assets/css/addons-frontend-blog-utils.css">
 {% endblock %}
 
 {% block javascripts %}
 {{ super() }}
-<script src="{{ config.asset_path|safe }}/assets/js/addons-frontend-card.js"></script>
+<script src="{{ config.asset_path|safe }}/assets/js/addons-frontend-blog-utils.js"></script>
 <script src="{{ config.asset_path|safe }}/assets/js/addon-cards.js"></script>
 {% endblock %}
