@@ -8,4 +8,12 @@ describe(__filename, () => {
       expect(footer).toContain('<footer class="Footer">');
     });
   });
+
+  describe('header', () => {
+    it('exposes the header HTML', () => {
+      const { header } = markup;
+
+      expect(header).toContain('<header class="Header">');
+    });
+  });
 });

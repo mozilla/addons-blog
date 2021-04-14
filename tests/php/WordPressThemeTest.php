@@ -46,6 +46,7 @@ final class WordPressThemeTest extends DOMTestCase
             $html
         );
         $this->assertStringNotContainsString('application/atom+xml', $html);
+        $this->assertSelectCount('.Header', 0, $html);
     }
 
     public function testIndexPage(): void
@@ -69,6 +70,7 @@ final class WordPressThemeTest extends DOMTestCase
             $html
         );
         $this->assertStringNotContainsString('application/atom+xml', $html);
+        $this->assertSelectCount('.Header', 1, $html);
     }
 
     public function testFunctions(): void

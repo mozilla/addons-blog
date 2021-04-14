@@ -19,23 +19,27 @@
     {%- endblock %}
   </head>
   <body>
-    {% if featuredImage %}
-    <header class="header" style="background-image: url('{{ featuredImage }}');">
+    {% if useMarkupHeader %}
+      {{ markup.header | safe }}
     {% else %}
-    <header class="header header--no-featured-image">
-    {% endif %}
-      <div class="header-overlay">
-        <div class="header-wrapper">
-          <a class="header-logo" href="/">
-            <span class="visually-hidden">Firefox Browser Add-ons</span>
-          </a>
+      {% if featuredImage %}
+      <header class="header" style="background-image: url('{{ featuredImage }}');">
+      {% else %}
+      <header class="header header--no-featured-image">
+      {% endif %}
+        <div class="header-overlay">
+          <div class="header-wrapper">
+            <a class="header-logo" href="/">
+              <span class="visually-hidden">Firefox Browser Add-ons</span>
+            </a>
 
-          <h1 class="header-title">
-            {% if title %}{{ title }}{% else %}{{ markup.siteTitle }}{% endif %}
-          </h1>
+            <h1 class="header-title">
+              {% if title %}{{ title }}{% else %}{{ markup.siteTitle }}{% endif %}
+            </h1>
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
+    {% endif %}
 
     {% block content %}
     <main aria-label="Content">
