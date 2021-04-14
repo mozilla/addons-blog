@@ -9,6 +9,10 @@ references:
     docker:
       - image: circleci/python:3.9-node
 
+  node_prod_container: &node_prod_container
+    docker:
+      - image: circleci/node:12
+
   install_aws_cli: &install_aws_cli
     run:
       name: Install AWS CLI
@@ -42,7 +46,7 @@ references:
         - ~/.cache/yarn
 
 jobs:
-  wptheme:
+  test-wptheme:
     docker:
       - image: cimg/php:7.4-node
     steps:
@@ -59,9 +63,8 @@ jobs:
             ./vendor/bin/phpunit
       - run: test -f wptheme.zip
 
-  blog:
-    docker:
-      - image: circleci/node:12
+  test-blog:
+    <<: *node_prod_container
     steps:
       - checkout
       - *restore_build_cache
@@ -77,6 +80,15 @@ jobs:
             yarn sass:build
             yarn script:build
             bin/asset-pipeline
+
+  build-blog:
+    <<: *node_prod_container
+    steps:
+      - checkout
+      - *restore_build_cache
+      - *run_yarn_install
+      - *save_build_cache
+      - run: yarn build:production
       - *persist_build_workspace
 
   deploy-dev:
@@ -98,8 +110,11 @@ workflows:
   version: 2
   default-workflow:
     jobs:
-      - wptheme
-      - blog
+      - test-wptheme
+      - test-blog
+      - build-blog:
+          requires:
+            - test-blog
       - deploy-dev:
           requires:
-            - blog
+            - build-blog
