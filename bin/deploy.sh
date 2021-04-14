@@ -123,7 +123,7 @@ for fn in $(find dist/blog -name 'index.html' -not -path 'dist/blog/index.html')
     --include "*.html" \
     --metadata "{${CSP}, ${HSTS}, ${TYPE}, ${XSS}, ${XFRAME}, ${REFERRER}}" \
     --metadata-directive "REPLACE" \
-    --website-redirect "/${s3path}/" \
+    --website-redirect "/blog/${s3path}/" \
     --acl "public-read" \
     $fn s3://${ADDONS_BLOG_BUCKET}/${s3path}
 done
