@@ -21,11 +21,14 @@ const fixInternalURLs = (content, { baseURL = WORDPRESS_BASE_URL } = {}) => {
     return content;
   }
 
-  return content.replace(
+  const urlPattern = [
     // Make sure the URL pattern accepts both http:// and https://.
-    new RegExp(baseURL.replace(/^https?:/, 'https?:'), 'g'),
-    AMO_BLOG_BASE_URL
-  );
+    baseURL.replace(/^https?:/, 'https?:'),
+    // Do not replace URLs containing `/wp-content/`.
+    '(?!/wp-content/)',
+  ].join('');
+
+  return content.replace(new RegExp(urlPattern, 'g'), AMO_BLOG_BASE_URL);
 };
 
 const createPost = ({
