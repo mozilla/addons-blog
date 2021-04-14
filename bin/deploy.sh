@@ -79,7 +79,7 @@ aws s3 sync \
   --metadata "{${CSP}, ${HSTS}, ${TYPE}, ${XSS}, ${XFRAME}, ${REFERRER}}" \
   --metadata-directive "REPLACE" \
   --acl "public-read" \
-  dist/ s3://${ADDONS_BLOG_BUCKET}/
+  dist/blog/ s3://${ADDONS_BLOG_BUCKET}/
 
 # JSON; short cache
 aws s3 sync \
@@ -90,7 +90,7 @@ aws s3 sync \
   --metadata "{${ACAO}, ${CSPSTATIC}, ${HSTS}, ${TYPE}, ${XSS}, ${XFRAME}, ${REFERRER}}" \
   --metadata-directive "REPLACE" \
   --acl "public-read" \
-  dist/ s3://${ADDONS_BLOG_BUCKET}/
+  dist/blog/ s3://${ADDONS_BLOG_BUCKET}/
 
 # SVG; cache forever, assign correct content-type
 aws s3 sync \
@@ -101,7 +101,7 @@ aws s3 sync \
   --metadata "{${CSPSTATIC}, ${HSTS}, ${TYPE}, ${XSS}, ${XFRAME}, ${REFERRER}}" \
   --metadata-directive "REPLACE" \
   --acl "public-read" \
-  dist/ s3://${ADDONS_BLOG_BUCKET}/
+  dist/blog/ s3://${ADDONS_BLOG_BUCKET}/
 
 # Everything else; cache forever, because it has hashes in the filenames
 aws s3 sync \
@@ -110,11 +110,11 @@ aws s3 sync \
   --metadata "{${CSPSTATIC}, ${HSTS}, ${TYPE}, ${XSS}, ${XFRAME}, ${REFERRER}}" \
   --metadata-directive "REPLACE" \
   --acl "public-read" \
-  dist/ s3://${ADDONS_BLOG_BUCKET}/
+  dist/blog/ s3://${ADDONS_BLOG_BUCKET}/
 
 # HTML - `path/index.html` to `path` resources; short cache
-for fn in $(find dist -name 'index.html' -not -path 'dist/index.html'); do
-  s3path=${fn#dist/}
+for fn in $(find dist/blog -name 'index.html' -not -path 'dist/blog/index.html'); do
+  s3path=${fn#dist/blog/}
   s3path=${s3path%/index.html}
   aws s3 cp \
     --cache-control "max-age=${TEN_MINUTES}" \
