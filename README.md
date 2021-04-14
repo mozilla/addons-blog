@@ -116,7 +116,7 @@ Whilst the `asset-pipline` script is custom, it leverages a lot of existing libs
 
 ### Asset paths
 
-For the `asset-pipeline` script to do its thing, all you need to do is refer to all assets with a path beginning with `/assets/`. If you do that, everything else is handled for you ✨
+For the `asset-pipeline` script to do its thing, all you need to do is refer to all assets with a path beginning with `/blog/assets/`. If you do that, everything else is handled for you ✨
 
 [prettier]: https://prettier.io/
 [browsersync]: https://browsersync.io/

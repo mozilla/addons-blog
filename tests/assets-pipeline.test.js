@@ -12,7 +12,7 @@ let ap;
 describe(__filename, () => {
   describe('Asset Pipeline functions', () => {
     beforeEach(async () => {
-      ap = new AssetPipeline(src, dest);
+      ap = new AssetPipeline(src, dest, { assetsDirPrefix: '/assets' });
       await ap.recursiveListDir();
     });
 
@@ -205,7 +205,7 @@ describe(__filename, () => {
     describe('cachebustAssets', () => {
       beforeAll(async () => {
         jest.spyOn(console, 'log').mockImplementation(jest.fn());
-        ap = new AssetPipeline(src, dest);
+        ap = new AssetPipeline(src, dest, { assetsDirPrefix: '/assets' });
         await ap.cacheBustAssets();
       });
 

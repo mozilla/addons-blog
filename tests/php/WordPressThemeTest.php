@@ -42,7 +42,7 @@ final class WordPressThemeTest extends DOMTestCase
         $this->assertSelectEquals('.author', 'some author', 1, $html);
         $this->assertSelectCount('.Footer', 1, $html);
         $this->assertStringContainsString(
-            'src="/path/to/template/dir/assets/js/bundle.js',
+            'src="/path/to/template/dir/blog/assets/js/bundle.js',
             $html
         );
         $this->assertStringNotContainsString('application/atom+xml', $html);
@@ -65,7 +65,7 @@ final class WordPressThemeTest extends DOMTestCase
         );
         $this->assertSelectCount('.Footer', 1, $html);
         $this->assertStringContainsString(
-            'src="/path/to/template/dir/assets/js/bundle.js',
+            'src="/path/to/template/dir/blog/assets/js/bundle.js',
             $html
         );
         $this->assertStringNotContainsString('application/atom+xml', $html);
