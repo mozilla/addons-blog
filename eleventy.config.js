@@ -66,8 +66,9 @@ module.exports = function configure(eleventyConfig) {
   if (process.env.NODE_ENV !== 'test') {
     // Explicitly copy through the built files needed.
     eleventyConfig.addPassthroughCopy({
-      './src/assets/img/': 'assets/img/',
-      './src/assets/fonts/': 'assets/fonts/',
+      './src/assets/img/': 'blog/assets/img/',
+      './src/assets/fonts/otf': 'blog/assets/fonts/otf',
+      './src/assets/fonts/woff2': 'blog/assets/fonts/woff2',
     });
 
     if (buildWordpressTheme) {
@@ -75,15 +76,21 @@ module.exports = function configure(eleventyConfig) {
 
       eleventyConfig.addPassthroughCopy({
         [`${wpInputDir}/screenshot.png`]: 'screenshot.png',
-        // These assets are used to build static add-on cards in WordPress.
-        [`${wpInputDir}/addon-cards.js`]: 'assets/js/addon-cards.js',
-        [`${blogUtils}/web.js`]: 'assets/js/addons-frontend-blog-utils.js',
-        [`${blogUtils}/style.css`]: 'assets/css/addons-frontend-blog-utils.css',
+        // These blog/assets are used to build static add-on cards in WordPress.
+        [`${wpInputDir}/addon-cards.js`]: 'blog/assets/js/addon-cards.js',
+        [`${blogUtils}/web.js`]: 'blog/assets/js/addons-frontend-blog-utils.js',
+        [`${blogUtils}/style.css`]: 'blog/assets/css/addons-frontend-blog-utils.css',
       });
     } else {
       eleventyConfig.addPassthroughCopy({
-        './src/content/robots.txt': 'robots.txt',
+        './src/content/robots.txt': 'blog/robots.txt',
       });
+      // We want to copy the same file twice but it isn't possible, see:
+      // https://github.com/11ty/eleventy/issues/924
+      fs.copySync(
+        './src/content/robots.txt',
+        path.join(outputDir, 'robots.txt')
+      );
     }
 
     let browserSyncConfig = {

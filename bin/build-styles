@@ -7,7 +7,7 @@ const sass = require('node-sass');
 
 const renderSass = util.promisify(sass.render);
 const inputFile = './src/assets/css/styles.scss';
-const outputFile = './build/assets/css/styles.css';
+const outputFile = './build/blog/assets/css/styles.css';
 const isProduction = process.env.ELEVENTY_ENV === 'production';
 
 const buildSass = async function () {

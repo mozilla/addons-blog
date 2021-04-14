@@ -8,15 +8,15 @@
 
     {{ blogpost.seoHead | safe({ isHeadMarkup: true }) }}
 
-    <link rel="apple-touch-icon" href="{{ config.asset_path|safe }}/assets/img/favicon.png">
-    <link rel="shortcut icon" href="{{ config.asset_path|safe }}/assets/img/favicon.ico">
+    <link rel="apple-touch-icon" href="{{ config.asset_path | safe }}/blog/assets/img/favicon.png">
+    <link rel="shortcut icon" href="{{ config.asset_path | safe }}/blog/assets/img/favicon.ico">
 
     {%- if not config.no_atom_feed %}
     <link rel="alternate" type="application/atom+xml" title="{{ markup.siteTitle }} RSS Feed" href="/blog/feed.xml">
     {%- endif %}
 
     {% block stylesheets %}
-    <link rel="stylesheet" href="{{ config.asset_path|safe }}/assets/css/styles.css">
+    <link rel="stylesheet" href="{{ config.asset_path | safe }}/blog/assets/css/styles.css">
     {%- endblock %}
   </head>
   <body>
@@ -47,7 +47,7 @@
     {{ markup.footer | safe }}
 
     {% block javascripts %}
-    <script src="{{ config.asset_path|safe }}/assets/js/bundle.js"></script>
+    <script src="{{ config.asset_path | safe }}/blog/assets/js/bundle.js"></script>
     {% endblock %}
   </body>
 </html>

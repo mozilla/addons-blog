@@ -15,6 +15,7 @@ const acorn = require('acorn');
 const walk = require('acorn-walk');
 const Url = require('url-parse');
 
+const assetsDirPrefix = '/blog/assets';
 // The dir that Eleventy builds to.
 const builtAssetDir = path.resolve(__dirname, '../build/');
 // Where we're writing to.
@@ -25,7 +26,7 @@ const binaryAssetsPattern = /\.(?:ico|jpe?g|png|tiff|webp|eot|gif|otf|ttf|woff2?
 const unHashableAssetsPattern = /(?:robots\.txt|\.html|pages\.json)$/;
 
 const defaultOptions = {
-  //assetsDirPrefix,
+  assetsDirPrefix,
   binaryAssetsPattern,
   unHashableAssetsPattern,
 };
@@ -298,7 +299,7 @@ class AssetPipeline {
 
             // This is a special case to support relative paths in CSS files.
             if (assetURL.startsWith('../')) {
-              assetURL = assetURL.replace(/^\.\./, '/assets');
+              assetURL = assetURL.replace(/^\.\./, this.opts.assetsDirPrefix);
             }
 
             if (this.hasHashedReplacementURL(assetURL, assetMap)) {
