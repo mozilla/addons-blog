@@ -115,6 +115,12 @@ workflows:
       - build-blog:
           requires:
             - test-blog
+          filters:
+            branches:
+              only: main
       - deploy-dev:
           requires:
             - build-blog
+          filters:
+            branches:
+              only: main
