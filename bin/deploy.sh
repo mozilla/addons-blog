@@ -17,6 +17,10 @@ if [ -z "$ADDONS_BLOG_BUCKET" ]; then
     exit 1
 fi
 
+if [ -n "$ADDONS_BLOG_BUCKET_PREFIX" ]; then
+    ADDONS_BLOG_BUCKET="$ADDONS_BLOG_BUCKET/$ADDONS_BLOG_BUCKET_PREFIX"
+fi
+
 # The basic strategy is to sync all the files that need special attention
 # first, and then sync everything else which will get defaults
 
