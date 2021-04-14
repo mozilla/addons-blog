@@ -98,9 +98,31 @@ describe(__filename, () => {
     it('replaces the WORDPRESS_BASE_URL with the AMO_BLOG_BASE_URL', () => {
       expect(
         fixInternalURLs(
-          `${WORDPRESS_BASE_URL}/foo // ${WORDPRESS_BASE_URL}/bar`
+          [
+            `${WORDPRESS_BASE_URL}/foo`,
+            `${WORDPRESS_BASE_URL}/bar`,
+            `${WORDPRESS_BASE_URL}/`,
+          ].join('\n')
         )
-      ).toEqual(`${AMO_BLOG_BASE_URL}/foo // ${AMO_BLOG_BASE_URL}/bar`);
+      ).toEqual(
+        [
+          `${AMO_BLOG_BASE_URL}/foo`,
+          `${AMO_BLOG_BASE_URL}/bar`,
+          `${AMO_BLOG_BASE_URL}/`,
+        ].join('\n')
+      );
+    });
+
+    it('skips /wp-content/ URLs', () => {
+      expect(fixInternalURLs(`${WORDPRESS_BASE_URL}/wp-content/`)).toEqual(
+        `${WORDPRESS_BASE_URL}/wp-content/`
+      );
+      expect(
+        fixInternalURLs(`${WORDPRESS_BASE_URL}/wp-content/foobar`)
+      ).toEqual(`${WORDPRESS_BASE_URL}/wp-content/foobar`);
+      expect(
+        fixInternalURLs(`${WORDPRESS_BASE_URL}/wp-content/foobar/image.png`)
+      ).toEqual(`${WORDPRESS_BASE_URL}/wp-content/foobar/image.png`);
     });
 
     it('replaces non-HTTPS URLs', () => {
