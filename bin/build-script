@@ -3,14 +3,16 @@
 /*
  * This script concatenates all the JS files listed below.
  * Minification is run for production builds separately
- *
  */
 
 const fetch = require('node-fetch');
 const fs = require('fs-extra');
 const isProduction = process.env.ELEVENTY_ENV === 'production';
 
-const inputFiles = ['src/assets/js/new-tab-links.js'];
+const inputFiles = [
+  'src/assets/js/new-tab-links.js',
+  'src/assets/js/dynamic-addon-cards.js',
+];
 
 const outputFile = './build/blog/assets/js/bundle.js';
 
