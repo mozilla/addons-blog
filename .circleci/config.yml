@@ -1,6 +1,31 @@
 version: 2.1
 
 references:
+  attach_deploy_workspace: &attach_deploy_workspace
+    attach_workspace:
+      at: .
+
+  deployment_container: &deployment_container
+    docker:
+      - image: circleci/python:3.9-node
+
+  node_prod_container: &node_prod_container
+    docker:
+      - image: circleci/node:12
+
+  install_aws_cli: &install_aws_cli
+    run:
+      name: Install AWS CLI
+      command: |
+        sudo pip install --upgrade pip
+        sudo pip install --upgrade awscli
+
+  persist_build_workspace: &persist_build_workspace
+    persist_to_workspace:
+      root: ./
+      paths:
+        - ./*
+
   restore_build_cache: &restore_build_cache
     restore_cache:
       name: restore yarn package cache
@@ -21,7 +46,7 @@ references:
         - ~/.cache/yarn
 
 jobs:
-  wptheme:
+  test-wptheme:
     docker:
       - image: cimg/php:7.4-node
     steps:
@@ -38,9 +63,8 @@ jobs:
             ./vendor/bin/phpunit
       - run: test -f wptheme.zip
 
-  blog:
-    docker:
-      - image: circleci/node:12
+  test-blog:
+    <<: *node_prod_container
     steps:
       - checkout
       - *restore_build_cache
@@ -57,9 +81,46 @@ jobs:
             yarn script:build
             bin/asset-pipeline
 
+  build-blog:
+    <<: *node_prod_container
+    steps:
+      - checkout
+      - *restore_build_cache
+      - *run_yarn_install
+      - *save_build_cache
+      - run: yarn build:production
+      - *persist_build_workspace
+
+  deploy-dev:
+    <<: *deployment_container
+    steps:
+      - *attach_deploy_workspace
+      - *install_aws_cli
+      - run:
+          name: addons-blog deployment (dev)
+          command: |
+            pwd && ls -l
+            AWS_ACCESS_KEY_ID="${DEV_AWS_ACCESS_KEY_ID}"              \
+            AWS_SECRET_ACCESS_KEY="${DEV_AWS_SECRET_ACCESS_KEY}"      \
+            ADDONS_BLOG_BUCKET="${DEV_ADDONS_BLOG_BUCKET}"            \
+            ADDONS_BLOG_BUCKET_PREFIX="${ADDONS_BLOG_BUCKET_PREFIX}"  \
+            ./bin/deploy.sh
+
 workflows:
   version: 2
   default-workflow:
     jobs:
-      - wptheme
-      - blog
+      - test-wptheme
+      - test-blog
+      - build-blog:
+          requires:
+            - test-blog
+          filters:
+            branches:
+              only: main
+      - deploy-dev:
+          requires:
+            - build-blog
+          filters:
+            branches:
+              only: main
