@@ -43,7 +43,7 @@ CSP="\"content-security-policy\": \"default-src 'none'; "\
 "font-src 'self'; "\
 "form-action 'none'; "\
 "frame-ancestors 'none'; "\
-"img-src 'self'; "\
+"img-src 'self' data: https://addons.cdn.mozilla.net/user-media/ https://mozamo.wpengine.com/wp-content/ https://secure.gravatar.com; "\
 "object-src 'none'; "\
 "script-src 'self' https://www.google-analytics.com/analytics.js; "\
 "style-src 'self' 'unsafe-inline'\""
