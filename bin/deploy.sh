@@ -6,7 +6,10 @@
 
 set -ex
 
-if [ ! -d "dist" ]; then
+# The src_dir is where the build artifacts are located. No trailing slash.
+src_dir="dist/blog"
+
+if [ ! -d "$src_dir" ]; then
     echo "Can't find /dist/ directory. Are you running from the correct"\
          "root directory?"
     exit 1
@@ -59,7 +62,7 @@ ACAO="\"Access-Control-Allow-Origin\": \"*\""
 [ -e version.json ] || $(dirname $0)/build-version-json.sh
 
 if [ -e version.json ]; then
-    mv version.json dist/__version__
+    mv version.json "${src_dir}/__version__"
     # __version__ JSON; short cache
     aws s3 cp \
       --cache-control "max-age=${TEN_MINUTES}" \
@@ -67,7 +70,7 @@ if [ -e version.json ]; then
       --metadata "{${ACAO}, ${CSPSTATIC}, ${HSTS}, ${TYPE}, ${XSS}, ${XFRAME}, ${REFERRER}}" \
       --metadata-directive "REPLACE" \
       --acl "public-read" \
-      dist/__version__ s3://${ADDONS_BLOG_BUCKET}/__version__
+      "${src_dir}/__version__" s3://${ADDONS_BLOG_BUCKET}/__version__
 fi
 
 # HTML; short cache
@@ -79,7 +82,7 @@ aws s3 sync \
   --metadata "{${CSP}, ${HSTS}, ${TYPE}, ${XSS}, ${XFRAME}, ${REFERRER}}" \
   --metadata-directive "REPLACE" \
   --acl "public-read" \
-  dist/blog/ s3://${ADDONS_BLOG_BUCKET}/
+  "$src_dir"/ s3://${ADDONS_BLOG_BUCKET}/
 
 # JSON; short cache
 aws s3 sync \
@@ -90,7 +93,7 @@ aws s3 sync \
   --metadata "{${ACAO}, ${CSPSTATIC}, ${HSTS}, ${TYPE}, ${XSS}, ${XFRAME}, ${REFERRER}}" \
   --metadata-directive "REPLACE" \
   --acl "public-read" \
-  dist/blog/ s3://${ADDONS_BLOG_BUCKET}/
+  "$src_dir"/ s3://${ADDONS_BLOG_BUCKET}/
 
 # SVG; cache forever, assign correct content-type
 aws s3 sync \
@@ -101,20 +104,19 @@ aws s3 sync \
   --metadata "{${CSPSTATIC}, ${HSTS}, ${TYPE}, ${XSS}, ${XFRAME}, ${REFERRER}}" \
   --metadata-directive "REPLACE" \
   --acl "public-read" \
-  dist/blog/ s3://${ADDONS_BLOG_BUCKET}/
+  "$src_dir"/ s3://${ADDONS_BLOG_BUCKET}/
 
 # Everything else; cache forever, because it has hashes in the filenames
 aws s3 sync \
-  --delete \
   --cache-control "max-age=${ONE_YEAR}, immutable" \
   --metadata "{${CSPSTATIC}, ${HSTS}, ${TYPE}, ${XSS}, ${XFRAME}, ${REFERRER}}" \
   --metadata-directive "REPLACE" \
   --acl "public-read" \
-  dist/blog/ s3://${ADDONS_BLOG_BUCKET}/
+  "$src_dir"/ s3://${ADDONS_BLOG_BUCKET}/
 
 # HTML - `path/index.html` to `path` resources; short cache
-for fn in $(find dist/blog -name 'index.html' -not -path 'dist/blog/index.html'); do
-  s3path=${fn#dist/blog/}
+for fn in $(find "$src_dir" -name 'index.html' -not -path "$src_dir"/index.html); do
+  s3path=${fn#"$src_dir"/}
   s3path=${s3path%/index.html}
   aws s3 cp \
     --cache-control "max-age=${TEN_MINUTES}" \
