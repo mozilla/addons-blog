@@ -52,8 +52,10 @@ $pull-quote-color: #4e1a6a;
     line-height: $heading-xxs-line-height;
   }
 
-  li {
-    margin: $default-margin 0;
+  li,
+  ul,
+  p {
+    margin: 14px 0;
   }
 
   img {
@@ -68,6 +70,10 @@ $pull-quote-color: #4e1a6a;
     &:not(.Button) {
       color: $link-color;
     }
+  }
+
+  figcaption {
+    text-align: center;
   }
 
   .wp-block-pullquote {

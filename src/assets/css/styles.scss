@@ -37,6 +37,10 @@ main {
   max-width: $max-content-width;
   flex: 1 0 auto;
   padding: $default-padding;
+
+  @include respond-to(l) {
+    padding: 40px $default-padding;
+  }
 }
 
 .visually-hidden {

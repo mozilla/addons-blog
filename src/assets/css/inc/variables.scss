@@ -10,17 +10,18 @@ $default-margin: $default-padding;
 
 $max-content-width: 1366px;
 
-// See: https://mozilla.design/firefox/typography/
-$body-sm-font-size: 14px;
-$body-sm-line-height: 22px;
+// We used https://mozilla.design/firefox/typography/ as a starting point but
+// line-heights are slightly different because we want unitless values.
+$body-sm-font-size: 16px;
+$body-sm-line-height: 1.5;
 $heading-xxs-font-size: 20px;
-$heading-xxs-line-height: 24px;
+$heading-xxs-line-height: 1.2;
 $heading-xs-font-size: 24px;
-$heading-xs-line-height: 28px;
+$heading-xs-line-height: 1.2;
 $heading-sm-font-size: 32px;
-$heading-sm-line-height: 36px;
+$heading-sm-line-height: 1.2;
 $heading-md-font-size: 40px;
-$heading-md-line-height: 44px;
+$heading-md-line-height: 1.2;
 
 // No "small" breakpoint is defined here because we are mobile-first.
 //
@@ -30,6 +31,14 @@ $breakpoints: (
   m: only screen and
     (
       min-width: 500px,
+    ),
+  m-height: only screen and
+    (
+      min-width: 500px,
+    )
+    and
+    (
+      min-height: 500px,
     ),
   l: only screen and
     (
