@@ -108,6 +108,7 @@ aws s3 sync \
 
 # Everything else; cache forever, because it has hashes in the filenames
 aws s3 sync \
+  --delete \
   --cache-control "max-age=${ONE_YEAR}, immutable" \
   --metadata "{${CSPSTATIC}, ${HSTS}, ${TYPE}, ${XSS}, ${XFRAME}, ${REFERRER}}" \
   --metadata-directive "REPLACE" \
