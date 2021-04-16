@@ -1,4 +1,4 @@
-/* global document */
+/* global document, window */
 const { buildStaticAddonCard } = require('addons-frontend-blog-utils');
 const UAParser = require('ua-parser-js');
 
@@ -70,6 +70,24 @@ describe(__filename, () => {
       const parsedUserAgent = new UAParser(userAgent);
 
       return updateAddonCard(card, { parsedUserAgent });
+    };
+
+    const expectDisabledInstallButton = ({ getFirefoxButton, downloadURL }) => {
+      const button = getFirefoxButton.querySelector('.GetFirefoxButton-button');
+
+      expect(button.classList).toContain('Button--disabled');
+      expect(button.getAttribute('aria-disabled')).toEqual('true');
+      expect(button.getAttribute('href')).toEqual(downloadURL);
+
+      const event = new window.MouseEvent('click');
+      const preventDefaultSpy = jest.spyOn(event, 'preventDefault');
+      button.dispatchEvent(event);
+      expect(preventDefaultSpy).toHaveBeenCalled();
+    };
+
+    const expectEnabledInstallButton = ({ getFirefoxButton }) => {
+      const button = getFirefoxButton.querySelector('.GetFirefoxButton-button');
+      expect(button.classList).not.toContain('Button--disabled');
     };
 
     it('calls the AMO API', async () => {
@@ -172,10 +190,7 @@ describe(__filename, () => {
         userAgent: userAgentsByPlatform.ios.firefox1iPad,
       });
 
-      const button = getFirefoxButton.querySelector('.GetFirefoxButton-button');
-      expect(button.classList).toContain('Button--disabled');
-      expect(button.getAttribute('disabled')).toEqual('true');
-      expect(button.getAttribute('href')).toEqual('');
+      expectDisabledInstallButton({ getFirefoxButton, downloadURL: '' });
     });
 
     it('disables the install button when there is no current version', async () => {
@@ -188,10 +203,7 @@ describe(__filename, () => {
         userAgent: userAgentsByPlatform.mac.firefox69,
       });
 
-      const button = getFirefoxButton.querySelector('.GetFirefoxButton-button');
-      expect(button.classList).toContain('Button--disabled');
-      expect(button.getAttribute('disabled')).toEqual('true');
-      expect(button.getAttribute('href')).toEqual('');
+      expectDisabledInstallButton({ getFirefoxButton, downloadURL: '' });
     });
 
     it('disables the install button when current version file is falsey', async () => {
@@ -210,10 +222,7 @@ describe(__filename, () => {
         userAgent: userAgentsByPlatform.mac.firefox69,
       });
 
-      const button = getFirefoxButton.querySelector('.GetFirefoxButton-button');
-      expect(button.classList).toContain('Button--disabled');
-      expect(button.getAttribute('disabled')).toEqual('true');
-      expect(button.getAttribute('href')).toEqual('');
+      expectDisabledInstallButton({ getFirefoxButton, downloadURL: '' });
     });
 
     it('disables the install button when there is no current version file', async () => {
@@ -232,10 +241,7 @@ describe(__filename, () => {
         userAgent: userAgentsByPlatform.mac.firefox69,
       });
 
-      const button = getFirefoxButton.querySelector('.GetFirefoxButton-button');
-      expect(button.classList).toContain('Button--disabled');
-      expect(button.getAttribute('disabled')).toEqual('true');
-      expect(button.getAttribute('href')).toEqual('');
+      expectDisabledInstallButton({ getFirefoxButton, downloadURL: '' });
     });
 
     it('disables the install button when there is no download URL', async () => {
@@ -254,10 +260,114 @@ describe(__filename, () => {
         userAgent: userAgentsByPlatform.mac.firefox69,
       });
 
-      const button = getFirefoxButton.querySelector('.GetFirefoxButton-button');
-      expect(button.classList).toContain('Button--disabled');
-      expect(button.getAttribute('disabled')).toEqual('true');
-      expect(button.getAttribute('href')).toEqual('');
+      expectDisabledInstallButton({ getFirefoxButton, downloadURL: '' });
+    });
+
+    describe('Firefox for Android', () => {
+      it('disables the install button when add-on is not promoted', async () => {
+        const addon = { ...tabbyAddon, promoted: null };
+        const card = await loadStaticAddonCardInDocument({ addon });
+        const getFirefoxButton = card.querySelector('.GetFirefoxButton');
+        mockFetch({ jsonData: addon });
+
+        await _updateAddonCard(card, {
+          userAgent: userAgentsByPlatform.android.firefox70,
+        });
+
+        expectDisabledInstallButton({
+          getFirefoxButton,
+          downloadURL: addon.current_version.files[0].url,
+        });
+      });
+
+      it('disables the install button when add-on is not recommended for Android', async () => {
+        const addon = {
+          ...tabbyAddon,
+          promoted: {
+            apps: ['firefox'],
+            category: 'recommended',
+          },
+        };
+        const card = await loadStaticAddonCardInDocument({ addon });
+        const getFirefoxButton = card.querySelector('.GetFirefoxButton');
+        mockFetch({ jsonData: addon });
+
+        await _updateAddonCard(card, {
+          userAgent: userAgentsByPlatform.android.firefox70,
+        });
+
+        expectDisabledInstallButton({
+          getFirefoxButton,
+          downloadURL: addon.current_version.files[0].url,
+        });
+      });
+
+      it('disables the install button when add-on is promoted for Android but not recommended', async () => {
+        const addon = {
+          ...tabbyAddon,
+          promoted: {
+            apps: ['android'],
+            category: 'line',
+          },
+        };
+        const card = await loadStaticAddonCardInDocument({ addon });
+        const getFirefoxButton = card.querySelector('.GetFirefoxButton');
+        mockFetch({ jsonData: addon });
+
+        await _updateAddonCard(card, {
+          userAgent: userAgentsByPlatform.android.firefox70,
+        });
+
+        expectDisabledInstallButton({
+          getFirefoxButton,
+          downloadURL: addon.current_version.files[0].url,
+        });
+      });
+
+      it('disables the install button when add-on is recommended for Android but there is no compatibility data', async () => {
+        const addon = {
+          ...tabbyAddon,
+          current_version: {
+            ...tabbyAddon.current_version,
+            compatibility: {},
+          },
+          promoted: {
+            apps: ['android'],
+            category: 'recommended',
+          },
+        };
+        const card = await loadStaticAddonCardInDocument({ addon });
+        const getFirefoxButton = card.querySelector('.GetFirefoxButton');
+        mockFetch({ jsonData: addon });
+
+        await _updateAddonCard(card, {
+          userAgent: userAgentsByPlatform.android.firefox70,
+        });
+
+        expectDisabledInstallButton({
+          getFirefoxButton,
+          downloadURL: addon.current_version.files[0].url,
+        });
+      });
+
+      it('enables the install button when add-on is recommended for Android', async () => {
+        const addon = {
+          ...tabbyAddon,
+          promoted: {
+            apps: ['android'],
+            category: 'recommended',
+          },
+        };
+        const card = await loadStaticAddonCardInDocument({ addon });
+        const getFirefoxButton = card.querySelector('.GetFirefoxButton');
+        mockFetch({ jsonData: addon });
+
+        await _updateAddonCard(card, {
+          userAgent: userAgentsByPlatform.android.firefox70,
+        });
+
+        expectEnabledInstallButton({ getFirefoxButton });
+      });
     });
   });
 });

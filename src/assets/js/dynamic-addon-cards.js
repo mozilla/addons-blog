@@ -26,7 +26,13 @@
 
     if (disableButton) {
       button.classList.add('Button--disabled');
-      button.setAttribute('disabled', true);
+      button.setAttribute('aria-disabled', true);
+      // We don't want to remove the URL pointing to the XPI in `href` (so that
+      // power users can still download the XPI). This is why we have to abort
+      // `click` events with a listener.
+      button.addEventListener('click', (event) => {
+        event.preventDefault();
+      });
     }
   };
 
@@ -63,7 +69,7 @@
           );
           disableButton = true;
         } else {
-          const { current_version } = await response.json();
+          const { current_version, promoted } = await response.json();
 
           if (!current_version || !current_version.files) {
             console.debug(`invalid current version for addonId=${addonId}`);
@@ -80,10 +86,21 @@
             }
           }
 
-          // TODO: if `clientApp` is `android`, we should also check the
-          // recommended prop and see whether the add-on can be installed on
-          // Fenix.  We probably don't need to care about Fennec anymore.
-          // Then, we will need to check the min version since the max version
+          if (!disableButton && clientApp === 'android') {
+            const isRecommended =
+              promoted && promoted.apps.includes(clientApp)
+                ? promoted.category === 'recommended'
+                : false;
+
+            if (!isRecommended || !current_version.compatibility[clientApp]) {
+              console.debug(
+                `add-on with addonId=${addonId} is not installable on Android`
+              );
+              disableButton = true;
+            }
+          }
+
+          // TODO: we will need to check the min version since the max version
           // is usually not a problem (AMO does not disable the install button
           // when we are over the max version).
         }
@@ -102,6 +119,7 @@
     }
   };
 
+  /* istanbul ignore else */
   if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
     module.exports = {
       convertToUnavailableCard,
