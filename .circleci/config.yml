@@ -104,6 +104,7 @@ jobs:
             AWS_SECRET_ACCESS_KEY="${DEV_AWS_SECRET_ACCESS_KEY}"      \
             ADDONS_BLOG_BUCKET="${DEV_ADDONS_BLOG_BUCKET}"            \
             ADDONS_BLOG_BUCKET_PREFIX="${ADDONS_BLOG_BUCKET_PREFIX}"  \
+            AMO_BASE_URL=https://addons-dev.allizom.org               \
             ./bin/deploy.sh
 
 workflows:
