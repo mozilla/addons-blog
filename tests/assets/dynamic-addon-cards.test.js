@@ -57,6 +57,10 @@ describe(__filename, () => {
         firefox69:
           'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:69.0) Gecko/20100101 Firefox/69.0',
       },
+      ios: {
+        firefox1iPad:
+          'Mozilla/5.0 (iPad; CPU iPhone OS 8_3 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) FxiOS/1.0 Mobile/12F69 Safari/600.1.4',
+      },
     };
 
     const _updateAddonCard = (
@@ -124,6 +128,136 @@ describe(__filename, () => {
       await _updateAddonCard(card);
 
       expect(card.classList).toContain('StaticAddonCard--is-unavailable');
+    });
+
+    it('converts the "GetFirefox" button to an install button when UserAgent is Firefox', async () => {
+      const downloadURL = 'https://example.org/addon.xpi';
+      const addon = {
+        ...tabbyAddon,
+        current_version: {
+          ...tabbyAddon.current_version,
+          files: [{ ...tabbyAddon.current_version.files[0], url: downloadURL }],
+        },
+      };
+      const card = await loadStaticAddonCardInDocument({ addon });
+      const getFirefoxButton = card.querySelector('.GetFirefoxButton');
+      mockFetch({ jsonData: addon });
+
+      expect(getFirefoxButton.classList).toContain('GetFirefoxButton--new');
+      expect(
+        getFirefoxButton.querySelector('.GetFirefoxButton-callout')
+      ).not.toBeNull();
+
+      await _updateAddonCard(card, {
+        userAgent: userAgentsByPlatform.mac.firefox69,
+      });
+
+      expect(getFirefoxButton.classList).not.toContain('GetFirefoxButton--new');
+      expect(
+        getFirefoxButton.querySelector('.GetFirefoxButton-callout')
+      ).toBeNull();
+
+      const button = getFirefoxButton.querySelector('.GetFirefoxButton-button');
+      expect(button.classList).toContain('Button--action');
+      expect(button.innerText).toEqual('Add to Firefox');
+      expect(button.getAttribute('href')).toEqual(downloadURL);
+    });
+
+    it('disables the install button for Firefox for iOS', async () => {
+      const card = await loadStaticAddonCardInDocument();
+      const getFirefoxButton = card.querySelector('.GetFirefoxButton');
+      mockFetch();
+
+      await _updateAddonCard(card, {
+        userAgent: userAgentsByPlatform.ios.firefox1iPad,
+      });
+
+      const button = getFirefoxButton.querySelector('.GetFirefoxButton-button');
+      expect(button.classList).toContain('Button--disabled');
+      expect(button.getAttribute('disabled')).toEqual('true');
+      expect(button.getAttribute('href')).toEqual('');
+    });
+
+    it('disables the install button when there is no current version', async () => {
+      const addon = { ...tabbyAddon, current_version: null };
+      const card = await loadStaticAddonCardInDocument({ addon });
+      const getFirefoxButton = card.querySelector('.GetFirefoxButton');
+      mockFetch({ jsonData: addon });
+
+      await _updateAddonCard(card, {
+        userAgent: userAgentsByPlatform.mac.firefox69,
+      });
+
+      const button = getFirefoxButton.querySelector('.GetFirefoxButton-button');
+      expect(button.classList).toContain('Button--disabled');
+      expect(button.getAttribute('disabled')).toEqual('true');
+      expect(button.getAttribute('href')).toEqual('');
+    });
+
+    it('disables the install button when current version file is falsey', async () => {
+      const addon = {
+        ...tabbyAddon,
+        current_version: {
+          ...tabbyAddon.current_version,
+          files: null,
+        },
+      };
+      const card = await loadStaticAddonCardInDocument({ addon });
+      const getFirefoxButton = card.querySelector('.GetFirefoxButton');
+      mockFetch({ jsonData: addon });
+
+      await _updateAddonCard(card, {
+        userAgent: userAgentsByPlatform.mac.firefox69,
+      });
+
+      const button = getFirefoxButton.querySelector('.GetFirefoxButton-button');
+      expect(button.classList).toContain('Button--disabled');
+      expect(button.getAttribute('disabled')).toEqual('true');
+      expect(button.getAttribute('href')).toEqual('');
+    });
+
+    it('disables the install button when there is no current version file', async () => {
+      const addon = {
+        ...tabbyAddon,
+        current_version: {
+          ...tabbyAddon.current_version,
+          files: [],
+        },
+      };
+      const card = await loadStaticAddonCardInDocument({ addon });
+      const getFirefoxButton = card.querySelector('.GetFirefoxButton');
+      mockFetch({ jsonData: addon });
+
+      await _updateAddonCard(card, {
+        userAgent: userAgentsByPlatform.mac.firefox69,
+      });
+
+      const button = getFirefoxButton.querySelector('.GetFirefoxButton-button');
+      expect(button.classList).toContain('Button--disabled');
+      expect(button.getAttribute('disabled')).toEqual('true');
+      expect(button.getAttribute('href')).toEqual('');
+    });
+
+    it('disables the install button when there is no download URL', async () => {
+      const addon = {
+        ...tabbyAddon,
+        current_version: {
+          ...tabbyAddon.current_version,
+          files: [{ ...tabbyAddon.current_version.files[0], url: null }],
+        },
+      };
+      const card = await loadStaticAddonCardInDocument({ addon });
+      const getFirefoxButton = card.querySelector('.GetFirefoxButton');
+      mockFetch({ jsonData: addon });
+
+      await _updateAddonCard(card, {
+        userAgent: userAgentsByPlatform.mac.firefox69,
+      });
+
+      const button = getFirefoxButton.querySelector('.GetFirefoxButton-button');
+      expect(button.classList).toContain('Button--disabled');
+      expect(button.getAttribute('disabled')).toEqual('true');
+      expect(button.getAttribute('href')).toEqual('');
     });
   });
 });
