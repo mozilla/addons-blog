@@ -67,6 +67,7 @@
     "stylelint": "^13.11.0",
     "stylelint-config-standard": "^21.0.0",
     "terser": "5.6.1",
+    "ua-parser-js": "^0.7.28",
     "url-parse": "^1.5.1"
   },
   "browserslist": [

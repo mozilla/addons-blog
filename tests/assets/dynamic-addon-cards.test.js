@@ -1,5 +1,6 @@
 /* global document */
 const { buildStaticAddonCard } = require('addons-frontend-blog-utils');
+const UAParser = require('ua-parser-js');
 
 const {
   convertToUnavailableCard,
@@ -45,15 +46,63 @@ describe(__filename, () => {
   });
 
   describe('updateAddonCard', () => {
+    const userAgentsByPlatform = {
+      android: {
+        firefox70:
+          'Mozilla/5.0 (Android 9; Mobile; rv:70.0) Gecko/70.0 Firefox/70.0',
+      },
+      mac: {
+        chrome41:
+          'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2227.1 Safari/537.36',
+        firefox69:
+          'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:69.0) Gecko/20100101 Firefox/69.0',
+      },
+    };
+
+    const _updateAddonCard = (
+      card,
+      { userAgent = userAgentsByPlatform.mac.chrome41 } = {}
+    ) => {
+      const parsedUserAgent = new UAParser(userAgent);
+
+      return updateAddonCard(card, { parsedUserAgent });
+    };
+
     it('calls the AMO API', async () => {
       const addon = { ...tabbyAddon };
       const card = await loadStaticAddonCardInDocument({ addon });
       const fetch = mockFetch({ jsonData: addon });
 
-      await updateAddonCard(card);
+      await _updateAddonCard(card);
 
       expect(fetch).toHaveBeenCalledWith(
         `https://addons.mozilla.org/api/v5/addons/addon/${addon.id}/?lang=en-US&app=firefox`
+      );
+    });
+
+    it('sets the app to firefox when OS is not Android', async () => {
+      const card = await loadStaticAddonCardInDocument();
+      const fetch = mockFetch();
+
+      await _updateAddonCard(card, {
+        userAgent: userAgentsByPlatform.mac.firefox69,
+      });
+
+      expect(fetch).toHaveBeenCalledWith(
+        expect.stringContaining('?lang=en-US&app=firefox')
+      );
+    });
+
+    it('sets the app to android when OS is Android', async () => {
+      const card = await loadStaticAddonCardInDocument();
+      const fetch = mockFetch();
+
+      await _updateAddonCard(card, {
+        userAgent: userAgentsByPlatform.android.firefox70,
+      });
+
+      expect(fetch).toHaveBeenCalledWith(
+        expect.stringContaining('?lang=en-US&app=android')
       );
     });
 
@@ -62,7 +111,7 @@ describe(__filename, () => {
       delete card.dataset.addonId;
       const fetch = mockFetch();
 
-      await updateAddonCard(card);
+      await _updateAddonCard(card);
 
       expect(fetch).not.toHaveBeenCalled();
       expect(card.classList).toContain('StaticAddonCard--is-unavailable');
@@ -72,7 +121,7 @@ describe(__filename, () => {
       const card = await loadStaticAddonCardInDocument();
       mockFetch({ ok: false });
 
-      await updateAddonCard(card);
+      await _updateAddonCard(card);
 
       expect(card.classList).toContain('StaticAddonCard--is-unavailable');
     });

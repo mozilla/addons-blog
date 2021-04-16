@@ -1,5 +1,5 @@
 /* eslint no-console: 0 */
-/* global document, fetch */
+/* global document, fetch, UAParser */
 (function dynamicAddonCards() {
   const AMO_BASE_URL = 'https://addons.mozilla.org';
 
@@ -9,7 +9,7 @@
     card.classList.add('StaticAddonCard--is-unavailable');
   };
 
-  const updateAddonCard = async (card) => {
+  const updateAddonCard = async (card, { parsedUserAgent }) => {
     const { addonId } = card.dataset;
 
     try {
@@ -17,9 +17,8 @@
         throw new Error('addonId is missing');
       }
 
-      // TODO: use UAParser to find the right `clientApp` (either `firefox` or
-      // `android`).
-      const clientApp = 'firefox';
+      const { name: osName } = parsedUserAgent.getOS();
+      const clientApp = osName === 'Android' ? 'android' : 'firefox';
 
       const response = await fetch(
         `${AMO_BASE_URL}/api/v5/addons/addon/${addonId}/?lang=en-US&app=${clientApp}`
@@ -40,6 +39,10 @@
       updateAddonCard,
     };
   } else {
-    document.querySelectorAll('.StaticAddonCard').forEach(updateAddonCard);
+    const parsedUserAgent = new UAParser();
+
+    document
+      .querySelectorAll('.StaticAddonCard')
+      .forEach((card) => updateAddonCard(card, { parsedUserAgent }));
   }
 })();
