@@ -9,6 +9,27 @@
     card.classList.add('StaticAddonCard--is-unavailable');
   };
 
+  const convertToInstallButton = ({
+    getFirefoxButton,
+    downloadURL,
+    disableButton,
+  }) => {
+    getFirefoxButton.classList.remove('GetFirefoxButton--new');
+    getFirefoxButton.querySelector('.GetFirefoxButton-callout').remove();
+
+    const button = getFirefoxButton.querySelector('.GetFirefoxButton-button');
+
+    button.classList.add('Button--action');
+    // eslint-disable-next-line no-param-reassign
+    button.innerText = 'Add to Firefox';
+    button.setAttribute('href', downloadURL || '');
+
+    if (disableButton) {
+      button.classList.add('Button--disabled');
+      button.setAttribute('disabled', true);
+    }
+  };
+
   const updateAddonCard = async (card, { parsedUserAgent }) => {
     const { addonId } = card.dataset;
 
@@ -26,6 +47,54 @@
 
       if (!response.ok) {
         throw new Error('add-on not found');
+      }
+
+      const { name: browserName } = parsedUserAgent.getBrowser();
+      const isFirefox = browserName === 'Firefox';
+
+      if (isFirefox) {
+        let downloadURL;
+        let disableButton;
+
+        // Firefox for iOS does not support add-ons.
+        if (osName === 'iOS') {
+          console.debug(
+            `disabling install button for addonId=${addonId} because Firefox for iOS does not support add-ons`
+          );
+          disableButton = true;
+        } else {
+          const { current_version } = await response.json();
+
+          if (!current_version || !current_version.files) {
+            console.debug(`invalid current version for addonId=${addonId}`);
+            disableButton = true;
+          }
+
+          if (!disableButton) {
+            const file = current_version.files[0];
+            downloadURL = file && file.url;
+
+            if (!downloadURL) {
+              console.debug(`no download URL for addonId=${addonId}`);
+              disableButton = true;
+            }
+          }
+
+          // TODO: if `clientApp` is `android`, we should also check the
+          // recommended prop and see whether the add-on can be installed on
+          // Fenix.  We probably don't need to care about Fennec anymore.
+          // Then, we will need to check the min version since the max version
+          // is usually not a problem (AMO does not disable the install button
+          // when we are over the max version).
+        }
+
+        const getFirefoxButton = card.querySelector('.GetFirefoxButton');
+
+        convertToInstallButton({
+          getFirefoxButton,
+          downloadURL,
+          disableButton,
+        });
       }
     } catch (e) {
       console.debug(`Error caught for addonId=${addonId}: ${e.message}`);
