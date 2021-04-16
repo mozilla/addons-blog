@@ -24,6 +24,11 @@ if [ -n "$ADDONS_BLOG_BUCKET_PREFIX" ]; then
     ADDONS_BLOG_BUCKET="$ADDONS_BLOG_BUCKET/$ADDONS_BLOG_BUCKET_PREFIX"
 fi
 
+if [ -z "$AMO_BASE_URL" ]; then
+  echo "The AMO base URL is not set. Failing."
+  exit 1
+fi
+
 # The basic strategy is to sync all the files that need special attention
 # first, and then sync everything else which will get defaults
 
@@ -39,20 +44,20 @@ CSPSTATIC="\"content-security-policy\": \"default-src 'none'; "\
 "form-action 'none'; "\
 "object-src 'none'\""
 
-# DO NOT REMOVE the locale from the newsletter form url. See #476.
+# Note about `connect-src`: we only use the AMO -prod API.
 CSP="\"content-security-policy\": \"default-src 'none'; "\
 "base-uri 'self'; "\
-"connect-src 'self' https://www.google-analytics.com/; "\
-"font-src 'self'; "\
+"connect-src https://addons.mozilla.org/api/ https://www.google-analytics.com/; "\
+"font-src ${AMO_BASE_URL}/blog/assets/fonts/; "\
 "form-action 'none'; "\
 "frame-ancestors 'none'; "\
-"img-src 'self' data: https://addons.cdn.mozilla.net/user-media/ https://mozamo.wpengine.com/wp-content/ https://secure.gravatar.com; "\
+"img-src ${AMO_BASE_URL}/blog/assets/img/ data: https://addons.cdn.mozilla.net/user-media/ https://mozamo.wpengine.com/wp-content/ https://secure.gravatar.com/avatar/; "\
 "object-src 'none'; "\
-"script-src 'self' https://www.google-analytics.com/analytics.js; "\
-"style-src 'self' 'unsafe-inline'\""
+"script-src ${AMO_BASE_URL}/blog/assets/js/ https://www.google-analytics.com/analytics.js; "\
+"style-src ${AMO_BASE_URL}/blog/assets/css/ 'unsafe-inline'\""
 HSTS="\"strict-transport-security\": \"max-age=${ONE_YEAR}; includeSubDomains; preload\""
 TYPE="\"x-content-type-options\": \"nosniff\""
-XSS="\"x-xss-protection\": \"1; mode=block\""
+XSS="\"x-xss-protection\": \"0\""
 XFRAME="\"x-frame-options\": \"SAMEORIGIN\""
 REFERRER="\"referrer-policy\": \"no-referrer-when-downgrade\""
 ACAO="\"Access-Control-Allow-Origin\": \"*\""
