@@ -90,7 +90,7 @@ This starts a watcher to rebuild the JS files automatically.
 
 This project relies on the following environment variables for configuration:
 
-- `AMO_BLOG_BASE_URL`: the base URL of the blog (default: `https://addons.mozilla.org/blog`)
+- `AMO_BASE_URL`: the base URL of AMO (default: `https://addons.mozilla.org`)
 - `BUILD_WORDPRESS_THEME`: build the WordPress theme instead of the blog when set to `'1'` (default: unset)
 - `DONT_FIX_INTERNAL_URLS`: do not rewrite internal URLs when set to `'1'` (default: unset)
 - `ELEVENTY_CWD`: the current working directory for Eleventy (default: the project's root directory)

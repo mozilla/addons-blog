@@ -123,6 +123,7 @@ $pull-quote-color: #4e1a6a;
 }
 
 .blogpost-meta {
+  display: grid;
   margin: 0;
   text-align: center;
 
@@ -133,17 +134,20 @@ $pull-quote-color: #4e1a6a;
     width: auto;
   }
 
-  .updated {
-    font-weight: bold;
+  .blogpost-meta-updated {
     margin: 0;
   }
 
-  .author {
+  .updated {
+    font-weight: bold;
+  }
+
+  .blogpost-meta-author {
     margin-top: 0;
     margin-bottom: 6px;
   }
 
-  .author-avatar {
+  .blogpost-meta-avatar {
     margin-top: 0;
 
     img {
@@ -151,7 +155,41 @@ $pull-quote-color: #4e1a6a;
     }
   }
 
+  .blogpost-meta-share-twitter {
+    margin-bottom: 60px;
+    margin-top: 30px;
+    order: -1;
+  }
+
+  .share-twitter-link {
+    background: #1da1f2 url('../img/twitter.svg') 6px center no-repeat;
+    background-size: 18px 18px;
+    border-color: #0d95e8;
+    border-radius: 0;
+    border-style: solid;
+    border-width: 2px;
+    color: $white;
+    display: inline-block;
+    padding: 2px 10px 2px 35px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 100ms ease-in-out;
+
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: #0d95e8;
+    }
+  }
+
   @include respond-to(xl) {
     text-align: left;
+
+    .blogpost-meta-share-twitter {
+      margin-bottom: 0;
+      margin-top: 60px;
+      order: initial;
+    }
   }
 }
