@@ -1,5 +1,5 @@
 /* eslint no-console: 0 */
-/* global document, fetch, UAParser */
+/* global document, fetch, UAParser, navigator */
 (function dynamicAddonCards() {
   const AMO_BASE_URL = 'https://addons.mozilla.org';
 
@@ -10,9 +10,11 @@
   };
 
   const convertToInstallButton = ({
-    getFirefoxButton,
+    addonId,
     downloadURL,
-    disableButton,
+    fileHash,
+    getFirefoxButton,
+    isIncompatible,
   }) => {
     getFirefoxButton.classList.remove('GetFirefoxButton--new');
     getFirefoxButton.querySelector('.GetFirefoxButton-callout').remove();
@@ -24,7 +26,7 @@
     button.innerText = 'Add to Firefox';
     button.setAttribute('href', downloadURL || '');
 
-    if (disableButton) {
+    if (isIncompatible) {
       button.classList.add('Button--disabled');
       button.setAttribute('aria-disabled', true);
       // We don't want to remove the URL pointing to the XPI in `href` (so that
@@ -32,6 +34,27 @@
       // `click` events with a listener.
       button.addEventListener('click', (event) => {
         event.preventDefault();
+      });
+    } else if (
+      typeof navigator !== 'undefined' &&
+      typeof navigator.mozAddonManager !== 'undefined'
+    ) {
+      button.addEventListener('click', async (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        try {
+          const installObj = await navigator.mozAddonManager.createInstall({
+            url: downloadURL,
+            hash: fileHash,
+          });
+
+          await installObj.install();
+        } catch (e) {
+          console.debug(
+            `failed to install add-on with addonId=${addonId}: ${e.message}`
+          );
+        }
       });
     }
   };
@@ -59,34 +82,41 @@
       const isFirefox = browserName === 'Firefox';
 
       if (isFirefox) {
+        let isIncompatible = false;
         let downloadURL;
-        let disableButton;
+        let fileHash;
 
         // Firefox for iOS does not support add-ons.
         if (osName === 'iOS') {
           console.debug(
             `disabling install button for addonId=${addonId} because Firefox for iOS does not support add-ons`
           );
-          disableButton = true;
+          isIncompatible = true;
         } else {
           const { current_version, promoted } = await response.json();
 
           if (!current_version || !current_version.files) {
             console.debug(`invalid current version for addonId=${addonId}`);
-            disableButton = true;
+            isIncompatible = true;
           }
 
-          if (!disableButton) {
+          if (!isIncompatible) {
             const file = current_version.files[0];
             downloadURL = file && file.url;
+            fileHash = file && file.hash;
 
             if (!downloadURL) {
               console.debug(`no download URL for addonId=${addonId}`);
-              disableButton = true;
+              isIncompatible = true;
+            }
+
+            if (!fileHash) {
+              console.debug(`no file hash for addonId=${addonId}`);
+              isIncompatible = true;
             }
           }
 
-          if (!disableButton && clientApp === 'android') {
+          if (!isIncompatible && clientApp === 'android') {
             const isRecommended =
               promoted &&
               promoted.apps.includes(clientApp) &&
@@ -96,7 +126,7 @@
               console.debug(
                 `add-on with addonId=${addonId} is not installable on Android`
               );
-              disableButton = true;
+              isIncompatible = true;
             }
           }
 
@@ -110,7 +140,9 @@
         convertToInstallButton({
           getFirefoxButton,
           downloadURL,
-          disableButton,
+          fileHash,
+          isIncompatible,
+          addonId,
         });
       }
     } catch (e) {
