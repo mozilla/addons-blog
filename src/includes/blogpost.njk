@@ -6,18 +6,28 @@
   </div>
   <aside class="blogpost-sidebar">
     <dl class="blogpost-meta">
-      <div>
+      <div class="blogpost-meta-updated">
         <dt class="updated">Updated</dt>
         <dd class="updated">{{ postModifiedDate }}</dd>
       </div>
       {% if postAuthor %}
-      <div>
+      <div class="blogpost-meta-author">
         <dt class="author">By</dt>
         <dd class="author">{{ postAuthor }}</dd>
       </div>
-      <div>
+      <div class="blogpost-meta-avatar">
         <dt class="author-avatar visually-hidden">Avatar</dt>
         <dd class="author-avatar"><img src="{{ postAuthorAvatar }}"></dd>
+      </div>
+      {% endif %}
+      {% if tweetText %}
+      <div class="blogpost-meta-share-twitter">
+        <dt class="share-twitter">Share</dt>
+        <dd class="share-twitter">
+          <a class="share-twitter-link" href="https://twitter.com/intent/tweet/?text={{ tweetText }}&url={{ tweetURL }}?{{ 'utm_source=twitter&utm_medium=social&utm_campaign=shares_from_blog' | urlencode }}">
+            Twitter
+          </a>
+        </dd>
       </div>
       {% endif %}
     </dl>

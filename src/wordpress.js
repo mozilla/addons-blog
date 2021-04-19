@@ -6,8 +6,8 @@ const fetch = require('node-fetch');
 const flatcache = require('flat-cache');
 const { DateTime } = require('luxon');
 
-const AMO_BLOG_BASE_URL =
-  process.env.AMO_BLOG_BASE_URL || 'https://addons.mozilla.org/blog';
+const AMO_BASE_URL = process.env.AMO_BASE_URL || 'https://addons.mozilla.org';
+const AMO_BLOG_BASE_URL = `${AMO_BASE_URL}/blog`;
 const WORDPRESS_BASE_URL =
   process.env.WORDPRESS_BASE_URL || 'https://mozamo.wpengine.com';
 
@@ -43,6 +43,10 @@ const createPost = ({
   yoast_head,
   featured_media,
 }) => {
+  const permalink = `/blog/${DateTime.fromISO(date).toFormat(
+    'y/LL/dd'
+  )}/${slug}/`;
+
   return {
     author,
     id,
@@ -52,7 +56,8 @@ const createPost = ({
     date,
     modified,
     content: fixInternalURLs(content.rendered),
-    permalink: `/blog/${DateTime.fromISO(date).toFormat('y/LL/dd')}/${slug}/`,
+    permalink,
+    absolutePermalink: `${AMO_BASE_URL}${permalink}`,
     seoHead: fixInternalURLs(yoast_head || ''),
     featuredImage: featured_media || null,
   };

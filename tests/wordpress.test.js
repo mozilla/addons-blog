@@ -13,6 +13,9 @@ describe(__filename, () => {
   describe('createPost', () => {
     it('creates an internal post object', () => {
       const post = createPost(apiPost);
+      const permalink = `/blog/${DateTime.fromISO(apiPost.date).toFormat(
+        'y/LL/dd'
+      )}/${apiPost.slug}/`;
 
       expect(post).toEqual({
         author: apiPost.author,
@@ -23,9 +26,8 @@ describe(__filename, () => {
         date: apiPost.date,
         modified: apiPost.modified,
         content: apiPost.content.rendered,
-        permalink: `/blog/${DateTime.fromISO(apiPost.date).toFormat(
-          'y/LL/dd'
-        )}/${apiPost.slug}/`,
+        permalink,
+        absolutePermalink: `https://addons.mozilla.org${permalink}`,
         seoHead: apiPost.yoast_head,
         featuredImage: null,
       });

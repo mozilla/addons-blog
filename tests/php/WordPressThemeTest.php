@@ -47,6 +47,10 @@ final class WordPressThemeTest extends DOMTestCase
         );
         $this->assertStringNotContainsString('application/atom+xml', $html);
         $this->assertSelectCount('.Header', 0, $html);
+
+        // This is used to detect PHP code that has been escaped. When we assign
+        // PHP code to variables, we should add the `| safe` filter.
+        $this->assertStringNotContainsString('&lt;?=', $html);
     }
 
     public function testIndexPage(): void
@@ -71,6 +75,10 @@ final class WordPressThemeTest extends DOMTestCase
         );
         $this->assertStringNotContainsString('application/atom+xml', $html);
         $this->assertSelectCount('.Header', 1, $html);
+
+        // This is used to detect PHP code that has been escaped. When we assign
+        // PHP code to variables, we should add the `| safe` filter.
+        $this->assertStringNotContainsString('&lt;?=', $html);
     }
 
     public function testFunctions(): void
