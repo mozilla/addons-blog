@@ -88,9 +88,9 @@
 
           if (!disableButton && clientApp === 'android') {
             const isRecommended =
-              promoted && promoted.apps.includes(clientApp)
-                ? promoted.category === 'recommended'
-                : false;
+              promoted &&
+              promoted.apps.includes(clientApp) &&
+              promoted.category === 'recommended';
 
             if (!isRecommended || !current_version.compatibility[clientApp]) {
               console.debug(

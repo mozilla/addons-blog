@@ -88,6 +88,11 @@ describe(__filename, () => {
     const expectEnabledInstallButton = ({ getFirefoxButton }) => {
       const button = getFirefoxButton.querySelector('.GetFirefoxButton-button');
       expect(button.classList).not.toContain('Button--disabled');
+
+      const event = new window.MouseEvent('click');
+      const preventDefaultSpy = jest.spyOn(event, 'preventDefault');
+      button.dispatchEvent(event);
+      expect(preventDefaultSpy).not.toHaveBeenCalled();
     };
 
     it('calls the AMO API', async () => {
