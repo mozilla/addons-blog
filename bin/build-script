@@ -10,6 +10,7 @@ const fs = require('fs-extra');
 const isProduction = process.env.ELEVENTY_ENV === 'production';
 
 const inputFiles = [
+  'src/assets/js/setup-dropdown-menu.js',
   'src/assets/js/new-tab-links.js',
   'node_modules/ua-parser-js/dist/ua-parser.min.js',
   'src/assets/js/dynamic-addon-cards.js',
