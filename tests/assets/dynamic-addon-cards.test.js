@@ -268,6 +268,47 @@ describe(__filename, () => {
       expectDisabledInstallButton({ getFirefoxButton, downloadURL: '' });
     });
 
+    it('disables the install button when there is no file hash', async () => {
+      const addon = {
+        ...tabbyAddon,
+        current_version: {
+          ...tabbyAddon.current_version,
+          files: [{ ...tabbyAddon.current_version.files[0], hash: null }],
+        },
+      };
+      const card = await loadStaticAddonCardInDocument({ addon });
+      const getFirefoxButton = card.querySelector('.GetFirefoxButton');
+      mockFetch({ jsonData: addon });
+
+      await _updateAddonCard(card, {
+        userAgent: userAgentsByPlatform.mac.firefox69,
+      });
+
+      expectDisabledInstallButton({
+        getFirefoxButton,
+        downloadURL: addon.current_version.files[0].url,
+      });
+    });
+
+    it('enables the install button when add-on is recommended for Firefox', async () => {
+      const addon = {
+        ...tabbyAddon,
+        promoted: {
+          apps: ['firefox'],
+          category: 'recommended',
+        },
+      };
+      const card = await loadStaticAddonCardInDocument({ addon });
+      const getFirefoxButton = card.querySelector('.GetFirefoxButton');
+      mockFetch({ jsonData: addon });
+
+      await _updateAddonCard(card, {
+        userAgent: userAgentsByPlatform.mac.firefox69,
+      });
+
+      expectEnabledInstallButton({ getFirefoxButton });
+    });
+
     describe('Firefox for Android', () => {
       it('disables the install button when add-on is not promoted', async () => {
         const addon = { ...tabbyAddon, promoted: null };
@@ -372,6 +413,119 @@ describe(__filename, () => {
         });
 
         expectEnabledInstallButton({ getFirefoxButton });
+      });
+    });
+
+    describe('mozAddonManager', () => {
+      const fakeInstallObj = { install: jest.fn() };
+      const fakeMozAddonManager = {
+        createInstall: jest.fn().mockReturnValue(fakeInstallObj),
+      };
+
+      let originalNavigator;
+
+      beforeEach(() => {
+        originalNavigator = global.navigator;
+        global.navigator.mozAddonManager = fakeMozAddonManager;
+      });
+
+      afterEach(() => {
+        global.navigator = originalNavigator;
+      });
+
+      const loadAndUpdateAddonCard = async ({
+        url = 'some url',
+        hash = 'some hash',
+      } = {}) => {
+        const addon = {
+          ...tabbyAddon,
+          current_version: {
+            ...tabbyAddon.current_version,
+            files: [
+              {
+                ...tabbyAddon.current_version.files[0],
+                url,
+                hash,
+              },
+            ],
+          },
+          promoted: {
+            apps: ['android'],
+            category: 'recommended',
+          },
+        };
+        // Render the static addon-card card, which makes 1 API call.
+        const card = await loadStaticAddonCardInDocument({ addon });
+
+        // Mock `fech` again for the 2nd API call made by the JavaScript code
+        // tested in this file (which updates the static card).
+        mockFetch({ jsonData: addon });
+
+        // Update the add-on card.
+        await _updateAddonCard(card, {
+          userAgent: userAgentsByPlatform.android.firefox70,
+        });
+
+        return {
+          getFirefoxButton: card.querySelector('.GetFirefoxButton'),
+          installButton: card.querySelector('.GetFirefoxButton-button'),
+        };
+      };
+
+      it('calls mozAddonManager to install an add-on when compatible', async () => {
+        const url = 'https://example.org/addon.xpi';
+        const hash = 'some hash';
+        const { installButton } = await loadAndUpdateAddonCard({
+          url,
+          hash,
+        });
+        const event = new window.MouseEvent('click');
+        const preventDefaultSpy = jest.spyOn(event, 'preventDefault');
+        const stopPropagationSpy = jest.spyOn(event, 'stopPropagation');
+
+        // User clicks the install button to install the add-on.
+        await installButton.dispatchEvent(event);
+
+        expect(preventDefaultSpy).toHaveBeenCalled();
+        expect(stopPropagationSpy).toHaveBeenCalled();
+        expect(fakeMozAddonManager.createInstall).toHaveBeenCalledWith({
+          url,
+          hash,
+        });
+        expect(fakeInstallObj.install).toHaveBeenCalled();
+      });
+
+      it('does not create a listener when navigator is not available', async () => {
+        delete global.navigator;
+
+        const { getFirefoxButton } = await loadAndUpdateAddonCard();
+
+        expectEnabledInstallButton({ getFirefoxButton });
+      });
+
+      it('does not create a listener when mozAddonManager is not available', async () => {
+        delete global.navigator.mozAddonManager;
+
+        const { getFirefoxButton } = await loadAndUpdateAddonCard();
+
+        expectEnabledInstallButton({ getFirefoxButton });
+      });
+
+      it('handles install errors', async () => {
+        expect.assertions(1);
+        jest.spyOn(global.console, 'debug').mockImplementation((e) => {
+          expect(e).toEqual(
+            'failed to install add-on with addonId=502774: an error'
+          );
+        });
+        global.navigator.mozAddonManager.createInstall = jest
+          .fn()
+          .mockResolvedValue({
+            install: () => Promise.reject(new Error('an error')),
+          });
+        const { installButton } = await loadAndUpdateAddonCard();
+
+        await installButton.click();
       });
     });
   });
