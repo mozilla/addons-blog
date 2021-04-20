@@ -1,6 +1,6 @@
 {
   "name": "addons-blog",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "The AMO Blog.",
   "main": "index.js",
   "author": "Mozilla Add-ons Team",
