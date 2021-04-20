@@ -205,7 +205,10 @@ describe(__filename, () => {
     describe('cachebustAssets', () => {
       beforeAll(async () => {
         jest.spyOn(console, 'log').mockImplementation(jest.fn());
-        ap = new AssetPipeline(src, dest, { assetsDirPrefix: '/assets' });
+        ap = new AssetPipeline(src, dest, {
+          assetsDirPrefix: '/assets',
+          defaultSocialImagePath: '/assets/octoamo-sm.png',
+        });
         await ap.cacheBustAssets();
       });
 
@@ -266,6 +269,19 @@ describe(__filename, () => {
         expect(html).toContain(ap.assetMap['assets/octoamo-sm.png'].hashedPath);
         expect(html).toContain(ap.assetMap['assets/file2.js'].hashedPath);
         expect(html).toContain(ap.assetMap['assets/css/file1.css'].hashedPath);
+      });
+
+      it('should have updated the default social image url', async () => {
+        const html = await fs.readFile(path.join(dest, 'index.html'), 'utf8');
+
+        const url = [
+          'https://example.com',
+          ap.assetMap['assets/octoamo-sm.png'].hashedPath,
+        ].join('/');
+        expect(html).toContain(`<meta property="og:image" content="${url}">`);
+        expect(html).not.toContain(
+          '<meta property="og:image" content="https://example.com/assets/octoamo-sm.png">'
+        );
       });
 
       it('should rewrite an robots.txt file to dest', async () => {

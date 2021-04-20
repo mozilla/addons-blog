@@ -4,10 +4,10 @@ permalink: blog/feed.xml
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>{{ markup.siteTitle }}</title>
-  <link href="{{ markup.baseURL }}/feed.xml" rel="self" />
-  <link href="{{ markup.baseURL }}/" />
+  <link href="{{ markup.baseURL }}/{{ permalink }}" rel="self" />
+  <link href="{{ markup.baseURL }}/blog/" />
   <updated>{{ posts | lastModifiedDate | dateToRfc3339 }}</updated>
-  <id>{{ markup.baseURL }}/</id>
+  <id>{{ markup.baseURL }}/blog/</id>
   {%- for post in posts %}
   {% set absolutePostURL %}{{ post.permalink | url | absoluteUrl(markup.baseURL) }}{% endset %}
   {% set author = authors | getAuthor(post.author) %}
