@@ -47,6 +47,17 @@ final class WordPressThemeTest extends DOMTestCase
         );
         $this->assertSelectCount('.Header', 0, $html);
 
+        $this->assertStringContainsString(
+            urlencode(
+                implode('&', [
+                    'utm_source=twitter',
+                    'utm_medium=social',
+                    'utm_campaign=amo_blog_share',
+                ])
+            ),
+            $html
+        );
+
         // This should not be generated when `config.is_wordpress_theme` is set
         // to `true`
         $this->assertStringNotContainsString('application/atom+xml', $html);
