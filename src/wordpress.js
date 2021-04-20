@@ -148,6 +148,7 @@ const getMediaSize = ({ media, size }) => {
 };
 
 module.exports = {
+  AMO_BASE_URL,
   AMO_BLOG_BASE_URL,
   WORDPRESS_BASE_URL,
   createPost,

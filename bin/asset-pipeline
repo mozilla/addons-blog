@@ -16,6 +16,9 @@ const walk = require('acorn-walk');
 const Url = require('url-parse');
 
 const assetsDirPrefix = '/blog/assets';
+// The path to the default social image (used in `og:image` meta tags for
+// instance).
+const defaultSocialImagePath = `${assetsDirPrefix}/img/default-social-image.png`;
 // The dir that Eleventy builds to.
 const builtAssetDir = path.resolve(__dirname, '../build/');
 // Where we're writing to.
@@ -27,6 +30,7 @@ const unHashableAssetsPattern = /(?:robots\.txt|\.html|pages\.json)$/;
 
 const defaultOptions = {
   assetsDirPrefix,
+  defaultSocialImagePath,
   binaryAssetsPattern,
   unHashableAssetsPattern,
 };
@@ -256,7 +260,20 @@ class AssetPipeline {
       )
       .process(text);
 
-    const fileHash = this.getContentHash(output.html);
+    let { html } = output;
+
+    // Replace the default social image in `meta` tag, which isn't supported by
+    // posthtmlURL.
+    const { defaultSocialImagePath } = this.opts;
+    if (this.hasHashedReplacementURL(defaultSocialImagePath, assetMap)) {
+      replacementsCount++;
+      html = html.replace(
+        defaultSocialImagePath,
+        this.getReplacementURL(defaultSocialImagePath, assetMap)
+      );
+    }
+
+    const fileHash = this.getContentHash(html);
 
     if (replacementsCount) {
       console.log(
@@ -276,7 +293,7 @@ class AssetPipeline {
 
     try {
       await fs.ensureFile(outputFile);
-      await fs.writeFile(outputFile, output.html);
+      await fs.writeFile(outputFile, html);
       const fileType = ext.replace(/^\./, '');
 
       console.log(

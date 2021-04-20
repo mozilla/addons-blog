@@ -26,7 +26,7 @@ final class WordPressThemeTest extends DOMTestCase
         $html = $this->render('single.php', 1);
 
         $this->assertStringContainsString(
-            '<title>some title - Mozilla Add-ons Blog</title>',
+            '<title>some title - Firefox Add-on Reviews</title>',
             $html
         );
         $this->assertStringContainsString(
@@ -45,8 +45,12 @@ final class WordPressThemeTest extends DOMTestCase
             'src="/path/to/template/dir/blog/assets/js/bundle.js',
             $html
         );
-        $this->assertStringNotContainsString('application/atom+xml', $html);
         $this->assertSelectCount('.Header', 0, $html);
+
+        // This should not be generated when `config.is_wordpress_theme` is set
+        // to `true`
+        $this->assertStringNotContainsString('application/atom+xml', $html);
+        $this->assertStringNotContainsString('property="og:locale"', $html);
 
         // This is used to detect PHP code that has been escaped. When we assign
         // PHP code to variables, we should add the `| safe` filter.
@@ -58,7 +62,7 @@ final class WordPressThemeTest extends DOMTestCase
         $html = $this->render('index.php', 2);
 
         $this->assertStringContainsString(
-            '<title>Mozilla Add-ons Blog</title>',
+            '<title>Firefox Add-on Reviews</title>',
             $html
         );
         $this->assertSelectEquals('.blog-entry-title', 'some title', 2, $html);
@@ -73,8 +77,12 @@ final class WordPressThemeTest extends DOMTestCase
             'src="/path/to/template/dir/blog/assets/js/bundle.js',
             $html
         );
-        $this->assertStringNotContainsString('application/atom+xml', $html);
         $this->assertSelectCount('.Header', 1, $html);
+
+        // This should not be generated when `config.is_wordpress_theme` is set
+        // to `true`
+        $this->assertStringNotContainsString('application/atom+xml', $html);
+        $this->assertStringNotContainsString('property="og:locale"', $html);
 
         // This is used to detect PHP code that has been escaped. When we assign
         // PHP code to variables, we should add the `| safe` filter.

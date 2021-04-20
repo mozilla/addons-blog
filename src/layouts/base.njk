@@ -6,11 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% if title %}{{ title }} - {% endif %}{{ markup.siteTitle }}</title>
 
+    {% if blogpost %}
     {{ blogpost.seoHead | safe({ isHeadMarkup: true }) }}
+    {% elif not config.is_wordpress_theme %}
+    <link rel="canonical" href="{{ markup.baseURL }}{{ page.url }}">
+    <meta name="description" content="{{ markup.siteDescription }}">
+    <meta property="og:locale" content="en-US">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="{{ markup.siteTitle }}">
+    <meta property="og:description" content="{{ markup.siteDescription }}">
+    <meta property="og:url" content="{{ markup.baseURL }}{{ page.url }}">
+    <meta property="og:site_name" content="{{ markup.siteTitle }}">
+    <meta property="og:image" content="{{ markup.baseURL }}/blog/assets/img/default-social-image.png">
+    <meta name="twitter:site" content="@mozamo">
+    <meta name="twitter:card" content="summary_large_image">
+    {% endif %}
 
     <link rel="shortcut icon" href="{{ config.asset_path | safe }}/blog/assets/img/favicon.ico">
 
-    {%- if not config.no_atom_feed %}
+    {%- if not config.is_wordpress_theme %}
     <link rel="alternate" type="application/atom+xml" title="{{ markup.siteTitle }} RSS Feed" href="/blog/feed.xml">
     {%- endif %}
 
