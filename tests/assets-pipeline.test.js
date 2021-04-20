@@ -279,6 +279,9 @@ describe(__filename, () => {
           ap.assetMap['assets/octoamo-sm.png'].hashedPath,
         ].join('/');
         expect(html).toContain(`<meta property="og:image" content="${url}">`);
+        expect(html).not.toContain(
+          '<meta property="og:image" content="https://example.com/assets/octoamo-sm.png">'
+        );
       });
 
       it('should rewrite an robots.txt file to dest', async () => {

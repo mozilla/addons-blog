@@ -263,7 +263,7 @@ class AssetPipeline {
     let { html } = output;
 
     // Replace the default social image in `meta` tag, which isn't supported by
-    // posthtmlURL.
+    // posthtml-urls, see: https://github.com/posthtml/posthtml-urls/issues/5
     const { defaultSocialImagePath } = this.opts;
     if (this.hasHashedReplacementURL(defaultSocialImagePath, assetMap)) {
       replacementsCount++;
