@@ -4,7 +4,7 @@
   "description": "The AMO Blog.",
   "main": "index.js",
   "author": "Mozilla Add-ons Team",
-  "license": "MPL2.0",
+  "license": "MPL-2.0",
   "private": true,
   "scripts": {
     "prettier": "prettier --write '**'",
@@ -38,6 +38,7 @@
     "@prettier/plugin-php": "^0.16.2",
     "acorn-walk": "^8.0.2",
     "addons-frontend-blog-utils": "^0.11.0",
+    "addons-moz-compare": "^0.0.3",
     "chokidar-cli": "^2.1.0",
     "codecov": "^3.8.1",
     "dompurify": "^2.2.6",

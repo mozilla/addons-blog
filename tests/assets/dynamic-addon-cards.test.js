@@ -1,6 +1,7 @@
 /* global document, window */
 const { buildStaticAddonCard } = require('addons-frontend-blog-utils');
 const UAParser = require('ua-parser-js');
+const { mozCompare } = require('addons-moz-compare');
 
 const {
   convertToUnavailableCard,
@@ -24,6 +25,9 @@ describe(__filename, () => {
     const fetch = mockFetch({ jsonData: addon });
     const staticCard = await buildStaticAddonCard({ addonId: addon.id });
     fetch.mockRestore();
+
+    // Inject mozCompare implementation.
+    global.mozCompare = mozCompare;
 
     document.body.innerHTML = `<div>${staticCard}</div>`;
 
@@ -425,11 +429,15 @@ describe(__filename, () => {
       let originalNavigator;
 
       beforeEach(() => {
-        originalNavigator = global.navigator;
+        originalNavigator = { ...global.navigator };
         global.navigator.mozAddonManager = fakeMozAddonManager;
       });
 
       afterEach(() => {
+        if (global.navigator) {
+          delete global.navigator;
+        }
+
         global.navigator = originalNavigator;
       });
 
@@ -526,6 +534,81 @@ describe(__filename, () => {
         const { installButton } = await loadAndUpdateAddonCard();
 
         await installButton.click();
+      });
+    });
+
+    describe('compatibility', () => {
+      it('disables the install button when Firefox version is under min version', async () => {
+        const addon = {
+          ...tabbyAddon,
+          current_version: {
+            ...tabbyAddon.current_version,
+            compatibility: {
+              firefox: {
+                min: '80.0',
+                max: '*',
+              },
+            },
+          },
+        };
+        const card = await loadStaticAddonCardInDocument({ addon });
+        const getFirefoxButton = card.querySelector('.GetFirefoxButton');
+        mockFetch({ jsonData: addon });
+
+        await _updateAddonCard(card, {
+          userAgent: userAgentsByPlatform.mac.firefox69,
+        });
+
+        expectDisabledInstallButton({
+          getFirefoxButton,
+          downloadURL: addon.current_version.files[0].url,
+        });
+      });
+
+      it('disables the install button when there is no compatibility data', async () => {
+        const addon = {
+          ...tabbyAddon,
+          current_version: {
+            ...tabbyAddon.current_version,
+            compatibility: {},
+          },
+        };
+        const card = await loadStaticAddonCardInDocument({ addon });
+        const getFirefoxButton = card.querySelector('.GetFirefoxButton');
+        mockFetch({ jsonData: addon });
+
+        await _updateAddonCard(card, {
+          userAgent: userAgentsByPlatform.mac.firefox69,
+        });
+
+        expectDisabledInstallButton({
+          getFirefoxButton,
+          downloadURL: addon.current_version.files[0].url,
+        });
+      });
+
+      it('enables the install button when Firefox version is above min version', async () => {
+        const addon = {
+          ...tabbyAddon,
+          current_version: {
+            ...tabbyAddon.current_version,
+            compatibility: {
+              firefox: {
+                min: '60.0',
+                max: '*',
+              },
+            },
+          },
+        };
+        const card = await loadStaticAddonCardInDocument({ addon });
+        const getFirefoxButton = card.querySelector('.GetFirefoxButton');
+        mockFetch({ jsonData: addon });
+
+        await _updateAddonCard(card, {
+          userAgent: userAgentsByPlatform.mac.firefox69,
+        });
+
+        expectEnabledInstallButton({ getFirefoxButton });
       });
     });
   });

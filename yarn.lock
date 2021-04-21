@@ -879,6 +879,11 @@ addons-frontend-blog-utils@^0.11.0:
     jsdom "16.5.3"
     node-fetch "^2.6.1"
 
+addons-moz-compare@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/addons-moz-compare/-/addons-moz-compare-0.0.3.tgz#a44753dba2c90c418e942811b845d30a2e8133d0"
+  integrity sha512-zuaBhfBjC0tzNjY7gVCexOJoTJ7Nd+OtBxCaxi8Re6wWHPCicWeiYMKyD/j8h09SBh2mooiOcKjx8XDZ2bQ6tA==
+
 after@0.8.2:
   version "0.8.2"
   resolved "https://registry.yarnpkg.com/after/-/after-0.8.2.tgz#fedb394f9f0e02aa9768e702bda23b505fae7e1f"
