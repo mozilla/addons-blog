@@ -1,6 +1,7 @@
 @import './blogpost-nav';
 
 $pull-quote-color: #4e1a6a;
+$breadcrumb-text-color: #52525e;
 
 .blogpost {
   display: grid;
@@ -12,9 +13,38 @@ $pull-quote-color: #4e1a6a;
   }
 }
 
+.blogpost-breadcrumb {
+  grid-column: 1 / span 2;
+  grid-row: 1;
+  margin: 10px 0 30px 0;
+
+  p {
+    margin: 0;
+
+    &,
+    a {
+      color: $breadcrumb-text-color;
+      font-weight: 400;
+      line-height: 1.2;
+    }
+
+    a:hover,
+    a:focus,
+    a:active {
+      color: lighten($breadcrumb-text-color, 30%);
+      text-decoration: none;
+    }
+  }
+
+  @include respond-to(xl) {
+    margin: 10px 0 50px 0;
+    padding: 0 $default-margin;
+  }
+}
+
 .blogpost-content {
   grid-column: 1;
-  grid-row: 1;
+  grid-row: 2;
 
   @include respond-to(xl) {
     grid-column: 2;
@@ -111,12 +141,12 @@ $pull-quote-color: #4e1a6a;
 
 .blogpost-sidebar {
   grid-column: 1;
-  grid-row: 2;
+  grid-row: 3;
   margin: $default-margin auto;
   width: 100%;
 
   @include respond-to(xl) {
-    grid-row: 1;
+    grid-row: 2;
     margin: 0 auto;
     padding: 0 $default-padding;
   }

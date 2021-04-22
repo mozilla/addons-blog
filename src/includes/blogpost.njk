@@ -1,4 +1,9 @@
 <div class="blogpost">
+  <div class="blogpost-breadcrumb">
+    <p>
+      <a href="/">Add-ons</a> / <a href="{% if config.is_wordpress_theme %}/{% else %}/blog/{% endif %}">Blog</a> / {{ title }}
+    </p>
+  </div>
   <div class="blogpost-content">
     <div class="blogpost-content-wrapper">
       {{ postContent }}
