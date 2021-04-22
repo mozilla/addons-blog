@@ -141,8 +141,8 @@
 
               // TODO: check maxVersion when `is_strict_compatibility_enabled: true`?
 
-              // A result of `-1` means the second argument is a lower version
-              // than the first.
+              // A result of `-1` means the first argument is a lower version
+              // than the second.
               if (minVersion && mozCompare(browserVersion, minVersion) === -1) {
                 console.debug(
                   `add-on with addonId=${addonId} is incompatible (under min version)`
