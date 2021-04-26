@@ -68,7 +68,7 @@
     "string-replace-async": "^2.0.0",
     "stylelint": "^13.13.0",
     "stylelint-config-standard": "^22.0.0",
-    "terser": "5.6.1",
+    "terser": "5.7.0",
     "ua-parser-js": "^0.7.28",
     "url-parse": "^1.5.1"
   },
