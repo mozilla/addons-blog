@@ -1,4 +1,17 @@
 <div class="blogpost">
+  <nav class="blogpost-breadcrumb" aria-label="breadcrumbs">
+    <ol>
+      <li>
+        <a href="/">Add-ons</a>
+      </li>
+      <li>
+        <a href="{% if config.is_wordpress_theme %}/{% else %}/blog/{% endif %}">Blog</a>
+      </li>
+      <li>
+        <a href="{{ postPermalink }}" aria-current="location">{{ title }}</a>
+      </li>
+    </ol>
+  </nav>
   <div class="blogpost-content">
     <div class="blogpost-content-wrapper">
       {{ postContent }}
