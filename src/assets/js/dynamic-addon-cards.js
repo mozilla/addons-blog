@@ -134,7 +134,9 @@
           }
 
           if (!isIncompatible) {
-            const compatibility = current_version.compatibility[clientApp];
+            const compatibility =
+              current_version.compatibility &&
+              current_version.compatibility[clientApp];
 
             if (compatibility) {
               const { min: minVersion } = compatibility;

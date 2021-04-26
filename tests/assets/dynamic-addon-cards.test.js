@@ -400,6 +400,28 @@ describe(__filename, () => {
         });
       });
 
+      it('disables the install button when add-on is recommended but there is no compatibility data', async () => {
+        const addon = {
+          ...tabbyAddon,
+          current_version: {
+            ...tabbyAddon.current_version,
+            compatibility: null,
+          },
+        };
+        const card = await loadStaticAddonCardInDocument({ addon });
+        const getFirefoxButton = card.querySelector('.GetFirefoxButton');
+        mockFetch({ jsonData: addon });
+
+        await _updateAddonCard(card, {
+          userAgent: userAgentsByPlatform.mac.firefox69,
+        });
+
+        expectDisabledInstallButton({
+          getFirefoxButton,
+          downloadURL: addon.current_version.files[0].url,
+        });
+      });
+
       it('enables the install button when add-on is recommended for Android', async () => {
         const addon = {
           ...tabbyAddon,
