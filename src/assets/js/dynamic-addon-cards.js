@@ -1,5 +1,5 @@
 /* eslint no-console: 0 */
-/* global document, fetch, UAParser, navigator */
+/* global document, fetch, UAParser, navigator, mozCompare */
 (function dynamicAddonCards() {
   const AMO_BASE_URL = 'https://addons.mozilla.org';
 
@@ -78,7 +78,10 @@
         throw new Error('add-on not found');
       }
 
-      const { name: browserName } = parsedUserAgent.getBrowser();
+      const {
+        name: browserName,
+        version: browserVersion,
+      } = parsedUserAgent.getBrowser();
       const isFirefox = browserName === 'Firefox';
 
       if (isFirefox) {
@@ -130,9 +133,31 @@
             }
           }
 
-          // TODO: we will need to check the min version since the max version
-          // is usually not a problem (AMO does not disable the install button
-          // when we are over the max version).
+          if (!isIncompatible) {
+            const compatibility =
+              current_version.compatibility &&
+              current_version.compatibility[clientApp];
+
+            if (compatibility) {
+              const { min: minVersion } = compatibility;
+
+              // TODO: check maxVersion when `is_strict_compatibility_enabled: true`?
+
+              // A result of `-1` means the first argument is a lower version
+              // than the second.
+              if (minVersion && mozCompare(browserVersion, minVersion) === -1) {
+                console.debug(
+                  `add-on with addonId=${addonId} is incompatible (under min version)`
+                );
+                isIncompatible = true;
+              }
+            } else {
+              console.debug(
+                `no compatibility data for clientApp=${clientApp} and addonId=${addonId}`
+              );
+              isIncompatible = true;
+            }
+          }
         }
 
         const getFirefoxButton = card.querySelector('.GetFirefoxButton');
