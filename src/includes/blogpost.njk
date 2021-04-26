@@ -3,11 +3,9 @@
     <ol>
       <li>
         <a href="/">Add-ons</a>
-        <span aria-hidden="true">/</span>
       </li>
       <li>
         <a href="{% if config.is_wordpress_theme %}/{% else %}/blog/{% endif %}">Blog</a>
-        <span aria-hidden="true">/</span>
       </li>
       <li>
         <a href="{{ postPermalink }}" aria-current="location">{{ title }}</a>

@@ -27,6 +27,11 @@ $breadcrumb-text-color: #52525e;
       list-style-type: none;
     }
 
+    li:not(:last-child)::after {
+      color: $breadcrumb-text-color;
+      content: '/';
+    }
+
     a,
     span {
       color: $breadcrumb-text-color;
