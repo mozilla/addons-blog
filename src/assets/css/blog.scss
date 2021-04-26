@@ -31,6 +31,15 @@ $excerpt-margin: 14px;
   margin-bottom: 14px;
 }
 
+.blog-entry-link {
+  &,
+  &:link,
+  &:visited {
+    color: $title-color;
+    text-decoration: none;
+  }
+}
+
 .blog-entry-featured-image {
   img {
     height: 200px;
@@ -53,13 +62,6 @@ $excerpt-margin: 14px;
 .blog-entry-title {
   font-size: $heading-xs-font-size;
   margin-bottom: 7px;
-
-  a,
-  a:link,
-  a:visited {
-    color: $title-color;
-    text-decoration: none;
-  }
 }
 
 .blog-entry-date {
