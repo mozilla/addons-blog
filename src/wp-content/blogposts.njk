@@ -20,6 +20,7 @@ config:
     {%- set postAuthorAvatar = "<?= get_avatar_url(get_the_author_meta('ID'), ['size' => 96]) ?>" | safe -%}
     {%- set tweetText = "<?= urlencode(get_the_title()) ?>" | safe -%}
     {%- set tweetURL = "<?= urlencode(get_permalink()) ?>" | safe -%}
+    {%- set postPermalink = "<?= get_permalink() ?>" | safe -%}
 
     {%- include 'blogpost.njk' -%}
 </main>

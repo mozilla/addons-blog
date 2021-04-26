@@ -20,6 +20,7 @@ permalink: "{{ blogpost.permalink }}index.html"
   {%- set postAuthorAvatar = author.avatar_urls[96] -%}
   {%- set tweetText = blogpost.title | urlencode -%}
   {%- set tweetURL = blogpost.absolutePermalink | urlencode -%}
+  {%- set postPermalink = blogpost.permalink -%}
 
   {%- include 'blogpost.njk' -%}
 </main>
