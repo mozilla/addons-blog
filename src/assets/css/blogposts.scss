@@ -41,7 +41,7 @@ $breadcrumb-text-color: #52525e;
     a:hover,
     a:focus,
     a:active {
-      color: lighten($breadcrumb-text-color, 30%);
+      color: $link-color;
       text-decoration: none;
     }
   }
