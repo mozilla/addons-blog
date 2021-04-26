@@ -1,4 +1,4 @@
-/* global document, window */
+/* global document, window, navigator */
 const { buildStaticAddonCard } = require('addons-frontend-blog-utils');
 const UAParser = require('ua-parser-js');
 const { mozCompare } = require('addons-moz-compare');
@@ -27,12 +27,16 @@ describe(__filename, () => {
     fetch.mockRestore();
 
     // Inject mozCompare implementation.
-    global.mozCompare = mozCompare;
+    window.mozCompare = mozCompare;
+    // Inject a fake amoTracking object.
+    window.amoTracking = { sendEvent: jest.fn() };
 
     document.body.innerHTML = `<div>${staticCard}</div>`;
 
     return document.querySelector('.StaticAddonCard');
   };
+
+  const flushPromises = () => new Promise((resolve) => setImmediate(resolve));
 
   afterEach(() => {
     jest.restoreAllMocks();
@@ -92,11 +96,6 @@ describe(__filename, () => {
     const expectEnabledInstallButton = ({ getFirefoxButton }) => {
       const button = getFirefoxButton.querySelector('.GetFirefoxButton-button');
       expect(button.classList).not.toContain('Button--disabled');
-
-      const event = new window.MouseEvent('click');
-      const preventDefaultSpy = jest.spyOn(event, 'preventDefault');
-      button.dispatchEvent(event);
-      expect(preventDefaultSpy).not.toHaveBeenCalled();
     };
 
     it('calls the AMO API', async () => {
@@ -155,6 +154,27 @@ describe(__filename, () => {
       await _updateAddonCard(card);
 
       expect(card.classList).toContain('StaticAddonCard--is-unavailable');
+    });
+
+    it('sends a GA event when the "download FF" button is clicked', async () => {
+      const guid = 'some guid';
+      const addon = {
+        ...tabbyAddon,
+        guid,
+      };
+      const card = await loadStaticAddonCardInDocument({ addon });
+      mockFetch({ jsonData: addon });
+      await _updateAddonCard(card);
+      const getFirefoxButton = card.querySelector('.GetFirefoxButton-button');
+
+      getFirefoxButton.click();
+      await flushPromises();
+
+      expect(window.amoTracking.sendEvent).toHaveBeenCalledWith({
+        action: 'download-firefox-click',
+        category: 'AMO Download Firefox',
+        label: guid,
+      });
     });
 
     it('converts the "GetFirefox" button to an install button when UserAgent is Firefox', async () => {
@@ -451,24 +471,22 @@ describe(__filename, () => {
       let originalNavigator;
 
       beforeEach(() => {
-        originalNavigator = { ...global.navigator };
-        global.navigator.mozAddonManager = fakeMozAddonManager;
+        originalNavigator = { ...navigator };
+        navigator.mozAddonManager = fakeMozAddonManager;
       });
 
       afterEach(() => {
-        if (global.navigator) {
-          delete global.navigator;
-        }
-
         global.navigator = originalNavigator;
       });
 
       const loadAndUpdateAddonCard = async ({
         url = 'some url',
         hash = 'some hash',
+        ...addonProps
       } = {}) => {
         const addon = {
           ...tabbyAddon,
+          ...addonProps,
           current_version: {
             ...tabbyAddon.current_version,
             files: [
@@ -514,7 +532,8 @@ describe(__filename, () => {
         const stopPropagationSpy = jest.spyOn(event, 'stopPropagation');
 
         // User clicks the install button to install the add-on.
-        await installButton.dispatchEvent(event);
+        installButton.dispatchEvent(event);
+        await flushPromises();
 
         expect(preventDefaultSpy).toHaveBeenCalled();
         expect(stopPropagationSpy).toHaveBeenCalled();
@@ -523,6 +542,37 @@ describe(__filename, () => {
           hash,
         });
         expect(fakeInstallObj.install).toHaveBeenCalled();
+      });
+
+      it('sends a GA event when an extension is installed', async () => {
+        const guid = 'some-guid';
+        const { installButton } = await loadAndUpdateAddonCard({ guid });
+
+        // User clicks the install button to install the add-on.
+        installButton.click();
+        await flushPromises();
+
+        expect(window.amoTracking.sendEvent).toHaveBeenCalledWith({
+          action: 'addon',
+          category: 'AMO Addon Installs',
+          label: guid,
+        });
+      });
+
+      it('sends a GA event when a static theme is installed', async () => {
+        const guid = 'some-guid';
+        const type = 'statictheme';
+        const { installButton } = await loadAndUpdateAddonCard({ guid, type });
+
+        // User clicks the install button to install the add-on.
+        installButton.click();
+        await flushPromises();
+
+        expect(window.amoTracking.sendEvent).toHaveBeenCalledWith({
+          action: type,
+          category: 'AMO Theme Installs',
+          label: guid,
+        });
       });
 
       it('does not create a listener when navigator is not available', async () => {
@@ -534,7 +584,7 @@ describe(__filename, () => {
       });
 
       it('does not create a listener when mozAddonManager is not available', async () => {
-        delete global.navigator.mozAddonManager;
+        delete navigator.mozAddonManager;
 
         const { getFirefoxButton } = await loadAndUpdateAddonCard();
 
@@ -543,19 +593,18 @@ describe(__filename, () => {
 
       it('handles install errors', async () => {
         expect.assertions(1);
-        jest.spyOn(global.console, 'debug').mockImplementation((e) => {
+        jest.spyOn(console, 'debug').mockImplementation((e) => {
           expect(e).toEqual(
             'failed to install add-on with addonId=502774: an error'
           );
         });
-        global.navigator.mozAddonManager.createInstall = jest
-          .fn()
-          .mockResolvedValue({
-            install: () => Promise.reject(new Error('an error')),
-          });
+        navigator.mozAddonManager.createInstall = jest.fn().mockResolvedValue({
+          install: () => Promise.reject(new Error('an error')),
+        });
         const { installButton } = await loadAndUpdateAddonCard();
 
-        await installButton.click();
+        installButton.click();
+        await flushPromises();
       });
     });
 

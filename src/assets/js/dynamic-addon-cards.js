@@ -1,7 +1,12 @@
 /* eslint no-console: 0 */
-/* global document, fetch, UAParser, navigator, mozCompare */
+/* global window, document, fetch, UAParser, navigator, mozCompare */
 (function dynamicAddonCards() {
   const AMO_BASE_URL = 'https://addons.mozilla.org';
+  // For amoTracking:
+  const GET_FIREFOX_BUTTON_CLICK_ACTION = 'download-firefox-click';
+  const GET_FIREFOX_BUTTON_CLICK_CATEGORY = 'AMO Download Firefox';
+  const INSTALL_EXTENSION_CATEGORY = 'AMO Addon Installs';
+  const INSTALL_THEME_CATEGORY = 'AMO Theme Installs';
 
   // `StaticAddonCard` elements can be marked as unavailable by adding a
   // special CSS class. The style as well as the content is already embedded.
@@ -10,7 +15,7 @@
   };
 
   const convertToInstallButton = ({
-    addonId,
+    addon,
     downloadURL,
     fileHash,
     getFirefoxButton,
@@ -50,9 +55,19 @@
           });
 
           await installObj.install();
+
+          const isStaticTheme = addon.type === 'statictheme';
+          window.amoTracking.sendEvent({
+            action: isStaticTheme ? 'statictheme' : 'addon',
+            category: isStaticTheme
+              ? INSTALL_THEME_CATEGORY
+              : INSTALL_EXTENSION_CATEGORY,
+            label: addon.guid,
+          });
         } catch (e) {
+          // eslint-disable-next-line no-console
           console.debug(
-            `failed to install add-on with addonId=${addonId}: ${e.message}`
+            `failed to install add-on with addonId=${addon.id}: ${e.message}`
           );
         }
       });
@@ -78,11 +93,15 @@
         throw new Error('add-on not found');
       }
 
+      const addon = await response.json();
+
       const {
         name: browserName,
         version: browserVersion,
       } = parsedUserAgent.getBrowser();
       const isFirefox = browserName === 'Firefox';
+
+      const getFirefoxButton = card.querySelector('.GetFirefoxButton');
 
       if (isFirefox) {
         let isIncompatible = false;
@@ -91,14 +110,16 @@
 
         // Firefox for iOS does not support add-ons.
         if (osName === 'iOS') {
+          // eslint-disable-next-line no-console
           console.debug(
             `disabling install button for addonId=${addonId} because Firefox for iOS does not support add-ons`
           );
           isIncompatible = true;
         } else {
-          const { current_version, promoted } = await response.json();
+          const { current_version, promoted } = addon;
 
           if (!current_version || !current_version.files) {
+            // eslint-disable-next-line no-console
             console.debug(`invalid current version for addonId=${addonId}`);
             isIncompatible = true;
           }
@@ -109,11 +130,13 @@
             fileHash = file && file.hash;
 
             if (!downloadURL) {
+              // eslint-disable-next-line no-console
               console.debug(`no download URL for addonId=${addonId}`);
               isIncompatible = true;
             }
 
             if (!fileHash) {
+              // eslint-disable-next-line no-console
               console.debug(`no file hash for addonId=${addonId}`);
               isIncompatible = true;
             }
@@ -126,6 +149,7 @@
               promoted.category === 'recommended';
 
             if (!isRecommended || !current_version.compatibility[clientApp]) {
+              // eslint-disable-next-line no-console
               console.debug(
                 `add-on with addonId=${addonId} is not installable on Android`
               );
@@ -160,17 +184,26 @@
           }
         }
 
-        const getFirefoxButton = card.querySelector('.GetFirefoxButton');
-
         convertToInstallButton({
-          getFirefoxButton,
+          addon,
           downloadURL,
           fileHash,
+          getFirefoxButton,
           isIncompatible,
-          addonId,
         });
+      } else {
+        getFirefoxButton
+          .querySelector('.GetFirefoxButton-button')
+          .addEventListener('click', () => {
+            window.amoTracking.sendEvent({
+              action: GET_FIREFOX_BUTTON_CLICK_ACTION,
+              category: GET_FIREFOX_BUTTON_CLICK_CATEGORY,
+              label: addon.guid,
+            });
+          });
       }
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.debug(`Error caught for addonId=${addonId}: ${e.message}`);
       convertToUnavailableCard(card);
     }
