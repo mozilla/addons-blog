@@ -65,7 +65,6 @@
             label: addon.guid,
           });
         } catch (e) {
-          // eslint-disable-next-line no-console
           console.debug(
             `failed to install add-on with addonId=${addon.id}: ${e.message}`
           );
@@ -110,7 +109,6 @@
 
         // Firefox for iOS does not support add-ons.
         if (osName === 'iOS') {
-          // eslint-disable-next-line no-console
           console.debug(
             `disabling install button for addonId=${addonId} because Firefox for iOS does not support add-ons`
           );
@@ -119,7 +117,6 @@
           const { current_version, promoted } = addon;
 
           if (!current_version || !current_version.files) {
-            // eslint-disable-next-line no-console
             console.debug(`invalid current version for addonId=${addonId}`);
             isIncompatible = true;
           }
@@ -130,13 +127,11 @@
             fileHash = file && file.hash;
 
             if (!downloadURL) {
-              // eslint-disable-next-line no-console
               console.debug(`no download URL for addonId=${addonId}`);
               isIncompatible = true;
             }
 
             if (!fileHash) {
-              // eslint-disable-next-line no-console
               console.debug(`no file hash for addonId=${addonId}`);
               isIncompatible = true;
             }
@@ -149,7 +144,6 @@
               promoted.category === 'recommended';
 
             if (!isRecommended || !current_version.compatibility[clientApp]) {
-              // eslint-disable-next-line no-console
               console.debug(
                 `add-on with addonId=${addonId} is not installable on Android`
               );
@@ -203,7 +197,6 @@
           });
       }
     } catch (e) {
-      // eslint-disable-next-line no-console
       console.debug(`Error caught for addonId=${addonId}: ${e.message}`);
       convertToUnavailableCard(card);
     }
