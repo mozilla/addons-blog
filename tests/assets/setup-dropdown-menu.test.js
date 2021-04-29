@@ -1,4 +1,4 @@
-/* global document */
+/* global document, MouseEvent */
 const { buildHeader } = require('addons-frontend-blog-utils');
 
 describe(__filename, () => {
@@ -66,5 +66,27 @@ describe(__filename, () => {
     menu.querySelector('.DropdownMenu-items').click();
 
     expect(menu.classList).toContain('DropdownMenu--active');
+  });
+
+  it('opens the dropdown menu on mouseover', () => {
+    const menu = document.querySelector('.DropdownMenu');
+    expect(menu.classList).not.toContain('DropdownMenu--active');
+
+    // User moves cursor on the "More..." menu.
+    menu.dispatchEvent(new MouseEvent('mouseover'));
+
+    expect(menu.classList).toContain('DropdownMenu--active');
+  });
+
+  it('closes the dropdown menu on mouseout', () => {
+    const menu = document.querySelector('.DropdownMenu');
+    // User clicks the "More..." button.
+    menu.querySelector('.DropdownMenu-button').click();
+    expect(menu.classList).toContain('DropdownMenu--active');
+
+    // User moves cursor somewhere else.
+    menu.dispatchEvent(new MouseEvent('mouseout'));
+
+    expect(menu.classList).not.toContain('DropdownMenu--active');
   });
 });
