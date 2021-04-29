@@ -113,6 +113,7 @@ $breadcrumb-text-color: #52525e;
   a:link,
   a:visited,
   a:hover,
+  a:focus,
   a:active {
     &:not(.Button) {
       color: $link-color;

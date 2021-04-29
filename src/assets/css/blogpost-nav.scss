@@ -15,7 +15,9 @@
     display: block;
     text-decoration: none;
 
-    &:hover {
+    &:hover,
+    &:active,
+    &:focus {
       p {
         color: $link-color;
         text-decoration: underline;

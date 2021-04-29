@@ -102,6 +102,7 @@ $excerpt-margin: 14px;
   }
 
   &:hover::after,
+  &:active::after,
   &:focus::after {
     margin-left: 4px;
   }
