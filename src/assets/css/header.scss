@@ -39,6 +39,7 @@
   display: block;
   height: $smallHeight;
   margin: 20px auto;
+  outline-color: $white;
   width: $smallWidth;
 
   @include respond-to(l) {
