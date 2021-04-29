@@ -12,6 +12,7 @@ const isProduction = process.env.ELEVENTY_ENV === 'production';
 // The order is this array matters (because `dynamic-addon-cards.js` depends on
 // some other scripts).
 const inputFiles = [
+  'node_modules/focus-visible/dist/focus-visible.min.js',
   'src/assets/js/setup-dropdown-menu.js',
   'src/assets/js/new-tab-links.js',
   'node_modules/ua-parser-js/dist/ua-parser.min.js',
