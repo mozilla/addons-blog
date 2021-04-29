@@ -12,9 +12,11 @@
 
 * {
   box-sizing: border-box;
-  // This is needed for Safari, which does not support `anywhere`.
-  overflow-wrap: break-word;
-  overflow-wrap: anywhere;
+  // We cannot use `overflow-wrap: anywhere` because it is not supported by
+  // Safari. MDN says `word-break: break-word` "has the same effect as
+  // word-break: normal and overflow-wrap: anywhere, regardless of the actual
+  // value of the overflow-wrap property".
+  word-break: break-word;
 }
 
 html,
