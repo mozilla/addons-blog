@@ -458,7 +458,7 @@ describe(__filename, () => {
         });
       });
 
-      it('disables the install button when add-on is not an extension', async () => {
+      it('disables the install button when add-on is recommended for Android but not an extension', async () => {
         const addon = {
           ...tabbyAddon,
           type: 'statictheme',

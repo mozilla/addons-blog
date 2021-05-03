@@ -138,13 +138,13 @@
           }
 
           if (!isIncompatible && clientApp === 'android') {
-            const isRecommended =
+            const isInstallable =
               addon.type === 'extension' &&
               promoted &&
               promoted.apps.includes(clientApp) &&
               promoted.category === 'recommended';
 
-            if (!isRecommended || !current_version.compatibility[clientApp]) {
+            if (!isInstallable || !current_version.compatibility[clientApp]) {
               console.debug(
                 `add-on with addonId=${addonId} is not installable on Android`
               );
