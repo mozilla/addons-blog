@@ -212,6 +212,20 @@ describe(__filename, () => {
       expect(button.getAttribute('href')).toEqual(downloadURL);
     });
 
+    it('sets a different button name when add-on is a static theme', async () => {
+      const addon = { ...tabbyAddon, type: 'statictheme' };
+      const card = await loadStaticAddonCardInDocument({ addon });
+      const getFirefoxButton = card.querySelector('.GetFirefoxButton');
+      mockFetch({ jsonData: addon });
+
+      await _updateAddonCard(card, {
+        userAgent: userAgentsByPlatform.mac.firefox69,
+      });
+
+      const button = getFirefoxButton.querySelector('.GetFirefoxButton-button');
+      expect(button.innerText).toEqual('Install Theme');
+    });
+
     it('disables the install button for Firefox for iOS', async () => {
       const card = await loadStaticAddonCardInDocument();
       const getFirefoxButton = card.querySelector('.GetFirefoxButton');
@@ -444,6 +458,29 @@ describe(__filename, () => {
         });
       });
 
+      it('disables the install button when add-on is not an extension', async () => {
+        const addon = {
+          ...tabbyAddon,
+          type: 'statictheme',
+          promoted: {
+            apps: ['android'],
+            category: 'recommended',
+          },
+        };
+        const card = await loadStaticAddonCardInDocument({ addon });
+        const getFirefoxButton = card.querySelector('.GetFirefoxButton');
+        mockFetch({ jsonData: addon });
+
+        await _updateAddonCard(card, {
+          userAgent: userAgentsByPlatform.android.firefox70,
+        });
+
+        expectDisabledInstallButton({
+          getFirefoxButton,
+          downloadURL: addon.current_version.files[0].url,
+        });
+      });
+
       it('enables the install button when add-on is recommended for Android', async () => {
         const addon = {
           ...tabbyAddon,
@@ -513,7 +550,7 @@ describe(__filename, () => {
 
         // Update the add-on card.
         await _updateAddonCard(card, {
-          userAgent: userAgentsByPlatform.android.firefox70,
+          userAgent: userAgentsByPlatform.mac.firefox69,
         });
 
         return {

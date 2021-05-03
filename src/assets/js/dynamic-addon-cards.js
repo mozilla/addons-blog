@@ -25,10 +25,11 @@
     getFirefoxButton.querySelector('.GetFirefoxButton-callout').remove();
 
     const button = getFirefoxButton.querySelector('.GetFirefoxButton-button');
+    const isStaticTheme = addon.type === 'statictheme';
 
     button.classList.add('Button--action');
     // eslint-disable-next-line no-param-reassign
-    button.innerText = 'Add to Firefox';
+    button.innerText = isStaticTheme ? 'Install Theme' : 'Add to Firefox';
     button.setAttribute('href', downloadURL || '');
 
     if (isIncompatible) {
@@ -56,7 +57,6 @@
 
           await installObj.install();
 
-          const isStaticTheme = addon.type === 'statictheme';
           window.amoTracking.sendEvent({
             action: isStaticTheme ? 'statictheme' : 'addon',
             category: isStaticTheme
@@ -139,6 +139,7 @@
 
           if (!isIncompatible && clientApp === 'android') {
             const isRecommended =
+              addon.type === 'extension' &&
               promoted &&
               promoted.apps.includes(clientApp) &&
               promoted.category === 'recommended';
