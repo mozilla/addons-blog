@@ -7,7 +7,8 @@
 set -ex
 
 # The src_dir is where the build artifacts are located. No trailing slash.
-src_dir="dist/blog"
+dist_dir="dist"
+src_dir="$dist_dir/blog"
 
 if [ ! -d "$src_dir" ]; then
     echo "Can't find /dist/ directory. Are you running from the correct"\
@@ -88,6 +89,18 @@ aws s3 sync \
   --metadata-directive "REPLACE" \
   --acl "public-read" \
   "$src_dir"/ s3://${ADDONS_BLOG_BUCKET}/
+
+# HTML special "error" page; short cache
+aws s3 sync \
+  --cache-control "max-age=${TEN_MINUTES}" \
+  --content-type "text/html" \
+  --exclude "*" \
+  --include "error.html" \
+  --metadata "{${CSP}, ${HSTS}, ${TYPE}, ${XSS}, ${XFRAME}, ${REFERRER}}" \
+  --metadata-directive "REPLACE" \
+  --acl "public-read" \
+  # Important: it is `dist_dir` here, not `src_dir`.
+  "$dist_dir"/ s3://${ADDONS_BLOG_BUCKET}/
 
 # JSON; short cache
 aws s3 sync \
