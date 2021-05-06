@@ -91,6 +91,7 @@ aws s3 sync \
   "$src_dir"/ s3://${ADDONS_BLOG_BUCKET}/
 
 # HTML special "error" page; short cache
+# Important: it is `dist_dir` here, not `src_dir`.
 aws s3 sync \
   --cache-control "max-age=${TEN_MINUTES}" \
   --content-type "text/html" \
@@ -99,7 +100,6 @@ aws s3 sync \
   --metadata "{${CSP}, ${HSTS}, ${TYPE}, ${XSS}, ${XFRAME}, ${REFERRER}}" \
   --metadata-directive "REPLACE" \
   --acl "public-read" \
-  # Important: it is `dist_dir` here, not `src_dir`.
   "$dist_dir"/ s3://${ADDONS_BLOG_BUCKET}/
 
 # JSON; short cache
