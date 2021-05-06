@@ -21,6 +21,9 @@ if [ -z "$ADDONS_BLOG_BUCKET" ]; then
     exit 1
 fi
 
+# We need this for the special "error.html" page.
+ROOT_ADDONS_BLOG_BUCKET="$ADDONS_BLOG_BUCKET"
+
 if [ -n "$ADDONS_BLOG_BUCKET_PREFIX" ]; then
     ADDONS_BLOG_BUCKET="$ADDONS_BLOG_BUCKET/$ADDONS_BLOG_BUCKET_PREFIX"
 fi
@@ -91,7 +94,8 @@ aws s3 sync \
   "$src_dir"/ s3://${ADDONS_BLOG_BUCKET}/
 
 # HTML special "error" page; short cache
-# Important: it is `dist_dir` here, not `src_dir`.
+# Important: it is `dist_dir`, not `src_dir`. We also have to put this special
+# file at the root of the bucket.
 aws s3 sync \
   --cache-control "max-age=${TEN_MINUTES}" \
   --content-type "text/html" \
@@ -100,7 +104,7 @@ aws s3 sync \
   --metadata "{${CSP}, ${HSTS}, ${TYPE}, ${XSS}, ${XFRAME}, ${REFERRER}}" \
   --metadata-directive "REPLACE" \
   --acl "public-read" \
-  "$dist_dir"/ s3://${ADDONS_BLOG_BUCKET}/
+  "$dist_dir"/ s3://${ROOT_ADDONS_BLOG_BUCKET}/
 
 # JSON; short cache
 aws s3 sync \
