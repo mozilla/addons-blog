@@ -17,7 +17,7 @@ permalink: blog/feed.xml
     <updated>{{ post.modified | convertToJsDate | dateToRfc3339 }}</updated>
     <id>{{ absolutePostURL }}</id>
     <author><name>{{ author.name }}</name></author>
-    <content type="html">{{ post.content | htmlToAbsoluteUrls(absolutePostURL) }}</content>
+    <content type="html">{{ post.content | safe | htmlToAbsoluteUrls(absolutePostURL) }}</content>
   </entry>
   {%- endfor %}
 </feed>

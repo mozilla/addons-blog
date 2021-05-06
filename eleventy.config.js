@@ -1,7 +1,6 @@
 const path = require('path');
 
 const fs = require('fs-extra');
-const Nunjucks = require('nunjucks');
 const pluginRss = require('@11ty/eleventy-plugin-rss');
 
 const {
@@ -16,6 +15,7 @@ const {
   mediaGetMediumURL,
   readableDate,
 } = require('./src/filters');
+const { createNunjucksEnvironment } = require('./src/nunjucks');
 
 const cwd = process.env.ELEVENTY_CWD
   ? path.resolve(process.env.ELEVENTY_CWD)
@@ -28,10 +28,9 @@ const includeDirName = 'includes';
 
 const buildWordpressTheme = process.env.BUILD_WORDPRESS_THEME === '1';
 
-const nunjucksEnvironment = new Nunjucks.Environment(
-  new Nunjucks.FileSystemLoader([path.join('src', includeDirName), cwd]),
-  { autoescape: true }
-);
+const nunjucksEnvironment = createNunjucksEnvironment({
+  searchPaths: [path.join('src', includeDirName), cwd],
+});
 const { safe: markAsSafe } = nunjucksEnvironment.filters;
 
 module.exports = function configure(eleventyConfig) {
