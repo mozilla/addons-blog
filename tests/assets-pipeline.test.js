@@ -172,8 +172,7 @@ describe(__filename, () => {
         await ap.updateHashMap(/\.css$/);
         expect(ap.assetMap).toEqual({
           'assets/css/file1.css': {
-            hash:
-              '28cef9d76b705be4c4f09d1c03e764c193ca7181d80604da1d90973706c9d556',
+            hash: '28cef9d76b705be4c4f09d1c03e764c193ca7181d80604da1d90973706c9d556',
             hashedPath: 'assets/css/file1.28cef9d7.css',
             shortHash: '28cef9d7',
             written: false,

@@ -78,7 +78,8 @@ module.exports = function configure(eleventyConfig) {
         // These blog/assets are used to build static add-on cards in WordPress.
         [`${wpInputDir}/addon-cards.js`]: 'blog/assets/js/addon-cards.js',
         [`${blogUtils}/web.js`]: 'blog/assets/js/addons-frontend-blog-utils.js',
-        [`${blogUtils}/style.css`]: 'blog/assets/css/addons-frontend-blog-utils.css',
+        [`${blogUtils}/style.css`]:
+          'blog/assets/css/addons-frontend-blog-utils.css',
       });
     } else {
       eleventyConfig.addPassthroughCopy({
