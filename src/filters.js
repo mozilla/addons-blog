@@ -81,34 +81,34 @@ const makeBetterSafe = ({ markAsSafe }) => {
   };
 };
 
-const makeBuildStaticAddonCards = ({
-  _buildStaticAddonCard = buildStaticAddonCard,
-} = {}) => async (value, callback) => {
-  const regexp = /<div class="addon-card" data-addon-id="(\d+)"><\/div>/g;
+const makeBuildStaticAddonCards =
+  ({ _buildStaticAddonCard = buildStaticAddonCard } = {}) =>
+  async (value, callback) => {
+    const regexp = /<div class="addon-card" data-addon-id="(\d+)"><\/div>/g;
 
-  const content = await stringReplaceAsync(
-    value.toString(),
-    regexp,
-    async (_, addonId) => {
-      let html = '';
+    const content = await stringReplaceAsync(
+      value.toString(),
+      regexp,
+      async (_, addonId) => {
+        let html = '';
 
-      try {
-        html = await _buildStaticAddonCard({ addonId });
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error(
-          `Error while trying to build card for addonId=${addonId}: ${
-            e.message || e
-          }`
-        );
+        try {
+          html = await _buildStaticAddonCard({ addonId });
+        } catch (e) {
+          // eslint-disable-next-line no-console
+          console.error(
+            `Error while trying to build card for addonId=${addonId}: ${
+              e.message || e
+            }`
+          );
+        }
+
+        return html;
       }
+    );
 
-      return html;
-    }
-  );
-
-  callback(null, content);
-};
+    callback(null, content);
+  };
 
 const mediaGetURL = (allMedia, featuredMediaId, size) => {
   const media = allMedia.find((item) => {

@@ -94,10 +94,8 @@
 
       const addon = await response.json();
 
-      const {
-        name: browserName,
-        version: browserVersion,
-      } = parsedUserAgent.getBrowser();
+      const { name: browserName, version: browserVersion } =
+        parsedUserAgent.getBrowser();
       const isFirefox = browserName === 'Firefox';
 
       const getFirefoxButton = card.querySelector('.GetFirefoxButton');
