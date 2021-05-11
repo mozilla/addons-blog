@@ -8,7 +8,7 @@
 
     {% if blogpost %}
     {{ blogpost.seoHead | safe({ isHeadMarkup: true }) }}
-    {% elif not config.is_wordpress_theme %}
+    {% elif not config.is_wordpress_theme and not config.is_404 %}
     <link rel="canonical" href="{{ markup.baseURL }}{{ page.url }}">
     <meta name="description" content="{{ markup.siteDescription }}">
     <meta property="og:locale" content="en-US">
@@ -24,7 +24,7 @@
 
     <link rel="shortcut icon" href="{{ config.asset_path | safe }}/blog/assets/img/favicon.ico">
 
-    {%- if not config.is_wordpress_theme %}
+    {%- if not config.is_wordpress_theme and not config.is_404 %}
     <link rel="alternate" type="application/atom+xml" title="{{ markup.siteTitle }} RSS Feed" href="/blog/feed.xml">
     {%- endif %}
 
