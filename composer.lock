@@ -1985,16 +1985,16 @@
         },
         {
             "name": "symfony/css-selector",
-            "version": "v5.2.7",
+            "version": "v5.2.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/css-selector.git",
-                "reference": "59a684f5ac454f066ecbe6daecce6719aed283fb"
+                "reference": "5d5f97809015102116208b976eb2edb44b689560"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/css-selector/zipball/59a684f5ac454f066ecbe6daecce6719aed283fb",
-                "reference": "59a684f5ac454f066ecbe6daecce6719aed283fb",
+                "url": "https://api.github.com/repos/symfony/css-selector/zipball/5d5f97809015102116208b976eb2edb44b689560",
+                "reference": "5d5f97809015102116208b976eb2edb44b689560",
                 "shasum": ""
             },
             "require": {
@@ -2030,7 +2030,7 @@
             "description": "Converts CSS selectors to XPath expressions",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/css-selector/tree/v5.3.0-BETA1"
+                "source": "https://github.com/symfony/css-selector/tree/v5.2.9"
             },
             "funding": [
                 {
@@ -2046,20 +2046,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-04-07T16:07:52+00:00"
+            "time": "2021-05-16T13:07:46+00:00"
         },
         {
             "name": "symfony/dom-crawler",
-            "version": "v5.2.4",
+            "version": "v5.2.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dom-crawler.git",
-                "reference": "400e265163f65aceee7e904ef532e15228de674b"
+                "reference": "8d5201206ded6f37de475b041a11bfaf3ac73d5e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/400e265163f65aceee7e904ef532e15228de674b",
-                "reference": "400e265163f65aceee7e904ef532e15228de674b",
+                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/8d5201206ded6f37de475b041a11bfaf3ac73d5e",
+                "reference": "8d5201206ded6f37de475b041a11bfaf3ac73d5e",
                 "shasum": ""
             },
             "require": {
@@ -2104,7 +2104,7 @@
             "description": "Eases DOM navigation for HTML and XML documents",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/dom-crawler/tree/v5.2.4"
+                "source": "https://github.com/symfony/dom-crawler/tree/v5.2.9"
             },
             "funding": [
                 {
@@ -2120,7 +2120,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-02-15T18:55:04+00:00"
+            "time": "2021-05-16T13:07:46+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
