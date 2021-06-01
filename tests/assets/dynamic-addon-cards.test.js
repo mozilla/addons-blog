@@ -38,7 +38,7 @@ describe(__filename, () => {
 
   // This is used when we need to wait for all promises, e.g., when promises
   // are executed in an event handler (which we cannot `await` directly).
-  const flushPromises = () => new Promise((resolve) => setImmediate(resolve));
+  const flushPromises = () => new Promise((resolve) => setTimeout(resolve, 0));
 
   afterEach(() => {
     jest.restoreAllMocks();
