@@ -1,5 +1,3 @@
-const { DateTime } = require('luxon');
-
 const {
   AMO_BLOG_BASE_URL,
   WORDPRESS_BASE_URL,
@@ -13,9 +11,7 @@ describe(__filename, () => {
   describe('createPost', () => {
     it('creates an internal post object', () => {
       const post = createPost(apiPost);
-      const permalink = `/blog/${DateTime.fromISO(apiPost.date).toFormat(
-        'y/LL/dd'
-      )}/${apiPost.slug}/`;
+      const permalink = `/blog/${apiPost.slug}/`;
 
       expect(post).toEqual({
         author: apiPost.author,
