@@ -59,7 +59,10 @@ final class WordPressThemeTest extends DOMTestCase
         );
 
         $this->assertSelectCount('.blogpost-breadcrumb', 1, $html);
-        $this->assertStringContainsString('<a href="/">Blog</a>', $html);
+        $this->assertStringContainsString(
+            '<a href="/">Firefox Add-on Reviews</a>',
+            $html
+        );
 
         // This should not be generated when `config.is_wordpress_theme` is set
         // to `true`
