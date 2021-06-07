@@ -21,7 +21,6 @@
     getFirefoxButton,
     isIncompatible,
   }) => {
-    getFirefoxButton.classList.remove('GetFirefoxButton--new');
     getFirefoxButton.querySelector('.GetFirefoxButton-callout').remove();
 
     const button = getFirefoxButton.querySelector('.GetFirefoxButton-button');

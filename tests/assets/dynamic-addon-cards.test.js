@@ -192,7 +192,6 @@ describe(__filename, () => {
       const getFirefoxButton = card.querySelector('.GetFirefoxButton');
       mockFetch({ jsonData: addon });
 
-      expect(getFirefoxButton.classList).toContain('GetFirefoxButton--new');
       expect(
         getFirefoxButton.querySelector('.GetFirefoxButton-callout')
       ).not.toBeNull();
@@ -201,7 +200,6 @@ describe(__filename, () => {
         userAgent: userAgentsByPlatform.mac.firefox69,
       });
 
-      expect(getFirefoxButton.classList).not.toContain('GetFirefoxButton--new');
       expect(
         getFirefoxButton.querySelector('.GetFirefoxButton-callout')
       ).toBeNull();
