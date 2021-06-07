@@ -5,7 +5,7 @@
         <a href="/">Add-ons</a>
       </li>
       <li>
-        <a href="{% if config.is_wordpress_theme %}/{% else %}/blog/{% endif %}">Blog</a>
+        <a href="{% if config.is_wordpress_theme %}/{% else %}/blog/{% endif %}">{{ markup.siteTitle }}</a>
       </li>
       <li>
         <a href="{{ postPermalink }}" aria-current="location">{{ title }}</a>
