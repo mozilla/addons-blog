@@ -149,6 +149,10 @@ const readableDate = (value) => {
   return DateTime.fromISO(value).toFormat('LLLL d, kkkk');
 };
 
+const sitemapDate = (value) => {
+  return DateTime.fromJSDate(value).toISODate();
+};
+
 const getPost = (allPosts, currentPost, modifier) => {
   let postIndex;
   for (let i = 0; i < allPosts.length; i++) {
@@ -194,4 +198,5 @@ module.exports = {
   mediaGetFullURL,
   mediaGetMediumURL,
   readableDate,
+  sitemapDate,
 };

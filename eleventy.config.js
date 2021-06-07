@@ -14,6 +14,7 @@ const {
   mediaGetFullURL,
   mediaGetMediumURL,
   readableDate,
+  sitemapDate,
 } = require('./src/filters');
 const { createNunjucksEnvironment } = require('./src/nunjucks');
 
@@ -59,6 +60,7 @@ module.exports = function configure(eleventyConfig) {
   eleventyConfig.addFilter('mediaGetFullURL', mediaGetFullURL);
   eleventyConfig.addFilter('mediaGetMediumURL', mediaGetMediumURL);
   eleventyConfig.addFilter('readableDate', readableDate);
+  eleventyConfig.addFilter('sitemapDate', sitemapDate);
 
   // We have integration tests that rely on a test project and it doesn't have
   // the files listed below so we don't copy those when executing the tests.

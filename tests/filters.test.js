@@ -9,6 +9,7 @@ const {
   mediaGetFullURL,
   mediaGetMediumURL,
   readableDate,
+  sitemapDate,
 } = require('../src/filters');
 const apiPost = require('./fixtures/apiPost');
 
@@ -498,6 +499,15 @@ describe(__filename, () => {
       it('returns null when there is no next post', () => {
         expect(getNextPost(allPosts, allPosts[3])).toEqual(null);
       });
+    });
+  });
+
+  describe('sitemapDate', () => {
+    it('formats a JS date for the sitemap "lastmod" tag', () => {
+      // JS date "month" starts at 0.
+      const jsDate = new Date(2021, 2, 1);
+
+      expect(sitemapDate(jsDate)).toEqual('2021-03-01');
     });
   });
 });
