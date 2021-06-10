@@ -105,6 +105,14 @@ jobs:
       - run: yarn build:production
       - *persist_deploy_workspace
 
+  build-blog-prod:
+    <<: *node_prod_container
+    steps:
+      - checkout
+      - *run_yarn_install
+      - run: yarn build:production
+      - *persist_deploy_workspace
+
   deploy-dev:
     <<: *deployment_container
     steps:
@@ -114,6 +122,7 @@ jobs:
           name: addons-blog deployment (dev)
           command: |
             pwd && ls -l
+
             AWS_ACCESS_KEY_ID="${DEV_AWS_ACCESS_KEY_ID}"              \
             AWS_SECRET_ACCESS_KEY="${DEV_AWS_SECRET_ACCESS_KEY}"      \
             ADDONS_BLOG_BUCKET="${DEV_ADDONS_BLOG_BUCKET}"            \
@@ -130,9 +139,29 @@ jobs:
           name: addons-blog deployment (stage)
           command: |
             pwd && ls -l
+
             AWS_ACCESS_KEY_ID="${STAGE_AWS_ACCESS_KEY_ID}"            \
             AWS_SECRET_ACCESS_KEY="${STAGE_AWS_SECRET_ACCESS_KEY}"    \
             ADDONS_BLOG_BUCKET="${STAGE_ADDONS_BLOG_BUCKET}"          \
+            ADDONS_BLOG_BUCKET_PREFIX="${ADDONS_BLOG_BUCKET_PREFIX}"  \
+            AMO_BASE_URL=https://addons.allizom.org                   \
+            ./bin/deploy.sh
+
+  deploy-prod:
+    <<: *deployment_container
+    steps:
+      - *attach_deploy_workspace
+      - *install_aws_cli
+      - run:
+          name: addons-blog deployment (prod)
+          command: |
+            pwd && ls -l
+
+            rm dist/robots.txt dist/blog/robots.txt
+
+            AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}"            \
+            AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}"    \
+            ADDONS_BLOG_BUCKET="${ADDONS_BLOG_BUCKET}"          \
             ADDONS_BLOG_BUCKET_PREFIX="${ADDONS_BLOG_BUCKET_PREFIX}"  \
             AMO_BASE_URL=https://addons.allizom.org                   \
             ./bin/deploy.sh
@@ -173,6 +202,26 @@ workflows:
           filters:
             tags:
               only: /.+-stage/
+            branches:
+              ignore: /.*/
+      # -prod
+      - build-blog-prod:
+          # Note that the tags filter is needed because "Circle CI does not
+          # run workflows for tags unless you explicitly specify tag filters.
+          # Additionally, if a job requires any other jobs (directly or
+          # indirectly), you must specify tag filters for those jobs.
+          filters:
+            tags:
+              # Matches tag names like `2021.09.10` or `2021.09.10-1`
+              only: /20\d{2}\.\d{2}\.\d{2}(-\d+)?$/
+            branches:
+              ignore: /.*/
+      - deploy-prod:
+          requires:
+            - build-blog-prod
+          filters:
+            tags:
+              only: /20\d{2}\.\d{2}\.\d{2}(-\d+)?$/
             branches:
               ignore: /.*/
 
