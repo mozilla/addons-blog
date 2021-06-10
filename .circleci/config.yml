@@ -163,7 +163,7 @@ jobs:
             AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}"    \
             ADDONS_BLOG_BUCKET="${ADDONS_BLOG_BUCKET}"          \
             ADDONS_BLOG_BUCKET_PREFIX="${ADDONS_BLOG_BUCKET_PREFIX}"  \
-            AMO_BASE_URL=https://addons.allizom.org                   \
+            AMO_BASE_URL=https://addons.mozilla.org                   \
             ./bin/deploy.sh
 
 workflows:
