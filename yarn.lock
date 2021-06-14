@@ -594,14 +594,14 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@prettier/plugin-php@^0.16.2":
-  version "0.16.3"
-  resolved "https://registry.yarnpkg.com/@prettier/plugin-php/-/plugin-php-0.16.3.tgz#74867210079ba3c0c3ae843029d76e25ff0aadf3"
-  integrity sha512-DNidzeGpP+/wmcCAZNSHxgoAnhEosYG+no4jJRqln19e1o3Okpuir/2JMxb07VCwdG50IWjtNgVwNPVl4uj0Hg==
+"@prettier/plugin-php@^0.17.0":
+  version "0.17.0"
+  resolved "https://registry.yarnpkg.com/@prettier/plugin-php/-/plugin-php-0.17.0.tgz#a51a9cab1b204acdcb726aaed9c8085f229d0307"
+  integrity sha512-eCEX4Psl8fxM+yGvXk1gQVmd+UkYjZnPTwL3Eo0dDl6bV3zc89ZjFoWOQKoLUEgRNjGYQN/jv3/ZQ9mUaAcxEA==
   dependencies:
     linguist-languages "^7.5.1"
     mem "^8.0.0"
-    php-parser "3.0.2"
+    php-parser "git+https://github.com/glayzzle/php-parser.git#bb89fff"
 
 "@sinonjs/commons@^1.7.0":
   version "1.8.3"
@@ -5446,10 +5446,10 @@ photon-colors@^3.3.2:
   resolved "https://registry.yarnpkg.com/photon-colors/-/photon-colors-3.3.2.tgz#eaf2e5a8ba9368fcdee0607cc86a9f613e6d3417"
   integrity sha512-xCeL7J2F8cjM00zQZEZawHAGnrSOM509RbanL4c8hvrV8n19V/wwdzydX6rSUEtLYj4nx4OvhmKC4/vujo9f/Q==
 
-php-parser@3.0.2:
+"php-parser@git+https://github.com/glayzzle/php-parser.git#bb89fff":
   version "3.0.2"
-  resolved "https://registry.yarnpkg.com/php-parser/-/php-parser-3.0.2.tgz#a86dbbc110e57378cba71ab4cd9b0d18f3872ac3"
-  integrity sha512-a7y1+odEGsceLDLpu7oNyspZ0pK8FMWJOoim4/yd82AtnEZNLdCLZ67arnOQZ9K0lHJiSp4/7lVUpGELVxE14w==
+  uid bb89fff9e636a991aa3ac931d5f8a66a365fccce
+  resolved "git+https://github.com/glayzzle/php-parser.git#bb89fff9e636a991aa3ac931d5f8a66a365fccce"
 
 picomatch@^2.0.4, picomatch@^2.2.1, picomatch@^2.2.3:
   version "2.3.0"
