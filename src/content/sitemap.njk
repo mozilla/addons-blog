@@ -1,0 +1,24 @@
+---
+permalink: blog/sitemap.xml
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  {# First, we add _all_ the non-blogpost pages that are not excluded from
+     collections. #}
+  {%- for entry in collections.all %}
+  <url>
+    <loc>{{ markup.baseURL }}{{ entry.url }}</loc>
+    <lastmod>{{ entry.date | sitemapDate }}</lastmod>
+  </url>
+  {%- endfor %}
+  {# Then, we add the blog posts using the `posts` data collection instead of
+     the `all` collection because we want to access specific properties like
+     the `modified` date. #}
+  {%- for post in posts %}
+  <url>
+    <loc>{{ post.absolutePermalink }}</loc>
+    <lastmod>{{ post.modified | convertToJsDate | sitemapDate }}</lastmod>
+  </url>
+  {%- endfor %}
+</urlset>
