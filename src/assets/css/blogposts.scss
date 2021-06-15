@@ -106,6 +106,7 @@ $breadcrumb-text-color: #52525e;
   }
 
   img {
+    box-shadow: 0 1px 1px transparentize($black, 0.9);
     height: auto;
     max-width: 100%;
   }
@@ -118,6 +119,10 @@ $breadcrumb-text-color: #52525e;
     &:not(.Button) {
       color: $link-color;
     }
+  }
+
+  figure {
+    margin: 40px 0;
   }
 
   figcaption {
