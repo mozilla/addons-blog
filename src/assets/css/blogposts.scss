@@ -76,6 +76,15 @@ $breadcrumb-text-color: #52525e;
     margin-top: 0;
   }
 
+  h2,
+  h3,
+  h4,
+  h5 {
+    a {
+      text-decoration: none;
+    }
+  }
+
   h2 {
     font-size: $heading-md-font-size;
     line-height: $heading-md-line-height;
