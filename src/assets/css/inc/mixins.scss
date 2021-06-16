@@ -10,9 +10,6 @@
 
 @mixin font-family-inter() {
   font-family: 'Inter', sans-serif;
-  @supports (font-variation-settings: normal) {
-    font-family: 'Inter Var', sans-serif;
-  }
 }
 
 @mixin font-regular() {
