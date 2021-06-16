@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% if title %}{{ title }} - {% endif %}{{ markup.siteTitle }}</title>
 
+    <link href="{{ config.asset_path | safe }}/blog/assets/fonts/woff2/Inter-roman-subset-en_de_fr_ru_es_pt_pl_it.var.woff2" crossorigin="anonymous" rel="preload" as="font" type="font/woff2">
+
     {% if blogpost %}
     {{ blogpost.seoHead | safe({ isHeadMarkup: true }) }}
     {% elif not config.is_wordpress_theme and not config.is_404 %}

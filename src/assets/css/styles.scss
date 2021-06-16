@@ -1,8 +1,11 @@
+// Put font style at the top of the generated CSS file.
+@import '../fonts/inter.scss';
+@import '../fonts/inter-subset.scss';
+
 // Normalization, vars, mixins and fonts.
 @import 'normalize.css/normalize';
 @import 'photon-colors/photon-colors.scss';
 
-@import '../fonts/inter.scss';
 @import './inc/variables';
 @import './inc/mixins';
 
