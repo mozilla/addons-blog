@@ -17,12 +17,23 @@ describe(__filename, () => {
     }
   });
 
-  maybeIt('has at least 2 blog posts', () => {
-    const directories = fs
+  const getAllPostDirectories = () => {
+    return fs
       .readdirSync(path.join(DIST_DIR, 'blog'), {
         withFileTypes: true,
       })
       .filter((entry) => entry.name !== 'assets' && entry.isDirectory());
+  };
+
+  const getPostHTML = (slug) => {
+    return fs.readFileSync(
+      path.join(DIST_DIR, 'blog', slug, 'index.html'),
+      'utf-8'
+    );
+  };
+
+  maybeIt('has at least 2 blog posts', () => {
+    const directories = getAllPostDirectories();
 
     expect(directories.length).toBeGreaterThanOrEqual(2);
   });
@@ -37,5 +48,19 @@ describe(__filename, () => {
     expect(fs.existsSync(path.join(DIST_DIR, 'blog', 'sitemap.xml'))).toEqual(
       true
     );
+  });
+
+  describe('blog post', () => {
+    maybeIt('renders a Pocket button', () => {
+      // eslint-disable-next-line no-unused-vars
+      const [first, ...others] = getAllPostDirectories();
+      const slug = first.name;
+      const html = getPostHTML(slug);
+      const url = `https://addons.mozilla.org/blog/${slug}/`;
+
+      expect(html).toContain(
+        `https://widgets.getpocket.com/v1/popup?url=${encodeURIComponent(url)}`
+      );
+    });
   });
 });
