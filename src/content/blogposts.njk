@@ -19,8 +19,8 @@ eleventyExcludeFromCollections: true
   {%- set postContent = blogpost.content | buildStaticAddonCards | safe -%}
   {%- set postAuthor = author.name -%}
   {%- set postAuthorAvatar = author.avatar_urls[96] -%}
-  {%- set tweetText = blogpost.title | urlencode -%}
-  {%- set tweetURL = blogpost.absolutePermalink | urlencode -%}
+  {%- set socialText = blogpost.title | urlencode -%}
+  {%- set socialURL = blogpost.absolutePermalink | urlencode -%}
   {%- set postPermalink = blogpost.permalink -%}
 
   {%- include 'blogpost.njk' -%}

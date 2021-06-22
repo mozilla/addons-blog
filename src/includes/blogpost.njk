@@ -33,12 +33,15 @@
         <dd class="author-avatar"><img src="{{ postAuthorAvatar }}"></dd>
       </div>
       {% endif %}
-      {% if tweetText %}
-      <div class="blogpost-meta-share-twitter">
-        <dt class="share-twitter">Share</dt>
-        <dd class="share-twitter">
-          <a class="share-twitter-link" href="https://twitter.com/intent/tweet/?text={{ tweetText }}&url={{ tweetURL }}?{{ 'utm_source=twitter&utm_medium=social&utm_campaign=amo_blog_share' | urlencode }}">
+      {% if socialText %}
+      <div class="blogpost-meta-share-social">
+        <dt class="share-social">Share</dt>
+        <dd class="share-social">
+          <a class="share-twitter-link" href="https://twitter.com/intent/tweet/?text={{ socialText }}&url={{ socialURL }}?{{ 'utm_source=twitter&utm_medium=social&utm_campaign=amo_blog_share' | urlencode }}">
             Twitter
+          </a>
+          <a class="share-pocket-link" href="https://widgets.getpocket.com/v1/popup?url={{ socialURL }}">
+            Pocket
           </a>
         </dd>
       </div>

@@ -217,7 +217,7 @@ $breadcrumb-text-color: #52525e;
     }
   }
 
-  .blogpost-meta-share-twitter {
+  .blogpost-meta-share-social {
     margin-bottom: 60px;
     margin-top: 30px;
     order: -1;
@@ -225,18 +225,8 @@ $breadcrumb-text-color: #52525e;
 
   .share-twitter-link {
     background: #1da1f2 url('../img/twitter.svg') 6px center no-repeat;
-    background-size: 18px 18px;
     border-color: #0d95e8;
-    border-radius: 0;
-    border-style: solid;
-    border-width: 2px;
     color: $white;
-    display: inline-block;
-    padding: 2px 10px 2px 35px;
-    position: relative;
-    text-align: center;
-    text-decoration: none;
-    transition: background-color 100ms ease-in-out;
 
     &:hover,
     &:focus,
@@ -245,10 +235,36 @@ $breadcrumb-text-color: #52525e;
     }
   }
 
+  .share-pocket-link {
+    background: #f2f2f2 url('../img/pocket.svg') 6px center no-repeat;
+    border-color: #c9c9c9;
+    color: #777;
+
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: #ececec;
+    }
+  }
+
+  .share-twitter-link,
+  .share-pocket-link {
+    background-size: 14px 14px;
+    border-radius: 0;
+    border-style: solid;
+    border-width: 1px;
+    display: inline-block;
+    padding: 1px 5px 1px 25px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 100ms ease-in-out;
+  }
+
   @include respond-to(xl) {
     text-align: left;
 
-    .blogpost-meta-share-twitter {
+    .blogpost-meta-share-social {
       margin-bottom: 0;
       margin-top: 60px;
       order: initial;

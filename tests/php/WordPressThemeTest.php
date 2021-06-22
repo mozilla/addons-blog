@@ -57,6 +57,7 @@ final class WordPressThemeTest extends DOMTestCase
             ),
             $html
         );
+        $this->assertSelectCount('.share-pocket-link', 1, $html);
 
         $this->assertSelectCount('.blogpost-breadcrumb', 1, $html);
         $this->assertStringContainsString(
