@@ -49,7 +49,7 @@
 
 .header-title {
   color: $white;
-  font-size: 34px;
+  font-size: 5vh;
   line-height: 1.2;
   margin: 0 auto;
   max-width: 1100px;
@@ -58,7 +58,6 @@
   width: 70%;
 
   @include respond-to(m-height) {
-    font-size: 44px;
     width: 90%;
   }
 
