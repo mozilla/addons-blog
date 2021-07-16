@@ -58,7 +58,6 @@
   width: 70%;
 
   @include respond-to(m-height) {
-    font-size: 44px;
     width: 90%;
   }
 
