@@ -118,6 +118,51 @@ Whilst the `asset-pipline` script is custom, it leverages a lot of existing libs
 
 For the `asset-pipeline` script to do its thing, all you need to do is refer to all assets with a path beginning with `/blog/assets/`. If you do that, everything else is handled for you ✨
 
+## Deployment strategy
+
+Currently, we use a "simple" deployment strategy based on git tags and Circle CI to deploy this blog. We have three different tag patterns:
+
+- `<year>.<month>.<date>-stage` (e.g., `2021.07.22-stage`): these tags will be deployed to our [-stage instance][stage]
+- `<year>.<month>.<date>` (e.g., `2021.07.22`): these tags will be deployed to our [-prod instance][prod]
+- `x.y.z` (e.g., `1.3.0`): this is the `version` in the `package.json` and it is used to version the WordPress theme that can be constructed in this project
+
+Each deployment will fetch the content from the (headless) WordPress instance, which ensures that the most recent content will be deployed.
+
+### -dev
+
+All commits on the `main` branch are automatically deployed to our [-dev instance][dev]. The content of the blog might not always be up-to-date.
+
+#### How to redeploy -dev?
+
+Either push a new commit to the `main` branch or go to [the Circle CI page][circle-addons-blog], select the `main` branch and re-run the most recent `default-workflow` workflow.
+
+### -stage
+
+As mentioned previously, git tags matching `<year>.<month>.<date>-stage` will be automatically deployed to our [-stage instance][stage].
+
+In addition, we automatically update -stage every 3 hours using a CRON task configured in Circle CI (see `autodeploy-stage` workflow in the [Circle CI configuration](.circleci/config.yml)). This task looks for the most recent git tag matching the pattern above and deploy it. As mentioned previously, the content is fetched from the WordPress API every time.
+
+#### How to redeploy -stage?
+
+Either wait up to 3 hours or go to [the Circle CI page][circle-addons-blog] and re-run the `autodeploy-stage` workflow (or the mot recent "stage" tag).
+
+### -prod
+
+Git tags matching `<year>.<month>.<date>` will be automatically deployed to our [-prod instance][prod].
+
+#### How to redeploy -prod?
+
+Go to [the Circle CI page][circle-addons-blog] and re-run the `default-workflow` workflow for the most recent "prod" tag.
+
+### About the WordPress theme
+
+This project is also able to build a WordPress theme for the WordPress instance. Use `npm version` to create new releases and run `yarn build:wptheme` to build a ZIP file containing the theme. Finally, push the commit and tag (created with `npm version`) and make a [GitHub Release][gh-release], including the ZIP file as an asset.
+
 [prettier]: https://prettier.io/
 [browsersync]: https://browsersync.io/
 [mkcert]: https://github.com/FiloSottile/mkcert
+[dev]: https://addons-dev.allizom.org/blog/
+[stage]: https://addons.allizom.org/blog/
+[prod]: https://addons.mozilla.org/blog/
+[circle-addons-blog]: https://app.circleci.com/pipelines/github/mozilla/addons-blog
+[gh-release]: https://github.com/mozilla/addons-blog/releases
