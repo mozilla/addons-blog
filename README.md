@@ -150,10 +150,13 @@ Either wait up to 3 hours or go to [the Circle CI page][circle-addons-blog] and 
 
 **Important:** when deploying to production, please deploy to -stage first.
 
-Git tags matching `<year>.<month>.<date>` will be automatically deployed to our [-prod instance][prod]. A git tag for production should point to a commit already tagged for stage so that we can deploy the exact same commit in both environments:
+Git tags matching `<year>.<month>.<date>` will be automatically deployed to our [-prod instance][prod].
+
+A git tag for production should point to a commit already tagged for stage so that we can deploy the exact same commit in both environments:
 
 ```
 # an example from `git log`
+
 commit 68da8f1d4ea536f7890012ab2b4c39299a853cc5 (tag: 2021.07.22-stage, tag: 2021.07.22)
 Author: William Durand <will+git@drnd.me>
 Date:   Mon Jul 19 11:39:56 2021 +0200
