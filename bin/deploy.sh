@@ -123,7 +123,7 @@ aws s3 sync \
   --content-type "application/xml" \
   --exclude "*" \
   --include "*.xml" \
-  --metadata "{${ACAO}, ${CSPSTATIC}, ${HSTS}, ${TYPE}, ${XSS}, ${XFRAME}, ${REFERRER}}" \
+  --metadata "{${CSPSTATIC}, ${HSTS}, ${TYPE}, ${XSS}, ${XFRAME}, ${REFERRER}}" \
   --metadata-directive "REPLACE" \
   --acl "public-read" \
   "$src_dir"/ s3://${ADDONS_BLOG_BUCKET}/
