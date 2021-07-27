@@ -117,6 +117,17 @@ aws s3 sync \
   --acl "public-read" \
   "$src_dir"/ s3://${ADDONS_BLOG_BUCKET}/
 
+# XML; short cache
+aws s3 sync \
+  --cache-control "max-age=${TEN_MINUTES}" \
+  --content-type "application/xml" \
+  --exclude "*" \
+  --include "*.xml" \
+  --metadata "{${ACAO}, ${CSPSTATIC}, ${HSTS}, ${TYPE}, ${XSS}, ${XFRAME}, ${REFERRER}}" \
+  --metadata-directive "REPLACE" \
+  --acl "public-read" \
+  "$src_dir"/ s3://${ADDONS_BLOG_BUCKET}/
+
 # SVG; cache forever, assign correct content-type
 aws s3 sync \
   --cache-control "max-age=${ONE_YEAR}, immutable" \
