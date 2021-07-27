@@ -126,7 +126,7 @@ Currently, we use a "simple" deployment strategy based on git tags and Circle CI
 - `<year>.<month>.<date>` (e.g., `2021.07.22`): these tags will be deployed to our [-prod instance][prod]
 - `x.y.z` (e.g., `1.3.0`): this is the `version` in the `package.json` and it is used to version the WordPress theme that can be constructed in this project
 
-Each deployment will fetch the content from the (headless) WordPress instance, which ensures that the most recent content will be deployed.
+Each deployment will fetch the content from the (headless) WordPress instance, which ensures that the most recent content will be deployed. The Editorial team uses the WordPress instance to prepare blog posts and decides when to mark them as "visible" (or public). When we publish the blog through a tag, we pull the content available to it at that point in time.
 
 ### -dev
 
