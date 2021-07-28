@@ -40,7 +40,7 @@
     "acorn-walk": "^8.0.2",
     "addons-frontend-blog-utils": "^0.21.0",
     "addons-moz-compare": "^1.0.0",
-    "chokidar-cli": "^2.1.0",
+    "chokidar-cli": "^3.0.0",
     "codecov": "^3.8.1",
     "dompurify": "^2.2.6",
     "eslint": "^7.22.0",
