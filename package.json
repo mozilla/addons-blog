@@ -38,7 +38,7 @@
     "@mozilla-protocol/tokens": "^5.0.5",
     "@prettier/plugin-php": "^0.17.0",
     "acorn-walk": "^8.0.2",
-    "addons-frontend-blog-utils": "^0.21.0",
+    "addons-frontend-blog-utils": "^0.24.0",
     "addons-moz-compare": "^1.0.0",
     "chokidar-cli": "^3.0.0",
     "codecov": "^3.8.1",
