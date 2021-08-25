@@ -144,7 +144,7 @@ In addition, we automatically update -stage every 3 hours using a CRON task conf
 
 #### How to redeploy -stage?
 
-Either wait up to 3 hours or go to [the Circle CI page][circle-addons-blog] and re-run the `autodeploy-stage` workflow (or the mot recent "stage" tag).
+Either wait up to 3 hours or go to [the Circle CI page][circle-addons-blog] and re-run the `autodeploy-stage` workflow (or the most recent "stage" tag).
 
 ### -prod
 
