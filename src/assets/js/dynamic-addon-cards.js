@@ -113,13 +113,13 @@
         } else {
           const { current_version, promoted } = addon;
 
-          if (!current_version || !current_version.files) {
+          if (!current_version || !current_version.file) {
             console.debug(`invalid current version for addonId=${addonId}`);
             isIncompatible = true;
           }
 
           if (!isIncompatible) {
-            const file = current_version.files[0];
+            const file = current_version.file;
             downloadURL = file && file.url;
             fileHash = file && file.hash;
 
