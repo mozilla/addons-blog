@@ -888,9 +888,10 @@ acorn@^8.2.4:
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.5.0.tgz#4512ccb99b3698c752591e9bb4472e38ad43cee2"
   integrity sha512-yXbYeFy+jUuYd3/CDcg2NkIYE991XYX/bje7LmjJigUciaeO1JR4XxXgCIV1/Zc/dRuFEyw1L0pbA+qynJkW5Q==
 
-"addons-frontend-blog-utils@https://github.com/mozilla/addons-frontend/releases/download/blog-utils-0.25.0/addons-frontend-blog-utils-0.25.0.tgz":
+addons-frontend-blog-utils@^0.25.0:
   version "0.25.0"
-  resolved "https://github.com/mozilla/addons-frontend/releases/download/blog-utils-0.25.0/addons-frontend-blog-utils-0.25.0.tgz#934a402fa06c697513581d19de4889bd9f657209"
+  resolved "https://registry.yarnpkg.com/addons-frontend-blog-utils/-/addons-frontend-blog-utils-0.25.0.tgz#c0920e6b4f0835fbd949b87a6dc1d6b15983023f"
+  integrity sha512-454SEMa+pN2iwjUuO83VCAgi4JDDgon9fFhpNWfEQy2tOAaRMKhucQfhp89RxK0H2G/20FV8qOA6BAwf1QwXpg==
   dependencies:
     jsdom "16.7.0"
     node-fetch "^2.6.1"
@@ -5442,7 +5443,7 @@ photon-colors@^3.3.2:
   resolved "https://registry.yarnpkg.com/photon-colors/-/photon-colors-3.3.2.tgz#eaf2e5a8ba9368fcdee0607cc86a9f613e6d3417"
   integrity sha512-xCeL7J2F8cjM00zQZEZawHAGnrSOM509RbanL4c8hvrV8n19V/wwdzydX6rSUEtLYj4nx4OvhmKC4/vujo9f/Q==
 
-"php-parser@github:glayzzle/php-parser#4c5b0675f52c0baab2e5b10a4e50e5d7a79b2767":
+php-parser@glayzzle/php-parser#4c5b0675f52c0baab2e5b10a4e50e5d7a79b2767:
   version "3.0.2"
   resolved "https://codeload.github.com/glayzzle/php-parser/tar.gz/4c5b0675f52c0baab2e5b10a4e50e5d7a79b2767"
 
