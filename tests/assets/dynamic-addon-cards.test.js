@@ -185,7 +185,7 @@ describe(__filename, () => {
         ...tabbyAddon,
         current_version: {
           ...tabbyAddon.current_version,
-          files: [{ ...tabbyAddon.current_version.files[0], url: downloadURL }],
+          file: { ...tabbyAddon.current_version.file, url: downloadURL },
         },
       };
       const card = await loadStaticAddonCardInDocument({ addon });
@@ -249,50 +249,12 @@ describe(__filename, () => {
       expectDisabledInstallButton({ getFirefoxButton, downloadURL: '' });
     });
 
-    it('disables the install button when current version file is falsey', async () => {
-      const addon = {
-        ...tabbyAddon,
-        current_version: {
-          ...tabbyAddon.current_version,
-          files: null,
-        },
-      };
-      const card = await loadStaticAddonCardInDocument({ addon });
-      const getFirefoxButton = card.querySelector('.GetFirefoxButton');
-      mockFetch({ jsonData: addon });
-
-      await _updateAddonCard(card, {
-        userAgent: userAgentsByPlatform.mac.firefox69,
-      });
-
-      expectDisabledInstallButton({ getFirefoxButton, downloadURL: '' });
-    });
-
-    it('disables the install button when there is no current version file', async () => {
-      const addon = {
-        ...tabbyAddon,
-        current_version: {
-          ...tabbyAddon.current_version,
-          files: [],
-        },
-      };
-      const card = await loadStaticAddonCardInDocument({ addon });
-      const getFirefoxButton = card.querySelector('.GetFirefoxButton');
-      mockFetch({ jsonData: addon });
-
-      await _updateAddonCard(card, {
-        userAgent: userAgentsByPlatform.mac.firefox69,
-      });
-
-      expectDisabledInstallButton({ getFirefoxButton, downloadURL: '' });
-    });
-
     it('disables the install button when there is no download URL', async () => {
       const addon = {
         ...tabbyAddon,
         current_version: {
           ...tabbyAddon.current_version,
-          files: [{ ...tabbyAddon.current_version.files[0], url: null }],
+          file: { ...tabbyAddon.current_version.file, url: null },
         },
       };
       const card = await loadStaticAddonCardInDocument({ addon });
@@ -311,7 +273,7 @@ describe(__filename, () => {
         ...tabbyAddon,
         current_version: {
           ...tabbyAddon.current_version,
-          files: [{ ...tabbyAddon.current_version.files[0], hash: null }],
+          file: { ...tabbyAddon.current_version.file, hash: null },
         },
       };
       const card = await loadStaticAddonCardInDocument({ addon });
@@ -324,7 +286,7 @@ describe(__filename, () => {
 
       expectDisabledInstallButton({
         getFirefoxButton,
-        downloadURL: addon.current_version.files[0].url,
+        downloadURL: addon.current_version.file.url,
       });
     });
 
@@ -360,7 +322,7 @@ describe(__filename, () => {
 
         expectDisabledInstallButton({
           getFirefoxButton,
-          downloadURL: addon.current_version.files[0].url,
+          downloadURL: addon.current_version.file.url,
         });
       });
 
@@ -382,7 +344,7 @@ describe(__filename, () => {
 
         expectDisabledInstallButton({
           getFirefoxButton,
-          downloadURL: addon.current_version.files[0].url,
+          downloadURL: addon.current_version.file.url,
         });
       });
 
@@ -404,7 +366,7 @@ describe(__filename, () => {
 
         expectDisabledInstallButton({
           getFirefoxButton,
-          downloadURL: addon.current_version.files[0].url,
+          downloadURL: addon.current_version.file.url,
         });
       });
 
@@ -430,7 +392,7 @@ describe(__filename, () => {
 
         expectDisabledInstallButton({
           getFirefoxButton,
-          downloadURL: addon.current_version.files[0].url,
+          downloadURL: addon.current_version.file.url,
         });
       });
 
@@ -452,7 +414,7 @@ describe(__filename, () => {
 
         expectDisabledInstallButton({
           getFirefoxButton,
-          downloadURL: addon.current_version.files[0].url,
+          downloadURL: addon.current_version.file.url,
         });
       });
 
@@ -475,7 +437,7 @@ describe(__filename, () => {
 
         expectDisabledInstallButton({
           getFirefoxButton,
-          downloadURL: addon.current_version.files[0].url,
+          downloadURL: addon.current_version.file.url,
         });
       });
 
@@ -526,13 +488,11 @@ describe(__filename, () => {
           ...addonProps,
           current_version: {
             ...tabbyAddon.current_version,
-            files: [
-              {
-                ...tabbyAddon.current_version.files[0],
-                url,
-                hash,
-              },
-            ],
+            file: {
+              ...tabbyAddon.current_version.file,
+              url,
+              hash,
+            },
           },
           promoted: {
             apps: ['android'],
@@ -669,7 +629,7 @@ describe(__filename, () => {
 
         expectDisabledInstallButton({
           getFirefoxButton,
-          downloadURL: addon.current_version.files[0].url,
+          downloadURL: addon.current_version.file.url,
         });
       });
 
@@ -691,7 +651,7 @@ describe(__filename, () => {
 
         expectDisabledInstallButton({
           getFirefoxButton,
-          downloadURL: addon.current_version.files[0].url,
+          downloadURL: addon.current_version.file.url,
         });
       });
 
