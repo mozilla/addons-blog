@@ -119,7 +119,7 @@
           }
 
           if (!isIncompatible) {
-            const file = current_version.file;
+            const { file } = current_version;
             downloadURL = file && file.url;
             fileHash = file && file.hash;
 
