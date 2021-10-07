@@ -33,22 +33,19 @@
       }
     },
     "edit_url": "https://addons-dev.allizom.org/en-US/developers/addon/tabby-catextension/versions/1688307",
-    "files": [
-      {
-        "id": 408968,
-        "created": "2019-06-14T13:26:48Z",
-        "hash": "sha256:77d8171f6d9fc1db57ee3d2ad5e4daee99f3b9148d0ac5ebcc518d2dbe51c511",
-        "is_restart_required": false,
-        "is_webextension": true,
-        "is_mozilla_signed_extension": false,
-        "platform": "all",
-        "size": 295590,
-        "status": "public",
-        "url": "https://addons-dev.allizom.org/firefox/downloads/file/408968/tabby_cat-1.0.2-an+fx.xpi",
-        "permissions": [],
-        "optional_permissions": []
-      }
-    ],
+    "file": {
+      "id": 408968,
+      "created": "2019-06-14T13:26:48Z",
+      "hash": "sha256:77d8171f6d9fc1db57ee3d2ad5e4daee99f3b9148d0ac5ebcc518d2dbe51c511",
+      "is_restart_required": false,
+      "is_mozilla_signed_extension": false,
+      "platform": "all",
+      "size": 295590,
+      "status": "public",
+      "url": "https://addons-dev.allizom.org/firefox/downloads/file/408968/tabby_cat-1.0.2-an+fx.xpi",
+      "permissions": [],
+      "optional_permissions": []
+    },
     "is_strict_compatibility_enabled": false,
     "license": {
       "id": 4078,
