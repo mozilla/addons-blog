@@ -113,7 +113,7 @@
         } else {
           const { current_version, promoted } = addon;
 
-          if (!current_version || !current_version.file) {
+          if (!current_version) {
             console.debug(`invalid current version for addonId=${addonId}`);
             isIncompatible = true;
           }
