@@ -7,7 +7,7 @@ references:
 
   deployment_container: &deployment_container
     docker:
-      - image: circleci/python:3.9-node
+      - image: circleci/python:3.10-node
 
   node_prod_container: &node_prod_container
     docker:
