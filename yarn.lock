@@ -623,7 +623,7 @@
   dependencies:
     linguist-languages "^7.5.1"
     mem "^8.0.0"
-    php-parser "github:glayzzle/php-parser#4c5b0675f52c0baab2e5b10a4e50e5d7a79b2767"
+    php-parser glayzzle/php-parser#4c5b0675f52c0baab2e5b10a4e50e5d7a79b2767
 
 "@sinonjs/commons@^1.7.0":
   version "1.8.3"
@@ -889,10 +889,10 @@ acorn@^8.2.4:
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.5.0.tgz#4512ccb99b3698c752591e9bb4472e38ad43cee2"
   integrity sha512-yXbYeFy+jUuYd3/CDcg2NkIYE991XYX/bje7LmjJigUciaeO1JR4XxXgCIV1/Zc/dRuFEyw1L0pbA+qynJkW5Q==
 
-addons-frontend-blog-utils@^0.26.0:
-  version "0.26.0"
-  resolved "https://registry.yarnpkg.com/addons-frontend-blog-utils/-/addons-frontend-blog-utils-0.26.0.tgz#ce8b6de817fa132ff4888e5baaad5f3d299b9a1f"
-  integrity sha512-Op3EnzsnyHquxS6WiLQ6RNXWVLEU+xwIoE5UEVuUbFod6bf9y78kZP4djDEqp1GDKh3aDVTnA9sjxeREYtXkUw==
+addons-frontend-blog-utils@^0.27.0:
+  version "0.27.0"
+  resolved "https://registry.yarnpkg.com/addons-frontend-blog-utils/-/addons-frontend-blog-utils-0.27.0.tgz#a9600dc4a051c15d429005e1b79ae9f2cdee416d"
+  integrity sha512-Yi9resX71ERLC8J54iTAxs+tvZ5ibUrSYjrXqLovDv1LnqC+npx6cQc4APv4jktd3pC0O9NF273kC0sUqA8mHw==
   dependencies:
     jsdom "16.7.0"
     node-fetch "^2.6.1"
@@ -5441,7 +5441,6 @@ photon-colors@^3.3.2:
 
 "php-parser@github:glayzzle/php-parser#4c5b0675f52c0baab2e5b10a4e50e5d7a79b2767":
   version "3.0.2"
-  uid "4c5b0675f52c0baab2e5b10a4e50e5d7a79b2767"
   resolved "https://codeload.github.com/glayzzle/php-parser/tar.gz/4c5b0675f52c0baab2e5b10a4e50e5d7a79b2767"
 
 picocolors@^0.2.1:
