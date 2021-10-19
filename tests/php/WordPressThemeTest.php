@@ -26,7 +26,7 @@ final class WordPressThemeTest extends DOMTestCase
         $html = $this->render('single.php', 1);
 
         $this->assertStringContainsString(
-            '<title>some title - Firefox Add-on Reviews</title>',
+            '<title>some title - Firefox Add-ons Blog</title>',
             $html
         );
         $this->assertStringContainsString(
@@ -61,7 +61,7 @@ final class WordPressThemeTest extends DOMTestCase
 
         $this->assertSelectCount('.blogpost-breadcrumb', 1, $html);
         $this->assertStringContainsString(
-            '<a href="/">Firefox Add-on Reviews</a>',
+            '<a href="/">Firefox Add-ons Blog</a>',
             $html
         );
 
@@ -80,7 +80,7 @@ final class WordPressThemeTest extends DOMTestCase
         $html = $this->render('index.php', 2);
 
         $this->assertStringContainsString(
-            '<title>Firefox Add-on Reviews</title>',
+            '<title>Firefox Add-ons Blog</title>',
             $html
         );
         $this->assertSelectEquals('.blog-entry-title', 'some title', 2, $html);
