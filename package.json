@@ -44,7 +44,7 @@
     "codecov": "^3.8.1",
     "dompurify": "^2.2.6",
     "eslint": "^7.22.0",
-    "eslint-config-amo": "^4.3.0",
+    "eslint-config-amo": "^5.0.0",
     "flat-cache": "^3.0.4",
     "focus-visible": "^5.2.0",
     "fs-extra": "^10.0.0",
