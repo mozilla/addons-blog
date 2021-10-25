@@ -11,7 +11,7 @@ references:
 
   node_prod_container: &node_prod_container
     docker:
-      - image: circleci/node:14
+      - image: circleci/node:17
 
   install_aws_cli: &install_aws_cli
     run:
