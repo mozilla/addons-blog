@@ -5464,7 +5464,6 @@ photon-colors@^3.3.2:
 
 php-parser@glayzzle/php-parser#4c5b0675f52c0baab2e5b10a4e50e5d7a79b2767:
   version "3.0.2"
-  uid "4c5b0675f52c0baab2e5b10a4e50e5d7a79b2767"
   resolved "https://codeload.github.com/glayzzle/php-parser/tar.gz/4c5b0675f52c0baab2e5b10a4e50e5d7a79b2767"
 
 picocolors@^0.2.1:
@@ -7224,6 +7223,11 @@ ua-parser-js@^0.7.28:
   version "0.7.28"
   resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.28.tgz#8ba04e653f35ce210239c64661685bf9121dec31"
   integrity sha512-6Gurc1n//gjp9eQNXjD9O3M/sMwVtN5S8Lv9bvOYBfKfDNiIIhqiyi01vMBO45u4zkDE420w/e0se7Vs+sIg+g==
+
+ua-parser-js@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-1.0.1.tgz#268408f4d60375e67aa919fa7d117bdc66d5cd77"
+  integrity sha512-ZMu7XRN3M3R+g/YaFQKiVW0J42bzciF0+xAxP5uuO6VibE30MQvRRBctHuh22uS3yAe5jkru/i8QVOwRDJazIw==
 
 uc.micro@^1.0.1, uc.micro@^1.0.5:
   version "1.0.6"
