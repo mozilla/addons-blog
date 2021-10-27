@@ -55,7 +55,7 @@ CSP="\"content-security-policy\": \"default-src 'none'; "\
 "font-src ${AMO_BASE_URL}/blog/assets/fonts/; "\
 "form-action 'none'; "\
 "frame-ancestors 'none'; "\
-"img-src ${AMO_BASE_URL}/blog/assets/img/ data: https://addons.cdn.mozilla.net/user-media/ https://mozamo.wpengine.com/wp-content/ https://secure.gravatar.com/avatar/; "\
+"img-src ${AMO_BASE_URL}/blog/assets/img/ data: ${AMO_BASE_URL}/user-media/ https://mozamo.wpengine.com/wp-content/ https://secure.gravatar.com/avatar/; "\
 "object-src 'none'; "\
 "script-src ${AMO_BASE_URL}/blog/assets/js/ https://www.google-analytics.com/analytics.js; "\
 "style-src ${AMO_BASE_URL}/blog/assets/css/ 'unsafe-inline'\""
