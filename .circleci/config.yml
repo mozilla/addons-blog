@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  codecov: codecov/codecov@3.2.0
+
 references:
   attach_deploy_workspace: &attach_deploy_workspace
     attach_workspace:
@@ -71,6 +74,7 @@ jobs:
       - *run_yarn_install
       - *save_build_cache
       - run: yarn test-ci
+      - codecov/upload
       - run: yarn prettier-ci
       - run: yarn lint:js
       - run: yarn lint:scss
