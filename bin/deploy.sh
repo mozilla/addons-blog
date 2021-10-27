@@ -49,13 +49,15 @@ CSPSTATIC="\"content-security-policy\": \"default-src 'none'; "\
 "object-src 'none'\""
 
 # Note about `connect-src`: we only use the AMO -prod API.
+# Note about `img-src`: we use the AMO -prod user media because we only use the
+# prod data.
 CSP="\"content-security-policy\": \"default-src 'none'; "\
 "base-uri 'self'; "\
 "connect-src https://addons.mozilla.org/api/ https://www.google-analytics.com/; "\
 "font-src ${AMO_BASE_URL}/blog/assets/fonts/; "\
 "form-action 'none'; "\
 "frame-ancestors 'none'; "\
-"img-src ${AMO_BASE_URL}/blog/assets/img/ data: ${AMO_BASE_URL}/user-media/ https://mozamo.wpengine.com/wp-content/ https://secure.gravatar.com/avatar/; "\
+"img-src ${AMO_BASE_URL}/blog/assets/img/ data: https://addons.mozilla.org/user-media/ https://mozamo.wpengine.com/wp-content/ https://secure.gravatar.com/avatar/; "\
 "object-src 'none'; "\
 "script-src ${AMO_BASE_URL}/blog/assets/js/ https://www.google-analytics.com/analytics.js; "\
 "style-src ${AMO_BASE_URL}/blog/assets/css/ 'unsafe-inline'\""
