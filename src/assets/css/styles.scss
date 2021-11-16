@@ -1,9 +1,13 @@
 // Put font style at the top of the generated CSS file.
-@import '../fonts/inter.scss';
-@import '../fonts/inter-subset.scss';
+@import '../fonts/inter';
+@import '../fonts/inter-subset';
 
 // Normalization, vars, mixins and fonts.
 @import 'normalize.css/normalize';
+
+// We have to disable the rule below because, without an extension, sass does
+// not know whether to load the .scss or .css file.
+// stylelint-disable-next-line scss/at-import-partial-extension
 @import 'photon-colors/photon-colors.scss';
 
 @import './inc/variables';
@@ -15,6 +19,7 @@
 
 * {
   box-sizing: border-box;
+
   // We cannot use `overflow-wrap: anywhere` because it is not supported by
   // Safari. MDN says `word-break: break-word` "has the same effect as
   // word-break: normal and overflow-wrap: anywhere, regardless of the actual
@@ -28,7 +33,7 @@ body {
 }
 
 body {
-  @include font-regular();
+  @include font-regular;
 
   background: $white;
   display: flex;

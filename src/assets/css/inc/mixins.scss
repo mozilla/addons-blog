@@ -9,18 +9,18 @@
 }
 
 @mixin font-family-inter() {
-  font-family: 'Inter', sans-serif;
+  font-family: Inter, sans-serif;
 }
 
 @mixin font-regular() {
-  @include font-family-inter();
+  @include font-family-inter;
 
   font-style: normal;
   font-weight: 300;
 }
 
 @mixin font-bold() {
-  @include font-family-inter();
+  @include font-family-inter;
 
   font-style: normal;
   font-weight: 600;

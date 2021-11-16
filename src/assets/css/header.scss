@@ -10,6 +10,7 @@
   background-color: transparentize($black, 0.5);
   height: 100%;
 
+  // stylelint-disable-next-line selector-class-pattern
   .header--no-featured-image & {
     background-color: transparent;
   }
@@ -25,22 +26,23 @@
 
 .header-logo {
   // This is width / height of the source SVG.
-  $aspectRatio: 4.3125;
-  $smallHeight: 48px;
-  $smallWidth: $smallHeight * $aspectRatio;
+  $aspect-ratio: 4.3125;
+  $small-height: 48px;
+  $small-width: $small-height * $aspect-ratio;
 
   align-self: end;
+
   // Important: we use a relative path in order to ease the process of building
   // the WordPress theme, and we cannot use the `/assets/` prefix in this file
   // (and other Sass files).
   background-image: url('../img/logo.svg');
   background-repeat: no-repeat;
-  background-size: $smallWidth $smallHeight;
+  background-size: $small-width $small-height;
   display: block;
-  height: $smallHeight;
+  height: $small-height;
   margin: 20px auto;
   outline-color: $white;
-  width: $smallWidth;
+  width: $small-width;
 
   @include respond-to(l) {
     margin: 0 0 0 48px;
