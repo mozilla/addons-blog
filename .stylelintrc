@@ -1,7 +1,5 @@
 {
-  "extends": [
-    "stylelint-config-standard",
-  ],
+  "extends": ["stylelint-config-standard-scss"],
   "rules": {
     "at-rule-empty-line-before": ["always", {
       "ignore": [
@@ -44,5 +42,7 @@
     }],
     "string-quotes": null,
     "value-list-comma-newline-after": null,
+    "scss/comment-no-empty": null,
+    "scss/no-global-function-names": null,
   }
 }
