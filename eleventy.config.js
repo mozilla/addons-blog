@@ -49,7 +49,7 @@ module.exports = function configure(eleventyConfig) {
 
   eleventyConfig.addNunjucksAsyncFilter(
     'buildStaticAddonCards',
-    makeBuildStaticAddonCards()
+    makeBuildStaticAddonCards({ baseURL: process.env.AMO_BASE_URL })
   );
 
   eleventyConfig.addFilter('convertToJsDate', convertToJsDate);
