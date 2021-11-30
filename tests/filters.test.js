@@ -260,6 +260,33 @@ describe(__filename, () => {
       }
     });
 
+    it('can handle identifiers that look like slugs and guids', async () => {
+      const addonIds = ['12', 'some-slug', 'guid@mozilla.com'];
+      const content = addonIds
+        .map(
+          (addonId) =>
+            `<div class="addon-card" data-addon-id="${addonId}"></div>`
+        )
+        .join('\n');
+      const callback = jest.fn();
+      const _buildStaticAddonCard = jest
+        .fn()
+        .mockReturnValue(STATIC_ADDON_CARD);
+
+      await makeBuildStaticAddonCards({ _buildStaticAddonCard })(
+        content,
+        callback
+      );
+
+      expect(callback).toHaveBeenCalledWith(
+        null,
+        [STATIC_ADDON_CARD, STATIC_ADDON_CARD, STATIC_ADDON_CARD].join('\n')
+      );
+      for (const addonId of addonIds) {
+        expect(_buildStaticAddonCard).toHaveBeenCalledWith({ addonId });
+      }
+    });
+
     it('handles errors coming from the addons-frontend-blog-utils library', async () => {
       const addonId = '1';
       const content = [
