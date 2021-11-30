@@ -202,6 +202,21 @@ describe(__filename, () => {
       expect(makeBuildStaticAddonCards()).toBeInstanceOf(Function);
     });
 
+    it('accepts and passes a baseURL', async () => {
+      const _buildStaticAddonCard = jest.fn();
+      const addonId = '1234';
+      const baseURL = 'https://addons-dev.allizom.org';
+      const callback = jest.fn();
+      const content = `<div class="addon-card" data-addon-id="${addonId}"></div>`;
+
+      await makeBuildStaticAddonCards({ _buildStaticAddonCard, baseURL })(
+        content,
+        callback
+      );
+
+      expect(_buildStaticAddonCard).toHaveBeenCalledWith({ addonId, baseURL });
+    });
+
     it('handles content without an add-on card', async () => {
       const content = 'some content';
       const callback = jest.fn();

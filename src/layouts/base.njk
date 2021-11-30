@@ -34,7 +34,7 @@
     <link rel="stylesheet" href="{{ config.asset_path | safe }}/blog/assets/css/styles.css">
     {%- endblock %}
   </head>
-  <body>
+  <body data-amo-base-url="{{ markup.baseURL }}">
     {% if useHeaderMarkup %}
       {{ markup.header | safe }}
     {% else %}

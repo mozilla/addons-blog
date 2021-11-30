@@ -1,7 +1,9 @@
 /* eslint no-console: 0 */
 /* global window, document, fetch, UAParser, navigator, mozCompare */
 (function dynamicAddonCards() {
-  const AMO_BASE_URL = 'https://addons.mozilla.org';
+  const AMO_BASE_URL =
+    document.querySelector('body').getAttribute('data-amo-base-url') ||
+    'https://addons.mozilla.org';
   // For amoTracking:
   const GET_FIREFOX_BUTTON_CLICK_ACTION = 'download-firefox-click';
   const GET_FIREFOX_BUTTON_CLICK_CATEGORY = 'AMO Download Firefox';
