@@ -84,7 +84,7 @@ const makeBetterSafe = ({ markAsSafe }) => {
 const makeBuildStaticAddonCards =
   ({ _buildStaticAddonCard = buildStaticAddonCard } = {}) =>
   async (value, callback) => {
-    const regexp = /<div class="addon-card" data-addon-id="(\S+)"><\/div>/g;
+    const regexp = /<div class="addon-card" data-addon-id="(.+?)"><\/div>/g;
 
     const content = await stringReplaceAsync(
       value.toString(),
