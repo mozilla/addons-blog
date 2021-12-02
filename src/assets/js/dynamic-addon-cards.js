@@ -2,7 +2,7 @@
 /* global window, document, fetch, UAParser, navigator, mozCompare */
 (function dynamicAddonCards() {
   const AMO_BASE_URL =
-    document.querySelector('body').getAttribute('data-amo-base-url') ||
+    document.querySelector('body').dataset.amoBaseUrl ||
     'https://addons.mozilla.org';
   // For amoTracking:
   const GET_FIREFOX_BUTTON_CLICK_ACTION = 'download-firefox-click';
@@ -75,6 +75,7 @@
   };
 
   const updateAddonCard = async (card, { parsedUserAgent }) => {
+    console.log('----- in updateAddonCard, AMO_BASE_URL: ', AMO_BASE_URL);
     const { addonId } = card.dataset;
 
     try {

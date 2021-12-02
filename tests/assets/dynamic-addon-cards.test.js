@@ -115,6 +115,37 @@ describe(__filename, () => {
       );
     });
 
+    it(`calls the API as configured on the document's body tag`, async () => {
+      const addon = { ...tabbyAddon };
+      let fetch = mockFetch({ jsonData: addon });
+      const staticCard = await buildStaticAddonCard({ addonId: addon.id });
+      fetch.mockRestore();
+
+      document.body.dataset.amoBaseUrl = 'https://addons-dev.allizom.org';
+      document.body.innerHTML = `<div>${staticCard}</div>`;
+
+      const card = document.querySelector('.StaticAddonCard');
+
+      fetch = mockFetch({ jsonData: addon });
+      console.log('---- document.body.dataset: ', document.body.dataset);
+      console.log(
+        '---- document.body.dataset.amoBaseUrl: ',
+        document.body.dataset.amoBaseUrl
+      );
+      document.body.dataset.amoBaseUrl = 'https://addons-dev.allizom.org';
+      console.log('---- document.body.dataset: ', document.body.dataset);
+      console.log(
+        '---- document.body.dataset.amoBaseUrl: ',
+        document.body.dataset.amoBaseUrl
+      );
+
+      await _updateAddonCard(card);
+
+      expect(fetch).toHaveBeenCalledWith(
+        `https://addons.mozilla.org/api/v5/addons/addon/${addon.id}/?lang=en-US&app=firefox`
+      );
+    });
+
     it('sets the app to firefox when OS is not Android', async () => {
       const card = await loadStaticAddonCardInDocument();
       const fetch = mockFetch();
