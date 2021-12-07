@@ -51,7 +51,7 @@ references:
 jobs:
   test-wptheme:
     docker:
-      - image: cimg/php:7.4-node
+      - image: cimg/php:8.0-node
     steps:
       - checkout
       - *restore_build_cache
