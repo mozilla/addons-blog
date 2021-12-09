@@ -1,5 +1,5 @@
+/* global window */
 const createDOMPurify = require('dompurify');
-const { JSDOM } = require('jsdom');
 const { buildStaticAddonCard } = require('addons-frontend-blog-utils');
 const stringReplaceAsync = require('string-replace-async');
 const { DateTime } = require('luxon');
@@ -12,8 +12,17 @@ const ALLOWED_ATTRS_BY_TAG_FOR_HEAD_MARKUP = {
   script: ['type'],
 };
 
+// Only load window from jsdom when it does not exist. In a node env, we expect
+// `window` to be undefined all the time but we are using the "jsdom"
+// environment in Jest, which already provides `window`. We don't want to load
+// jsdom again when that is the case.
+if (typeof window === 'undefined') {
+  // eslint-disable-next-line global-require
+  const { JSDOM } = require('jsdom');
+  global.window = new JSDOM('').window;
+}
+
 const makeBetterSafe = ({ markAsSafe }) => {
-  const { window } = new JSDOM('');
   const DOMPurify = createDOMPurify(window);
 
   return (value, { isHeadMarkup = false } = {}) => {

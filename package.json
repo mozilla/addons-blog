@@ -48,7 +48,7 @@
     "focus-visible": "^5.2.0",
     "fs-extra": "^10.0.0",
     "jest": "^27.0.0",
-    "jsdom": "^16.5.1",
+    "jsdom": "^19.0.0",
     "luxon": "^2.0.0",
     "markdown-it-container": "^3.0.0",
     "node-fetch": "^2.6.1",
