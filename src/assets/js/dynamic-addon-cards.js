@@ -1,8 +1,9 @@
 /* eslint no-console: 0 */
 /* global window, document, fetch, UAParser, navigator, mozCompare */
 (function dynamicAddonCards() {
+  const baseURLFromBody = document.querySelector('body').dataset.amoBaseUrl;
   const AMO_BASE_URL =
-    document.querySelector('body').dataset.amoBaseUrl ||
+    (baseURLFromBody && baseURLFromBody === 'https://addons-dev.allizom.org') ||
     'https://addons.mozilla.org';
   // For amoTracking:
   const GET_FIREFOX_BUTTON_CLICK_ACTION = 'download-firefox-click';

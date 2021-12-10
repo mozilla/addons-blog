@@ -16,6 +16,17 @@ final class WordPressThemeTest extends DOMTestCase
             : 'https://addons.mozilla.org';
         self::$BUILD_DIR = realpath(__DIR__ . '/../../build/');
 
+        fwrite(
+            STDERR,
+            print_r(
+                sprintf(
+                    'Running with AMO_BASE_URL env variable: %s',
+                    self::$AMO_BASE_URL
+                ),
+                true
+            )
+        );
+
         if (!is_file(self::$BUILD_DIR . '/style.css')) {
             throw new \RuntimeException(
                 'You should run `yarn build:wptheme` first'
