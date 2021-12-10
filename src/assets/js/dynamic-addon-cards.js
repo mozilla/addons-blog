@@ -2,6 +2,7 @@
 /* global window, document, fetch, UAParser, navigator, mozCompare */
 (function dynamicAddonCards() {
   const baseURLFromBody = document.querySelector('body').dataset.amoBaseUrl;
+  // We only want to override the baseURL for the dev environment.
   const AMO_BASE_URL =
     (baseURLFromBody && baseURLFromBody === 'https://addons-dev.allizom.org') ||
     'https://addons.mozilla.org';

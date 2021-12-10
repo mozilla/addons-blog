@@ -47,9 +47,17 @@ module.exports = function configure(eleventyConfig) {
     eleventyConfig.addNunjucksFilter('safe', makeBetterSafe({ markAsSafe }));
   }
 
+  const baseURLFromEnv = process.env.AMO_BASE_URL;
+
   eleventyConfig.addNunjucksAsyncFilter(
     'buildStaticAddonCards',
-    makeBuildStaticAddonCards({ baseURL: process.env.AMO_BASE_URL })
+    makeBuildStaticAddonCards({
+      // We only want to override the baseURL for the dev environment.
+      baseURL:
+        (baseURLFromEnv &&
+          baseURLFromEnv === 'https://addons-dev.allizom.org') ||
+        'https://addons.mozilla.org',
+    })
   );
 
   eleventyConfig.addFilter('convertToJsDate', convertToJsDate);
