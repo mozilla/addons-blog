@@ -65,6 +65,8 @@ jobs:
             composer install
             ./vendor/bin/phpunit
       - run: test -f wptheme.zip
+    environment:
+      AMO_BASE_URL: https://addons-dev.allizom.org
 
   test-blog:
     <<: *node_prod_container

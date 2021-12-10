@@ -6,10 +6,14 @@ use PHPUnit\Framework\DOMTestCase;
 
 final class WordPressThemeTest extends DOMTestCase
 {
+    private static $AMO_BASE_URL;
     private static $BUILD_DIR;
 
     public static function setUpBeforeClass(): void
     {
+        self::$AMO_BASE_URL = $_ENV['AMO_BASE_URL']
+            ? $_ENV['AMO_BASE_URL']
+            : 'https://addons.mozilla.org';
         self::$BUILD_DIR = realpath(__DIR__ . '/../../build/');
 
         if (!is_file(self::$BUILD_DIR . '/style.css')) {
@@ -25,6 +29,10 @@ final class WordPressThemeTest extends DOMTestCase
     {
         $html = $this->render('single.php', 1);
 
+        $this->assertStringContainsString(
+            sprintf('<body data-amo-base-url="%s">', self::$AMO_BASE_URL),
+            $html
+        );
         $this->assertStringContainsString(
             '<title>some title - Firefox Add-ons Blog</title>',
             $html
@@ -79,6 +87,10 @@ final class WordPressThemeTest extends DOMTestCase
     {
         $html = $this->render('index.php', 2);
 
+        $this->assertStringContainsString(
+            sprintf('<body data-amo-base-url="%s">', self::$AMO_BASE_URL),
+            $html
+        );
         $this->assertStringContainsString(
             '<title>Firefox Add-ons Blog</title>',
             $html
