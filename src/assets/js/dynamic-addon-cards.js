@@ -1,11 +1,6 @@
 /* eslint no-console: 0 */
 /* global window, document, fetch, UAParser, navigator, mozCompare */
 (function dynamicAddonCards() {
-  const baseURLFromBody = document.querySelector('body').dataset.amoBaseUrl;
-  // We only want to override the baseURL for the dev environment.
-  const AMO_BASE_URL =
-    (baseURLFromBody && baseURLFromBody === 'https://addons-dev.allizom.org') ||
-    'https://addons.mozilla.org';
   // For amoTracking:
   const GET_FIREFOX_BUTTON_CLICK_ACTION = 'download-firefox-click';
   const GET_FIREFOX_BUTTON_CLICK_CATEGORY = 'AMO Download Firefox';
@@ -77,7 +72,12 @@
   };
 
   const updateAddonCard = async (card, { parsedUserAgent }) => {
-    console.log('----- in updateAddonCard, AMO_BASE_URL: ', AMO_BASE_URL);
+    const baseURLFromBody = document.querySelector('body').dataset.amoBaseUrl;
+    // We only want to override the baseURL for the dev environment.
+    const AMO_BASE_URL =
+      baseURLFromBody && baseURLFromBody === 'https://addons-dev.allizom.org'
+        ? baseURLFromBody
+        : 'https://addons.mozilla.org';
     const { addonId } = card.dataset;
 
     try {

@@ -54,9 +54,9 @@ module.exports = function configure(eleventyConfig) {
     makeBuildStaticAddonCards({
       // We only want to override the baseURL for the dev environment.
       baseURL:
-        (baseURLFromEnv &&
-          baseURLFromEnv === 'https://addons-dev.allizom.org') ||
-        'https://addons.mozilla.org',
+        baseURLFromEnv && baseURLFromEnv === 'https://addons-dev.allizom.org'
+          ? baseURLFromEnv
+          : 'https://addons.mozilla.org',
     })
   );
 

@@ -21,7 +21,10 @@ describe(__filename, () => {
   // add-on cards. We can reuse the code that we are using at build time here,
   // except that we mock the API call to generate a static add-on card in a
   // predictable manner.
-  const loadStaticAddonCardInDocument = async ({ addon = tabbyAddon } = {}) => {
+  const loadStaticAddonCardInDocument = async ({
+    addon = tabbyAddon,
+    amoBaseUrl,
+  } = {}) => {
     const fetch = mockFetch({ jsonData: addon });
     const staticCard = await buildStaticAddonCard({ addonId: addon.id });
     fetch.mockRestore();
@@ -32,6 +35,9 @@ describe(__filename, () => {
     window.amoTracking = { sendEvent: jest.fn() };
 
     document.body.innerHTML = `<div>${staticCard}</div>`;
+    if (amoBaseUrl) {
+      document.body.dataset.amoBaseUrl = amoBaseUrl;
+    }
 
     return document.querySelector('.StaticAddonCard');
   };
@@ -115,32 +121,34 @@ describe(__filename, () => {
       );
     });
 
-    it(`calls the API as configured on the document's body tag`, async () => {
+    it(`calls the API as configured on the document's body tag for dev`, async () => {
       const addon = { ...tabbyAddon };
-      let fetch = mockFetch({ jsonData: addon });
-      const staticCard = await buildStaticAddonCard({ addonId: addon.id });
-      fetch.mockRestore();
-
-      document.body.dataset.amoBaseUrl = 'https://addons-dev.allizom.org';
-      document.body.innerHTML = `<div>${staticCard}</div>`;
-
-      const card = document.querySelector('.StaticAddonCard');
-
-      fetch = mockFetch({ jsonData: addon });
-      console.log('---- document.body.dataset: ', document.body.dataset);
-      console.log(
-        '---- document.body.dataset.amoBaseUrl: ',
-        document.body.dataset.amoBaseUrl
-      );
-      document.body.dataset.amoBaseUrl = 'https://addons-dev.allizom.org';
-      console.log('---- document.body.dataset: ', document.body.dataset);
-      console.log(
-        '---- document.body.dataset.amoBaseUrl: ',
-        document.body.dataset.amoBaseUrl
-      );
+      const devAPIUrl = 'https://addons-dev.allizom.org';
+      const card = await loadStaticAddonCardInDocument({
+        addon,
+        amoBaseUrl: devAPIUrl,
+      });
+      const fetch = mockFetch({ jsonData: addon });
 
       await _updateAddonCard(card);
 
+      expect(fetch).toHaveBeenCalledWith(
+        `${devAPIUrl}/api/v5/addons/addon/${addon.id}/?lang=en-US&app=firefox`
+      );
+    });
+
+    it(`ignores data-amo-base-url for stage`, async () => {
+      const addon = { ...tabbyAddon };
+      // Set data-amo-base-url to stage.
+      const card = await loadStaticAddonCardInDocument({
+        addon,
+        amoBaseUrl: 'https://addons.allizom.org',
+      });
+      const fetch = mockFetch({ jsonData: addon });
+
+      await _updateAddonCard(card);
+
+      // Expect prod API to have been called.
       expect(fetch).toHaveBeenCalledWith(
         `https://addons.mozilla.org/api/v5/addons/addon/${addon.id}/?lang=en-US&app=firefox`
       );
