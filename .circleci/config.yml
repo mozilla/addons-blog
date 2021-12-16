@@ -66,6 +66,7 @@ jobs:
             ./vendor/bin/phpunit
       - run: test -f wptheme.zip
     environment:
+      # See: https://github.com/mozilla/addons-blog/pull/344#issuecomment-990961180
       AMO_BASE_URL: https://addons-dev.allizom.org
 
   test-blog:

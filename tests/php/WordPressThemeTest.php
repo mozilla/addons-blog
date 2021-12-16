@@ -39,9 +39,10 @@ final class WordPressThemeTest extends DOMTestCase
     public function testSinglePage(): void
     {
         $html = $this->render('single.php', 1);
+        $AMO_BASE_URL = self::$AMO_BASE_URL;
 
         $this->assertStringContainsString(
-            sprintf('<body data-amo-base-url="%s">', self::$AMO_BASE_URL),
+            "<body data-amo-base-url=\"$AMO_BASE_URL\">",
             $html
         );
         $this->assertStringContainsString(
@@ -97,9 +98,10 @@ final class WordPressThemeTest extends DOMTestCase
     public function testIndexPage(): void
     {
         $html = $this->render('index.php', 2);
+        $AMO_BASE_URL = self::$AMO_BASE_URL;
 
         $this->assertStringContainsString(
-            sprintf('<body data-amo-base-url="%s">', self::$AMO_BASE_URL),
+            "<body data-amo-base-url=\"$AMO_BASE_URL\">",
             $html
         );
         $this->assertStringContainsString(
