@@ -5,7 +5,8 @@ const path = require('path');
 const fetch = require('node-fetch');
 const flatcache = require('flat-cache');
 
-const AMO_BASE_URL = process.env.AMO_BASE_URL || 'https://addons.mozilla.org';
+const AMO_PROD_BASE_URL = 'https://addons.mozilla.org';
+const AMO_BASE_URL = process.env.AMO_BASE_URL || AMO_PROD_BASE_URL;
 const AMO_BLOG_BASE_URL = `${AMO_BASE_URL}/blog`;
 const WORDPRESS_BASE_URL =
   process.env.WORDPRESS_BASE_URL || 'https://mozamo.wpengine.com';
@@ -14,6 +15,13 @@ async function getNumPages(endPoint) {
   const result = await fetch(endPoint, { method: 'HEAD' });
   return result.headers.get('x-wp-totalpages') || 1;
 }
+
+const getBaseApiURL = (amoBaseURL = AMO_BASE_URL) => {
+  // We only want to override the baseAPIURL for the dev environment.
+  return amoBaseURL === 'https://addons-dev.allizom.org'
+    ? amoBaseURL
+    : AMO_PROD_BASE_URL;
+};
 
 const fixInternalURLs = (content, { baseURL = WORDPRESS_BASE_URL } = {}) => {
   if (process.env.DONT_FIX_INTERNAL_URLS === '1') {
@@ -145,6 +153,7 @@ const getMediaSize = ({ media, size }) => {
 };
 
 module.exports = {
+  getBaseApiURL,
   AMO_BASE_URL,
   AMO_BLOG_BASE_URL,
   WORDPRESS_BASE_URL,

@@ -17,6 +17,7 @@ const {
   sitemapDate,
 } = require('./src/filters');
 const { createNunjucksEnvironment } = require('./src/nunjucks');
+const { getBaseApiURL } = require('./src/wordpress');
 
 const cwd = process.env.ELEVENTY_CWD
   ? path.resolve(process.env.ELEVENTY_CWD)
@@ -47,17 +48,9 @@ module.exports = function configure(eleventyConfig) {
     eleventyConfig.addNunjucksFilter('safe', makeBetterSafe({ markAsSafe }));
   }
 
-  const baseURLFromEnv = process.env.AMO_BASE_URL;
-
   eleventyConfig.addNunjucksAsyncFilter(
     'buildStaticAddonCards',
-    makeBuildStaticAddonCards({
-      // We only want to override the baseURL for the dev environment.
-      baseURL:
-        baseURLFromEnv && baseURLFromEnv === 'https://addons-dev.allizom.org'
-          ? baseURLFromEnv
-          : 'https://addons.mozilla.org',
-    })
+    makeBuildStaticAddonCards({ baseURL: getBaseApiURL() })
   );
 
   eleventyConfig.addFilter('convertToJsDate', convertToJsDate);

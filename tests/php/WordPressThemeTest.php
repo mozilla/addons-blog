@@ -42,7 +42,7 @@ final class WordPressThemeTest extends DOMTestCase
         $AMO_BASE_URL = self::$AMO_BASE_URL;
 
         $this->assertStringContainsString(
-            "<body data-amo-base-url=\"$AMO_BASE_URL\">",
+            "<body data-base-api-url=\"$AMO_BASE_URL\">",
             $html
         );
         $this->assertStringContainsString(
@@ -101,7 +101,7 @@ final class WordPressThemeTest extends DOMTestCase
         $AMO_BASE_URL = self::$AMO_BASE_URL;
 
         $this->assertStringContainsString(
-            "<body data-amo-base-url=\"$AMO_BASE_URL\">",
+            "<body data-base-api-url=\"$AMO_BASE_URL\">",
             $html
         );
         $this->assertStringContainsString(

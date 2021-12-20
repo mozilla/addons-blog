@@ -72,12 +72,7 @@
   };
 
   const updateAddonCard = async (card, { parsedUserAgent }) => {
-    const baseURLFromBody = document.querySelector('body').dataset.amoBaseUrl;
-    // We only want to override the baseURL for the dev environment.
-    const AMO_BASE_URL =
-      baseURLFromBody && baseURLFromBody === 'https://addons-dev.allizom.org'
-        ? baseURLFromBody
-        : 'https://addons.mozilla.org';
+    const baseApiURL = document.querySelector('body').dataset.baseApiUrl;
     const { addonId } = card.dataset;
 
     try {
@@ -89,7 +84,7 @@
       const clientApp = osName === 'Android' ? 'android' : 'firefox';
 
       const response = await fetch(
-        `${AMO_BASE_URL}/api/v5/addons/addon/${addonId}/?lang=en-US&app=${clientApp}`
+        `${baseApiURL}/api/v5/addons/addon/${addonId}/?lang=en-US&app=${clientApp}`
       );
 
       if (!response.ok) {
