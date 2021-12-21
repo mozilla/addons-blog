@@ -17,7 +17,7 @@ async function getNumPages(endPoint) {
 }
 
 const getBaseApiURL = (amoBaseURL = AMO_BASE_URL) => {
-  // We only want to override the baseAPIURL for the dev environment.
+  // We only want to override the baseApiURL for the dev environment.
   return amoBaseURL === 'https://addons-dev.allizom.org'
     ? amoBaseURL
     : AMO_PROD_BASE_URL;
