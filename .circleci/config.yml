@@ -99,6 +99,9 @@ jobs:
       - run: yarn build:production
       - run: yarn test-build
       - *persist_deploy_workspace
+    environment:
+      # See: https://github.com/mozilla/addons-blog/issues/351
+      AMO_BASE_URL: https://addons-dev.allizom.org
 
   build-blog-stage:
     <<: *node_prod_container
