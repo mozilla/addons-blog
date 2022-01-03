@@ -34,7 +34,7 @@
     <link rel="stylesheet" href="{{ config.asset_path | safe }}/blog/assets/css/styles.css">
     {%- endblock %}
   </head>
-  <body>
+  <body data-base-api-url="{{ markup.baseApiURL }}">
     {% if useHeaderMarkup %}
       {{ markup.header | safe }}
     {% else %}

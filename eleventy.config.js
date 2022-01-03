@@ -17,6 +17,7 @@ const {
   sitemapDate,
 } = require('./src/filters');
 const { createNunjucksEnvironment } = require('./src/nunjucks');
+const { getBaseApiURL } = require('./src/wordpress');
 
 const cwd = process.env.ELEVENTY_CWD
   ? path.resolve(process.env.ELEVENTY_CWD)
@@ -49,7 +50,7 @@ module.exports = function configure(eleventyConfig) {
 
   eleventyConfig.addNunjucksAsyncFilter(
     'buildStaticAddonCards',
-    makeBuildStaticAddonCards()
+    makeBuildStaticAddonCards({ baseURL: getBaseApiURL() })
   );
 
   eleventyConfig.addFilter('convertToJsDate', convertToJsDate);

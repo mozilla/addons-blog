@@ -3,6 +3,7 @@ const {
   WORDPRESS_BASE_URL,
   createPost,
   fixInternalURLs,
+  getBaseApiURL,
   getMediaSize,
 } = require('../src/wordpress');
 const apiPost = require('./fixtures/apiPost');
@@ -161,6 +162,23 @@ describe(__filename, () => {
       const media = { media_details: { sizes: { full: 'some size' } } };
 
       expect(getMediaSize({ media, size: 'full' })).toEqual('some size');
+    });
+  });
+
+  describe('getBaseApiURL', () => {
+    const devURL = 'https://addons-dev.allizom.org';
+    const prodURL = 'https://addons.mozilla.org';
+
+    it('returns the dev URL when AMO_BASE_URL is dev', () => {
+      expect(getBaseApiURL(devURL)).toEqual(devURL);
+    });
+
+    it('returns the prod URL when AMO_BASE_URL is stage', () => {
+      expect(getBaseApiURL('https://addons.allizom.org')).toEqual(prodURL);
+    });
+
+    it('returns the prod URL by default', () => {
+      expect(getBaseApiURL()).toEqual(prodURL);
     });
   });
 });

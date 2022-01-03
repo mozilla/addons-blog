@@ -91,7 +91,7 @@ const makeBetterSafe = ({ markAsSafe }) => {
 };
 
 const makeBuildStaticAddonCards =
-  ({ _buildStaticAddonCard = buildStaticAddonCard } = {}) =>
+  ({ _buildStaticAddonCard = buildStaticAddonCard, baseURL } = {}) =>
   async (value, callback) => {
     const regexp = /<div class="addon-card" data-addon-id="(.+?)"><\/div>/g;
 
@@ -102,7 +102,7 @@ const makeBuildStaticAddonCards =
         let html = '';
 
         try {
-          html = await _buildStaticAddonCard({ addonId });
+          html = await _buildStaticAddonCard({ addonId, baseURL });
         } catch (e) {
           // eslint-disable-next-line no-console
           console.error(

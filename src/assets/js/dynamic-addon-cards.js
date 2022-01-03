@@ -1,7 +1,6 @@
 /* eslint no-console: 0 */
 /* global window, document, fetch, UAParser, navigator, mozCompare */
 (function dynamicAddonCards() {
-  const AMO_BASE_URL = 'https://addons.mozilla.org';
   // For amoTracking:
   const GET_FIREFOX_BUTTON_CLICK_ACTION = 'download-firefox-click';
   const GET_FIREFOX_BUTTON_CLICK_CATEGORY = 'AMO Download Firefox';
@@ -73,6 +72,7 @@
   };
 
   const updateAddonCard = async (card, { parsedUserAgent }) => {
+    const baseApiURL = document.querySelector('body').dataset.baseApiUrl;
     const { addonId } = card.dataset;
 
     try {
@@ -84,7 +84,7 @@
       const clientApp = osName === 'Android' ? 'android' : 'firefox';
 
       const response = await fetch(
-        `${AMO_BASE_URL}/api/v5/addons/addon/${addonId}/?lang=en-US&app=${clientApp}`
+        `${baseApiURL}/api/v5/addons/addon/${addonId}/?lang=en-US&app=${clientApp}`
       );
 
       if (!response.ok) {
