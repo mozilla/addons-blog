@@ -860,10 +860,10 @@ acorn@^8.2.4, acorn@^8.5.0, acorn@^8.6.0:
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.6.0.tgz#e3692ba0eb1a0c83eaa4f37f5fa7368dd7142895"
   integrity sha512-U1riIR+lBSNi3IbxtaHOIKdH8sLFv3NYfNv8sg7ZsNhcfl4HF2++BfqqrNAxoCLQW1iiylOj76ecnaUxz+z9yw==
 
-addons-frontend-blog-utils@^0.30.0:
-  version "0.30.0"
-  resolved "https://registry.yarnpkg.com/addons-frontend-blog-utils/-/addons-frontend-blog-utils-0.30.0.tgz#286a4c2e27a1d642550f16af10fb659247f0113e"
-  integrity sha512-U9la4YO0NecDAj0eU9PpwTNCCUQ7udJiI89Twm3DUWOrNJ4n+NbnZL7C73H96oVHLH5R27PSQiTQ3HrPEZDPWw==
+addons-frontend-blog-utils@^0.31.0:
+  version "0.31.0"
+  resolved "https://registry.yarnpkg.com/addons-frontend-blog-utils/-/addons-frontend-blog-utils-0.31.0.tgz#890acdf661499ee376c2679541657b513a67b89f"
+  integrity sha512-OCK5V3xGoVToFON2/h90OqPt5FgTrby9AYD7ernbwMlWuXNghexQMblQnGQJmy92nqRXwrhtmBpoA5o0mvP6yw==
   dependencies:
     jsdom "16.7.0"
     node-fetch "^2.6.1"
