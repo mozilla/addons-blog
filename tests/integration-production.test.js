@@ -2,6 +2,8 @@
 const path = require('path');
 const fs = require('fs');
 
+const { AMO_BASE_URL } = require('../src/wordpress');
+
 describe(__filename, () => {
   const DIST_DIR = path.join(__dirname, '..', 'dist');
   // If the `SKIP_PRODUCTION_BUILD_TESTS` env variable is set (to `'1'`), we
@@ -56,7 +58,7 @@ describe(__filename, () => {
       const [first, ...others] = getAllPostDirectories();
       const slug = first.name;
       const html = getPostHTML(slug);
-      const url = `https://addons.mozilla.org/blog/${slug}/`;
+      const url = `${AMO_BASE_URL}/blog/${slug}/`;
 
       expect(html).toContain(
         `https://widgets.getpocket.com/v1/popup?url=${encodeURIComponent(url)}`
