@@ -13,7 +13,9 @@ describe(__filename, () => {
   beforeEach(() => {
     // Inject matchMedia into window to get media queries working, reseting
     // matches to true before each test since some of them are changing it.
-    window.matchMedia = () => { return { matches: true } };
+    window.matchMedia = () => {
+      return { matches: true };
+    };
   });
 
   afterEach(() => {
@@ -88,7 +90,9 @@ describe(__filename, () => {
     const menu = document.querySelector('.DropdownMenu');
     expect(menu.classList).not.toContain('DropdownMenu--active');
 
-    window.matchMedia = () => { return { matches: false } };
+    window.matchMedia = () => {
+      return { matches: false };
+    };
 
     // User moves cursor on the "More..." menu.
     menu.dispatchEvent(new MouseEvent('mouseover'));
@@ -111,7 +115,9 @@ describe(__filename, () => {
   it('does not close the dropdown menu on mouseout if device does not support hover', () => {
     const menu = document.querySelector('.DropdownMenu');
 
-    window.matchMedia = () => { return { matches: false } };
+    window.matchMedia = () => {
+      return { matches: false };
+    };
 
     // User clicks the "More..." button.
     menu.querySelector('.DropdownMenu-button').click();
