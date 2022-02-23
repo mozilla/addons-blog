@@ -1,4 +1,4 @@
-/* global document */
+/* global window, document */
 (function setupDropdownMenu() {
   const openDropDownMenu = (menu) => {
     menu.classList.add('DropdownMenu--active');
@@ -35,13 +35,21 @@
     });
 
     dropdownMenu.addEventListener('mouseover', () => {
-      if (!dropdownMenu.classList.contains('DropdownMenu--active')) {
+      if (
+        window &&
+        window.matchMedia('(hover)').matches &&
+        !dropdownMenu.classList.contains('DropdownMenu--active')
+      ) {
         openDropDownMenu(dropdownMenu);
       }
     });
 
     dropdownMenu.addEventListener('mouseout', () => {
-      if (dropdownMenu.classList.contains('DropdownMenu--active')) {
+      if (
+        window &&
+        window.matchMedia('(hover)').matches &&
+        dropdownMenu.classList.contains('DropdownMenu--active')
+      ) {
         closeDropDownMenu(dropdownMenu);
       }
     });

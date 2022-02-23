@@ -1,4 +1,4 @@
-/* global document, MouseEvent */
+/* global window, document, MouseEvent */
 const { buildHeader } = require('addons-frontend-blog-utils');
 
 describe(__filename, () => {
@@ -8,6 +8,14 @@ describe(__filename, () => {
     // This file has a side-effect.
     // eslint-disable-next-line global-require
     require('../../src/assets/js/setup-dropdown-menu');
+  });
+
+  beforeEach(() => {
+    // Inject matchMedia into window to get media queries working, resetting
+    // matches to true before each test since some of them are changing it.
+    window.matchMedia = () => {
+      return { matches: true };
+    };
   });
 
   afterEach(() => {
@@ -78,6 +86,20 @@ describe(__filename, () => {
     expect(menu.classList).toContain('DropdownMenu--active');
   });
 
+  it('does not open the dropdown menu on mouseover if device does not support hover', () => {
+    const menu = document.querySelector('.DropdownMenu');
+    expect(menu.classList).not.toContain('DropdownMenu--active');
+
+    window.matchMedia = () => {
+      return { matches: false };
+    };
+
+    // User moves cursor on the "More..." menu.
+    menu.dispatchEvent(new MouseEvent('mouseover'));
+
+    expect(menu.classList).not.toContain('DropdownMenu--active');
+  });
+
   it('closes the dropdown menu on mouseout', () => {
     const menu = document.querySelector('.DropdownMenu');
     // User clicks the "More..." button.
@@ -88,5 +110,23 @@ describe(__filename, () => {
     menu.dispatchEvent(new MouseEvent('mouseout'));
 
     expect(menu.classList).not.toContain('DropdownMenu--active');
+  });
+
+  it('does not close the dropdown menu on mouseout if device does not support hover', () => {
+    const menu = document.querySelector('.DropdownMenu');
+
+    window.matchMedia = () => {
+      return { matches: false };
+    };
+
+    // User clicks the "More..." button.
+    menu.querySelector('.DropdownMenu-button').click();
+    expect(menu.classList).toContain('DropdownMenu--active');
+
+    // User moves cursor somewhere else.
+    menu.dispatchEvent(new MouseEvent('mouseout'));
+
+    // Didn't change since device does not support hover: matchMedia returned no matches
+    expect(menu.classList).toContain('DropdownMenu--active');
   });
 });
