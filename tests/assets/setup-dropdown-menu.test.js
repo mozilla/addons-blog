@@ -11,7 +11,7 @@ describe(__filename, () => {
   });
 
   beforeEach(() => {
-    // Inject matchMedia into window to get media queries working, reseting
+    // Inject matchMedia into window to get media queries working, resetting
     // matches to true before each test since some of them are changing it.
     window.matchMedia = () => {
       return { matches: true };
