@@ -10,11 +10,11 @@ references:
 
   deployment_container: &deployment_container
     docker:
-      - image: circleci/python:3.10-node
+      - image: cimg/python:3.10-node
 
   node_prod_container: &node_prod_container
     docker:
-      - image: circleci/node:14
+      - image: cimg/node:14.19
 
   install_aws_cli: &install_aws_cli
     run:
