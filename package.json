@@ -78,8 +78,5 @@
     "last 2 versions",
     "Firefox ESR",
     "not dead"
-  ],
-  "jest": {
-    "testEnvironment": "jsdom"
-  }
+  ]
 }

@@ -1,5 +1,10 @@
+/**
+ * @jest-environment jsdom
+ */
 /* global document, window, navigator */
-const { buildStaticAddonCard } = require('addons-frontend-blog-utils');
+const nodeCrypto = require('crypto');
+
+const { buildStaticAddonCard } = require('addons-frontend-blog-utils/web');
 const UAParser = require('ua-parser-js');
 const { mozCompare } = require('addons-moz-compare');
 
@@ -10,6 +15,17 @@ const {
 const tabbyAddon = require('../fixtures/amo-api-response-tabby');
 
 describe(__filename, () => {
+  // A polyfill for `crypto.getRandomValues()` needed by the `uuid` library
+  // (embedded in `addons-frontend-blog-utils`). Major browsers implement this
+  // API already, it is only a problem with jsdom.
+  //
+  // See: https://github.com/jsdom/jsdom/issues/1612
+  global.crypto = {
+    getRandomValues: (buffer) => {
+      return nodeCrypto.randomFillSync(buffer);
+    },
+  };
+
   const mockFetch = ({ ok = true, jsonData = {} } = {}) => {
     return jest.spyOn(global, 'fetch').mockResolvedValue({
       ok,
