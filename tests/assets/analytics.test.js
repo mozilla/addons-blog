@@ -1,3 +1,6 @@
+/**
+ * @jest-environment jsdom
+ */
 /* global document, window, navigator */
 const fs = require('fs');
 

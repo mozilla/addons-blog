@@ -1,5 +1,8 @@
+/**
+ * @jest-environment jsdom
+ */
 /* global window, document, MouseEvent */
-const { buildHeader } = require('addons-frontend-blog-utils');
+const { buildHeader } = require('addons-frontend-blog-utils/web');
 
 describe(__filename, () => {
   beforeAll(() => {
