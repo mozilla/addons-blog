@@ -172,6 +172,8 @@ Go to [the Circle CI page][circle-addons-blog] and re-run the `default-workflow`
 
 This project is also able to build a WordPress theme for the WordPress instance. Use `npm version` to create new releases and run `yarn build:wptheme` to build a ZIP file containing the theme. Finally, push the commit and tag (created with `npm version`) and make a [GitHub Release][gh-release], including the ZIP file as an asset.
 
+**Important:** it is generally a good idea to update the WordPress theme when a new version of `addons-frontend-blog-utils` has been merged. Once the ZIP file containing the theme has been generated and published as described above, a user with elevated privileges should _manually_ update the theme on the WordPress instance. This is usually a safe operation that consists in uploading the ZIP file in `Dashboard > Appearance > Themes`.
+
 [prettier]: https://prettier.io/
 [browsersync]: https://browsersync.io/
 [mkcert]: https://github.com/FiloSottile/mkcert
