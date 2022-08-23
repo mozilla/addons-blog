@@ -13,7 +13,7 @@ eleventyExcludeFromCollections: true
   {% set absolutePostURL %}{{ post.permalink | url | absoluteUrl(markup.baseURL) }}{% endset %}
   {% set author = authors | getAuthor(post.author) %}
   <entry>
-    <title>{{ post.title }}</title>
+    <title>{{ post.title | safe }}</title>
     <link href="{{ absolutePostURL }}" />
     <updated>{{ post.modified | convertToJsDate | dateToRfc3339 }}</updated>
     <id>{{ absolutePostURL }}</id>
