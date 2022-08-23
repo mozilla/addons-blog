@@ -9,7 +9,7 @@ eleventyExcludeFromCollections: true
 
 {% extends "../layouts/base.njk" %}
 
-{% set title = blogpost.title %}
+{% set title = blogpost.title | safe %}
 {% set featuredImage = media | mediaGetFullURL(blogpost.featuredImage) %}
 {% set author = authors | getAuthor(blogpost.author) %}
 
@@ -33,7 +33,7 @@ eleventyExcludeFromCollections: true
   <ol>
     {% if prevPost %}
       {% set prevPostPermalink = prevPost.permalink %}
-      {% set prevPostTitle = prevPost.title %}
+      {% set prevPostTitle = prevPost.title | safe %}
       {% set prevPostDate = prevPost.date %}
       {% set prevPostReadableDate = prevPost.date | readableDate %}
       {% if not nextPost %}
@@ -45,7 +45,7 @@ eleventyExcludeFromCollections: true
 
     {% if nextPost %}
       {% set nextPostPermalink = nextPost.permalink %}
-      {% set nextPostTitle = nextPost.title %}
+      {% set nextPostTitle = nextPost.title | safe %}
       {% set nextPostDate = nextPost.date %}
       {% set nextPostReadableDate = nextPost.date | readableDate %}
       {% if not prevPost %}
