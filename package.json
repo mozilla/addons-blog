@@ -36,7 +36,7 @@
     "@11ty/eleventy": "^1.0.0",
     "@11ty/eleventy-plugin-rss": "^1.1.1",
     "@mozilla-protocol/tokens": "^5.0.5",
-    "@prettier/plugin-php": "^0.18.0",
+    "@prettier/plugin-php": "^0.19.0",
     "acorn-walk": "^8.0.2",
     "addons-frontend-blog-utils": "^0.33.0",
     "addons-moz-compare": "^1.0.0",
