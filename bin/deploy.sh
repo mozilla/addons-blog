@@ -35,9 +35,9 @@ fi
 
 # connect-src and img-src should be set to prod for prod and staging, but set
 # to dev for dev.
-CSP_CONNECT_IMG_SRC_PREFIX = "https://addons.mozilla.org"
+CSP_CONNECT_IMG_SRC_PREFIX="https://addons.mozilla.org"
 if [ "$AMO_BASE_URL" == "https://addons-dev.allizom.org" ]; then
-  CSP_CONNECT_IMG_SRC_PREFIX = "https://addons-dev.allizom.org"
+  CSP_CONNECT_IMG_SRC_PREFIX="https://addons-dev.allizom.org"
 fi
 
 # The basic strategy is to sync all the files that need special attention
