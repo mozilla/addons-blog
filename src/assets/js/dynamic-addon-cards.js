@@ -1,5 +1,5 @@
 /* eslint no-console: 0 */
-/* global window, document, fetch, UAParser, navigator, mozCompare */
+/* global window, document, UAParser, navigator, mozCompare */
 (function dynamicAddonCards() {
   // For amoTracking:
   const GET_FIREFOX_BUTTON_CLICK_ACTION = 'download-firefox-click';
