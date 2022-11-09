@@ -10,7 +10,7 @@ references:
 
   deployment_container: &deployment_container
     docker:
-      - image: cimg/python:3.10-node
+      - image: cimg/python:3.11-node
 
   node_prod_container: &node_prod_container
     docker:
