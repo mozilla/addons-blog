@@ -33,7 +33,9 @@ const buildAddonsFrontendBlogUtils = async function () {
   };
 
   await fs.mkdir(assetsPath, { recursive: true });
-  await fs.mkdir(path.dirname(addonsFrontendBlogUtilsOutputFile), { recursive: true });
+  await fs.mkdir(path.dirname(addonsFrontendBlogUtilsOutputFile), {
+    recursive: true,
+  });
 
   const result = await postcss().use(postcssURL(options)).process(css, {
     from: addonsFrontendBlogUtilsInputFile,
