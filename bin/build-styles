@@ -2,6 +2,9 @@
 
 const fetch = require('node-fetch');
 const fs = require('fs-extra');
+const path = require('path');
+const postcss = require('postcss');
+const postcssURL = require('postcss-url');
 const util = require('util');
 const sass = require('node-sass');
 
@@ -10,7 +13,36 @@ const inputFile = './src/assets/css/styles.scss';
 const outputFile = './build/blog/assets/css/styles.css';
 const isProduction = process.env.ELEVENTY_ENV === 'production';
 
+const buildAddonsFrontendBlogUtils = async function () {
+  const addonsFrontendBlogUtilsInputFile = path.resolve(
+    'node_modules/addons-frontend-blog-utils/style.css'
+  );
+  const addonsFrontendBlogUtilsOutputFile = path.resolve(
+    'build/blog/assets/css/addons-frontend-blog-utils.style.css'
+  );
+  const css = await fs.readFile(addonsFrontendBlogUtilsInputFile, 'utf8');
+  // addons-frontend-blog-utils style.css has paths to images, we want to copy
+  // those to the right directory, rewrite the stylesheet, then the rewritten
+  // file can be imported from ours.
+  const options = {
+    url: 'copy',
+    basePath: path.resolve('node_modules/addons-frontend-blog-utils'),
+    // assetsPath is supposed to be relative to `to` or absolute, but it
+    // doesn't seem to work correctly with absolute paths or with '../img', so
+    // we set it to be empty and allow the images to live inside 'css/'.
+    assetsPath: '',
+    useHash: true,
+  };
+
+  const result = await postcss().use(postcssURL(options)).process(css, {
+    from: addonsFrontendBlogUtilsInputFile,
+    to: addonsFrontendBlogUtilsOutputFile,
+  });
+  return fs.writeFile(addonsFrontendBlogUtilsOutputFile, result.css);
+};
+
 const buildSass = async function () {
+  await buildAddonsFrontendBlogUtils();
   const { css } = await renderSass({
     file: inputFile,
     includePaths: ['node_modules/'],
