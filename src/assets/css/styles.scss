@@ -65,5 +65,7 @@ main {
 }
 
 // Import at the end to avoid side-effects caused by the CSS in this project.
+// The file we're importing is built from addons-frontend-blog-utils package by
+// sass:build.
 /* stylelint-disable-next-line no-invalid-position-at-import-rule */
-@import 'addons-frontend-blog-utils/style';
+@import 'addons-frontend-blog-utils.style.css';
