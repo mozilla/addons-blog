@@ -1,6 +1,7 @@
 /* eslint  jest/no-standalone-expect: 0 */
 const path = require('path');
 const fs = require('fs');
+
 const { JSDOM } = require('jsdom');
 
 const { AMO_BASE_URL } = require('../src/wordpress');

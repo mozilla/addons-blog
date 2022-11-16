@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 
+const path = require('path');
+const util = require('util');
+
 const fetch = require('node-fetch');
 const fs = require('fs-extra');
-const path = require('path');
 const postcss = require('postcss');
 const postcssURL = require('postcss-url');
-const util = require('util');
 const sass = require('node-sass');
 
 const renderSass = util.promisify(sass.render);
