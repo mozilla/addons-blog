@@ -1,6 +1,7 @@
 /* eslint  jest/no-standalone-expect: 0 */
 const path = require('path');
 const fs = require('fs');
+const { JSDOM } = require('jsdom');
 
 const { AMO_BASE_URL } = require('../src/wordpress');
 
@@ -50,6 +51,26 @@ describe(__filename, () => {
     expect(fs.existsSync(path.join(DIST_DIR, 'blog', 'sitemap.xml'))).toEqual(
       true
     );
+  });
+
+  maybeIt('has a a css', () => {
+    // Grab the index page
+    const html = getPostHTML('');
+    const dom = new JSDOM(html);
+    const stylesheetUrl = dom.window.document.querySelector(
+      'link[rel=stylesheet]'
+    ).href;
+
+    expect(stylesheetUrl).toMatch(/^\/blog\/.*$/);
+    expect(fs.existsSync(path.join(DIST_DIR, stylesheetUrl))).toEqual(true);
+
+    // Our stylesheet should integrate addons-frontend-blog-utils instead of importing
+    // it.
+    const stylesheetContents = fs.readFileSync(
+      path.join(DIST_DIR, stylesheetUrl),
+      'utf-8'
+    );
+    expect(stylesheetContents).not.toContain('@import');
   });
 
   describe('blog post', () => {

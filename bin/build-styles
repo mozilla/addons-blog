@@ -48,7 +48,7 @@ const buildSass = async function () {
   await buildAddonsFrontendBlogUtils();
   const { css } = await renderSass({
     file: inputFile,
-    includePaths: ['node_modules/'],
+    includePaths: ['node_modules/', 'build/blog/assets/css/'],
     outputStyle: isProduction ? 'compressed' : 'nested',
   });
 
