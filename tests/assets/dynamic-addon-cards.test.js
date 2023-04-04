@@ -508,12 +508,12 @@ describe(__filename, () => {
 
     describe('mozAddonManager', () => {
       let fakeInstallObj;
-      let fakeMozAddonManager
+      let fakeMozAddonManager;
       let originalNavigator;
 
       beforeEach(() => {
         originalNavigator = { ...navigator };
-        fakeInstallObj  = { install: jest.fn() };
+        fakeInstallObj = { install: jest.fn() };
         fakeMozAddonManager = {
           createInstall: jest.fn().mockReturnValue(fakeInstallObj),
         };
