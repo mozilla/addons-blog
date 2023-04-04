@@ -66,7 +66,7 @@ describe(__filename, () => {
     });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    jest.clearAllMocks();
   });
 
   describe('convertToUnavailableCard', () => {
