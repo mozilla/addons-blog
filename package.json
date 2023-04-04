@@ -14,7 +14,7 @@
     "test-ci": "npm run test -- --coverage",
     "test-build": "jest ./tests/integration-production.test.js",
     "clean": "rimraf './build/'",
-    "clean-tests": "rimraf './tests/fixtures/dist/**/*!(.gitkeep)'",
+    "clean-tests": "rimraf -g './tests/fixtures/dist/**/*!(.gitkeep)'",
     "build": "npm run clean && eleventy --config=./eleventy.config.js && npm run sass:build && npm run script:build",
     "build:debug": "DEBUG=Eleventy* npm run build:serve",
     "build:production": "rimraf './dist/' && ELEVENTY_ENV=production npm run build && bin/asset-pipeline",
