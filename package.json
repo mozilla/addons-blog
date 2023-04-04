@@ -43,7 +43,7 @@
     "chokidar-cli": "^3.0.0",
     "dompurify": "^3.0.1",
     "eslint": "^8.37.0",
-    "eslint-config-amo": "^5.8.0",
+    "eslint-config-amo": "^5.9.0",
     "flat-cache": "^3.0.4",
     "focus-visible": "^5.2.0",
     "fs-extra": "^11.1.1",
