@@ -64,7 +64,7 @@
     "posthtml-beautify": "0.7.0",
     "posthtml-postcss": "0.5.0",
     "posthtml-urls": "1.0.0",
-    "prettier": "^2.8.7",
+    "prettier": "^2.8.8",
     "pretty-quick": "^3.1.0",
     "rimraf": "^5.0.0",
     "string-replace-async": "^2.0.0",
