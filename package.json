@@ -68,7 +68,7 @@
     "pretty-quick": "^3.1.0",
     "rimraf": "^5.0.1",
     "string-replace-async": "^2.0.0",
-    "stylelint": "^14.16.1",
+    "stylelint": "^15.10.1",
     "stylelint-config-standard-scss": "^6.1.0",
     "terser": "5.18.1",
     "ua-parser-js": "^1.0.35",
