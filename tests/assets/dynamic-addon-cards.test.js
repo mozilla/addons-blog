@@ -355,7 +355,7 @@ describe(__filename, () => {
     });
 
     describe('Firefox for Android', () => {
-      it('disables the install button when add-on is not promoted', async () => {
+      it('enables the install button when add-on is not promoted', async () => {
         const addon = { ...tabbyAddon, promoted: null };
         const card = await loadStaticAddonCardInDocument({ addon });
         const getFirefoxButton = card.querySelector('.GetFirefoxButton');
@@ -365,13 +365,10 @@ describe(__filename, () => {
           userAgent: userAgentsByPlatform.android.firefox70,
         });
 
-        expectDisabledInstallButton({
-          getFirefoxButton,
-          downloadURL: addon.current_version.file.url,
-        });
+        expectEnabledInstallButton({ getFirefoxButton });
       });
 
-      it('disables the install button when add-on is not recommended for Android', async () => {
+      it('enables the install button when add-on is not recommended for Android', async () => {
         const addon = {
           ...tabbyAddon,
           promoted: {
@@ -387,13 +384,10 @@ describe(__filename, () => {
           userAgent: userAgentsByPlatform.android.firefox70,
         });
 
-        expectDisabledInstallButton({
-          getFirefoxButton,
-          downloadURL: addon.current_version.file.url,
-        });
+        expectEnabledInstallButton({ getFirefoxButton });
       });
 
-      it('disables the install button when add-on is promoted for Android but not recommended', async () => {
+      it('enables the install button when add-on is promoted for Android but not recommended', async () => {
         const addon = {
           ...tabbyAddon,
           promoted: {
@@ -409,10 +403,7 @@ describe(__filename, () => {
           userAgent: userAgentsByPlatform.android.firefox70,
         });
 
-        expectDisabledInstallButton({
-          getFirefoxButton,
-          downloadURL: addon.current_version.file.url,
-        });
+        expectEnabledInstallButton({ getFirefoxButton });
       });
 
       it('disables the install button when add-on is recommended for Android but there is no compatibility data', async () => {
