@@ -96,33 +96,17 @@ module.exports = function configure(eleventyConfig) {
       );
     }
 
-    let browserSyncConfig = {
-      callbacks: {
-        ready(err, bs) {
-          bs.addMiddleware('*', (req, res) => {
-            const content_404 = fs.readFileSync('./build/error.html');
-            // Provides the 404 content without redirect.
-            res.write(content_404);
-            // Add 404 http status code in request header.
-            res.writeHead(404);
-            res.end();
-          });
-        },
-      },
-    };
-
     if (process.env.USE_HTTPS === '1') {
-      browserSyncConfig = {
-        ...browserSyncConfig,
+      const serverOptions = {
         host: 'example.com',
         https: {
           key: './example.com-key.pem',
           cert: './example.com.pem',
         },
       };
-    }
 
-    eleventyConfig.setBrowserSyncConfig(browserSyncConfig);
+      eleventyConfig.setServerOptions(serverOptions);
+    }
   }
 
   // Plugins
