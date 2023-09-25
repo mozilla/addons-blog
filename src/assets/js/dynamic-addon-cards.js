@@ -111,7 +111,7 @@
           );
           isIncompatible = true;
         } else {
-          const { current_version, promoted } = addon;
+          const { current_version } = addon;
 
           if (!current_version) {
             console.debug(`invalid current version for addonId=${addonId}`);
@@ -135,11 +135,7 @@
           }
 
           if (!isIncompatible && clientApp === 'android') {
-            const isInstallable =
-              addon.type === 'extension' &&
-              promoted &&
-              promoted.apps.includes(clientApp) &&
-              promoted.category === 'recommended';
+            const isInstallable = addon.type === 'extension';
 
             if (!isInstallable || !current_version.compatibility[clientApp]) {
               console.debug(
