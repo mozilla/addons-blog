@@ -58,7 +58,7 @@ This is similar to `yarn start` but the WordPress API results won't be cached lo
 
 ### `yarn start:https`
 
-This is similar to `yarn start` but it configures [browsersync][] to serve the blog using the `example.com` domain and with HTTPS enabled. This is useful when one wants to interact with the `mozAddonManager` locally (note: the `extensions.webapi.testing` pref should be set to `true`).
+This is similar to `yarn start` but it configures the development server to serve the blog using the `example.com` domain and with HTTPS enabled. This is useful when one wants to interact with the `mozAddonManager` locally (note: the `extensions.webapi.testing` pref should be set to `true`).
 
 **Important:** you need to generate development certificates with [mkcert][]:
 
@@ -175,7 +175,6 @@ This project is also able to build a WordPress theme for the WordPress instance.
 **Important:** it is generally a good idea to update the WordPress theme when a new version of `addons-frontend-blog-utils` has been merged. Once the ZIP file containing the theme has been generated and published as described above, a user with elevated privileges should _manually_ update the theme on the WordPress instance. This is usually a safe operation that consists in uploading the ZIP file in `Dashboard > Appearance > Themes`.
 
 [prettier]: https://prettier.io/
-[browsersync]: https://browsersync.io/
 [mkcert]: https://github.com/FiloSottile/mkcert
 [dev]: https://addons-dev.allizom.org/blog/
 [stage]: https://addons.allizom.org/blog/
