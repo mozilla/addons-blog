@@ -17,9 +17,9 @@
         window.ga(method, data);
       }
     },
-    gtag() {
+    gtag(...args) {
       if (this.isEnabled()) {
-        window.dataLayer.push(arguments);
+        window.dataLayer.push(args);
       }
     },
     sendEvent({ category, action, label }) {
