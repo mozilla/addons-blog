@@ -57,7 +57,7 @@ CSPSTATIC="\"content-security-policy\": \"default-src 'none'; "\
 
 CSP="\"content-security-policy\": \"default-src 'none'; "\
 "base-uri 'self'; "\
-"connect-src ${CSP_CONNECT_IMG_SRC_PREFIX}/api/ https://*.google-analytics.com/; "\
+"connect-src ${CSP_CONNECT_IMG_SRC_PREFIX}/api/ https://*.google-analytics.com; "\
 "font-src ${AMO_BASE_URL}/blog/assets/fonts/; "\
 "form-action 'none'; "\
 "frame-ancestors 'none'; "\
