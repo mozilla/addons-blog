@@ -57,13 +57,13 @@ CSPSTATIC="\"content-security-policy\": \"default-src 'none'; "\
 
 CSP="\"content-security-policy\": \"default-src 'none'; "\
 "base-uri 'self'; "\
-"connect-src ${CSP_CONNECT_IMG_SRC_PREFIX}/api/ https://www.google-analytics.com/; "\
+"connect-src ${CSP_CONNECT_IMG_SRC_PREFIX}/api/ https://*.google-analytics.com/; "\
 "font-src ${AMO_BASE_URL}/blog/assets/fonts/; "\
 "form-action 'none'; "\
 "frame-ancestors 'none'; "\
 "img-src ${AMO_BASE_URL}/blog/assets/img/ data: ${CSP_CONNECT_IMG_SRC_PREFIX}/user-media/ https://mozamo.wpengine.com/wp-content/ https://secure.gravatar.com/avatar/; "\
 "object-src 'none'; "\
-"script-src ${AMO_BASE_URL}/blog/assets/js/ https://www.google-analytics.com/analytics.js; "\
+"script-src ${AMO_BASE_URL}/blog/assets/js/ https://www.google-analytics.com/analytics.js https://www.googletagmanager.com/gtag/js; "\
 "style-src ${AMO_BASE_URL}/blog/assets/css/ 'unsafe-inline'\""
 HSTS="\"strict-transport-security\": \"max-age=${ONE_YEAR}; includeSubDomains; preload\""
 TYPE="\"x-content-type-options\": \"nosniff\""

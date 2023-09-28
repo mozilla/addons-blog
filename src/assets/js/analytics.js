@@ -1,6 +1,7 @@
 /* global document, navigator, window, ga */
 (function analytics() {
   const GA_TRACKING_ID = 'UA-36116321-7';
+  const GA4_TRACKING_ID = 'G-B9CY1C9VBC';
 
   const amoTracking = {
     isEnabled() {
@@ -14,6 +15,11 @@
     ga(method, data) {
       if (this.isEnabled()) {
         window.ga(method, data);
+      }
+    },
+    gtag(...args) {
+      if (this.isEnabled()) {
+        window.dataLayer.push(args);
       }
     },
     sendEvent({ category, action, label }) {
@@ -31,6 +37,7 @@
         )})`
       );
       this.ga('send', data);
+      this.gtag('event', data.eventCategory, data);
     },
   };
 
@@ -62,7 +69,17 @@
         'https://www.google-analytics.com/analytics.js',
         'ga'
       );
+
+      const lastScriptElm = document.getElementsByTagName('script')[0];
+      const scriptElm = document.createElement('script');
+      scriptElm.async = 1;
+      scriptElm.src = `https://www.googletagmanager.com/gtag/js?id=${GA4_TRACKING_ID}`;
+      lastScriptElm.parentNode.insertBefore(scriptElm, lastScriptElm);
+      window.dataLayer = window.dataLayer || [];
+
       /* eslint-enable */
+      window.amoTracking.gtag('js', new Date());
+      window.amoTracking.gtag('config', GA4_TRACKING_ID);
       ga('create', GA_TRACKING_ID, 'auto');
       ga('set', 'transport', 'beacon');
       ga('send', 'pageview');

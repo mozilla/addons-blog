@@ -24,6 +24,7 @@ describe(__filename, () => {
 
     it('can send a GA event', () => {
       window.ga = jest.fn();
+      window.dataLayer = { push: jest.fn() };
       const category = 'some category';
       const action = 'some action';
       const label = 'some label';
@@ -36,10 +37,21 @@ describe(__filename, () => {
         eventAction: action,
         eventLabel: label,
       });
+      expect(Array.from(window.dataLayer.push.mock.calls[0][0])).toEqual([
+        'event',
+        category,
+        {
+          eventAction: action,
+          eventCategory: category,
+          eventLabel: label,
+          hitType: 'event',
+        },
+      ]);
     });
 
     it('does not send a GA event when disabled', () => {
       window.ga = jest.fn();
+      window.dataLayer = { push: jest.fn() };
       window.doNotTrack = '1';
       const category = 'some category';
       const action = 'some action';
@@ -48,6 +60,7 @@ describe(__filename, () => {
       amoTracking.sendEvent({ category, action, label });
 
       expect(window.ga).not.toHaveBeenCalled();
+      expect(window.dataLayer.push).not.toHaveBeenCalled();
     });
 
     it('is not enabled when window.doNotTrack is "1"', () => {
