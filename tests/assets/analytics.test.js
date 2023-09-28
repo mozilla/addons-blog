@@ -37,16 +37,21 @@ describe(__filename, () => {
         eventAction: action,
         eventLabel: label,
       });
-      expect(Array.from(window.dataLayer.push.mock.calls[0][0])).toEqual([
-        'event',
-        category,
-        {
+      // Ugly check but the content of the object is not the only thing that
+      // matters: pushing an array doesn't work.
+      expect(window.dataLayer.push.mock.calls[0][0].toString()).toBe(
+        '[object Arguments]'
+      );
+      expect(window.dataLayer.push.mock.calls[0][0]).toMatchObject({
+        0: 'event',
+        1: category,
+        2: {
           eventAction: action,
           eventCategory: category,
           eventLabel: label,
           hitType: 'event',
         },
-      ]);
+      });
     });
 
     it('does not send a GA event when disabled', () => {
