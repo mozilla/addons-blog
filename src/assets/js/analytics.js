@@ -17,9 +17,13 @@
         window.ga(method, data);
       }
     },
-    gtag(...args) {
+    gtag() {
       if (this.isEnabled()) {
-        window.dataLayer.push(args);
+        // Google Tag Manager expects dataLayer to contain objects looking like
+        // arrays, not actual arrays (i.e. Arguments objects), we can't just
+        // use ...args rest params.
+        // eslint-disable-next-line prefer-rest-params
+        window.dataLayer.push(arguments);
       }
     },
     sendEvent({ category, action, label }) {

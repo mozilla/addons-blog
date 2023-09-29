@@ -37,6 +37,11 @@ describe(__filename, () => {
         eventAction: action,
         eventLabel: label,
       });
+      // We must pass an array-like object to `dataLayer.push()` but we cannot verify
+      // that we pass an object since an Array is also an Object... We can make sure that
+      // we are not passing an Array, though.
+      // See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/arguments
+      expect(window.dataLayer.push.mock.calls[0][0]).not.toBeInstanceOf(Array);
       expect(Array.from(window.dataLayer.push.mock.calls[0][0])).toEqual([
         'event',
         category,
