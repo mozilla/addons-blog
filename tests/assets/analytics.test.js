@@ -42,16 +42,16 @@ describe(__filename, () => {
       // we are not passing an Array, though.
       // See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/arguments
       expect(window.dataLayer.push.mock.calls[0][0]).not.toBeInstanceOf(Array);
-      expect(window.dataLayer.push.mock.calls[0][0]).toMatchObject({
-        0: 'event',
-        1: category,
-        2: {
+      expect(Array.from(window.dataLayer.push.mock.calls[0][0])).toEqual([
+        'event',
+        category,
+        {
           eventAction: action,
           eventCategory: category,
           eventLabel: label,
           hitType: 'event',
         },
-      });
+      ]);
     });
 
     it('does not send a GA event when disabled', () => {
