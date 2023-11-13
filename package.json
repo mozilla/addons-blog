@@ -50,7 +50,7 @@
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "jsdom": "^22.1.0",
-    "luxon": "^3.4.3",
+    "luxon": "^3.4.4",
     "markdown-it-container": "^3.0.0",
     "node-fetch": "^2.6.1",
     "node-sass": "^9.0.0",
