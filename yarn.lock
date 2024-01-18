@@ -6820,10 +6820,10 @@ tar@^6.1.11:
     mkdirp "^1.0.3"
     yallist "^4.0.0"
 
-terser@5.24.0:
-  version "5.24.0"
-  resolved "https://registry.yarnpkg.com/terser/-/terser-5.24.0.tgz#4ae50302977bca4831ccc7b4fef63a3c04228364"
-  integrity sha512-ZpGR4Hy3+wBEzVEnHvstMvqpD/nABNelQn/z2r0fjVWGQsN3bpOLzQlqDxmb4CDZnXq5lpjnQ+mHQLAOpfM5iw==
+terser@5.27.0:
+  version "5.27.0"
+  resolved "https://registry.yarnpkg.com/terser/-/terser-5.27.0.tgz#70108689d9ab25fef61c4e93e808e9fd092bf20c"
+  integrity sha512-bi1HRwVRskAjheeYl291n3JC4GgO/Ty4z1nVs5AAsmonJulGxpSektecnNedrwK9C7vpvVtcX3cw00VSLt7U2A==
   dependencies:
     "@jridgewell/source-map" "^0.3.3"
     acorn "^8.8.2"
