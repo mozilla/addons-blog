@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "@11ty/eleventy": "^2.0.1",
-    "@11ty/eleventy-plugin-rss": "^1.1.1",
+    "@11ty/eleventy-plugin-rss": "^2.0.0",
     "@mozilla-protocol/tokens": "^5.0.5",
     "@prettier/plugin-php": "^0.19.7",
     "acorn-walk": "^8.3.2",
