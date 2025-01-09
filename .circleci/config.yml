@@ -57,7 +57,6 @@ jobs:
       - checkout
       - node/install:
           install-yarn: true
-          install-npm: false
           node-version: "18.18"
       - *restore_build_cache
       - *run_yarn_install
