@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   codecov: codecov/codecov@3.2.4
+  node: circleci/node@7.0.0
 
 references:
   attach_deploy_workspace: &attach_deploy_workspace
@@ -54,6 +55,9 @@ jobs:
       - image: cimg/php:8.2-node
     steps:
       - checkout
+      - node/install:
+          install-yarn: true
+          node-version: "18.18"
       - *restore_build_cache
       - *run_yarn_install
       - *save_build_cache
