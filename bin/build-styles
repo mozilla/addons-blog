@@ -7,7 +7,7 @@ const fetch = require('node-fetch');
 const fs = require('fs-extra');
 const postcss = require('postcss');
 const postcssURL = require('postcss-url');
-const sass = require('node-sass');
+const sass = require('sass-embedded');
 
 const renderSass = util.promisify(sass.render);
 const inputFile = './src/assets/css/styles.scss';
@@ -50,7 +50,7 @@ const buildSass = async function () {
   const { css } = await renderSass({
     file: inputFile,
     includePaths: ['node_modules/', 'build/blog/assets/css/'],
-    outputStyle: isProduction ? 'compressed' : 'nested',
+    outputStyle: isProduction ? 'compressed' : 'expanded',
   });
 
   // This is a hint to know if this is a first run, in which case

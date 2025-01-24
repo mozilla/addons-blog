@@ -24,28 +24,9 @@ $heading-md-line-height: 1.2;
 // Instead of adding a rule for only mobile, add a mobile rule and override it
 // with `@include respond-to(m) { [...] }`.
 $breakpoints: (
-  m: only screen and
-    (
-      min-width: 500px,
-    ),
-  m-height: only screen and
-    (
-      min-width: 500px,
-    )
-    and
-    (
-      min-height: 500px,
-    ),
-  l: only screen and
-    (
-      min-width: 720px,
-    ),
-  xl: only screen and
-    (
-      min-width: 900px,
-    ),
-  xxl: only screen and
-    (
-      min-width: $max-content-width,
-    ),
+  m: 'only screen and (min-width: 500px)',
+  m-height: 'only screen and (min-width: 500px) and (min-height: 500px)',
+  l: 'only screen and (min-width: 720px)',
+  xl: 'only screen and (min-width: 900px)',
+  xxl: 'only screen and (min-width: $max-content-width)',
 );
