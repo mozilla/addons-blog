@@ -3,7 +3,6 @@
 [![CircleCI](https://circleci.com/gh/mozilla/addons-blog.svg?style=svg)](https://circleci.com/gh/mozilla/addons-blog)
 
 This is the AMO Blog, which uses WP as a headless CMS with 11ty as a static generator.
-
 ## Getting started
 
 1. clone the project
