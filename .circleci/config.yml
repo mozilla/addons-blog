@@ -15,7 +15,7 @@ references:
 
   node_prod_container: &node_prod_container
     docker:
-      - image: cimg/node:18.18
+      - image: cimg/node:20.18
 
   install_aws_cli: &install_aws_cli
     run:
