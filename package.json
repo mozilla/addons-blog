@@ -42,7 +42,7 @@
     "dompurify": "^3.2.6",
     "eslint": "^8.57.0",
     "eslint-config-amo": "^5.9.0",
-    "flat-cache": "^3.1.1",
+    "flat-cache": "^6.1.9",
     "focus-visible": "^5.2.0",
     "fs-extra": "^11.1.1",
     "jest": "^29.7.0",
