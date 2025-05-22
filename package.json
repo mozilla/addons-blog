@@ -31,7 +31,7 @@
     "lint:scss": "stylelint **/*.scss"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^2.0.1",
+    "@11ty/eleventy": "^3.1.0",
     "@11ty/eleventy-plugin-rss": "^1.1.1",
     "@mozilla-protocol/tokens": "^5.0.5",
     "@prettier/plugin-php": "^0.19.7",
