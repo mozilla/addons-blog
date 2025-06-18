@@ -85,14 +85,14 @@ describe(__filename, () => {
     const prodAPIUrl = 'https://addons.mozilla.org';
     const userAgentsByPlatform = {
       android: {
-        firefox70:
-          'Mozilla/5.0 (Android 9; Mobile; rv:70.0) Gecko/70.0 Firefox/70.0',
+        firefox130:
+          'Mozilla/5.0 (Android 9; Mobile; rv:130.0) Gecko/70.0 Firefox/130.0',
       },
       mac: {
         chrome41:
           'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2227.1 Safari/537.36',
-        firefox69:
-          'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:69.0) Gecko/20100101 Firefox/69.0',
+        firefox129:
+          'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:129.0) Gecko/20100101 Firefox/129.0',
       },
       ios: {
         firefox1iPad:
@@ -162,7 +162,7 @@ describe(__filename, () => {
       const fetch = mockFetch();
 
       await _updateAddonCard(card, {
-        userAgent: userAgentsByPlatform.mac.firefox69,
+        userAgent: userAgentsByPlatform.mac.firefox129,
       });
 
       expect(fetch).toHaveBeenCalledWith(
@@ -175,7 +175,7 @@ describe(__filename, () => {
       const fetch = mockFetch();
 
       await _updateAddonCard(card, {
-        userAgent: userAgentsByPlatform.android.firefox70,
+        userAgent: userAgentsByPlatform.android.firefox130,
       });
 
       expect(fetch).toHaveBeenCalledWith(
@@ -242,7 +242,7 @@ describe(__filename, () => {
       ).not.toBeNull();
 
       await _updateAddonCard(card, {
-        userAgent: userAgentsByPlatform.mac.firefox69,
+        userAgent: userAgentsByPlatform.mac.firefox129,
       });
 
       expect(
@@ -262,7 +262,7 @@ describe(__filename, () => {
       mockFetch({ jsonData: addon });
 
       await _updateAddonCard(card, {
-        userAgent: userAgentsByPlatform.mac.firefox69,
+        userAgent: userAgentsByPlatform.mac.firefox129,
       });
 
       const button = getFirefoxButton.querySelector('.GetFirefoxButton-button');
@@ -288,7 +288,7 @@ describe(__filename, () => {
       mockFetch({ jsonData: addon });
 
       await _updateAddonCard(card, {
-        userAgent: userAgentsByPlatform.mac.firefox69,
+        userAgent: userAgentsByPlatform.mac.firefox129,
       });
 
       expectDisabledInstallButton({ getFirefoxButton, downloadURL: '' });
@@ -307,7 +307,7 @@ describe(__filename, () => {
       mockFetch({ jsonData: addon });
 
       await _updateAddonCard(card, {
-        userAgent: userAgentsByPlatform.mac.firefox69,
+        userAgent: userAgentsByPlatform.mac.firefox129,
       });
 
       expectDisabledInstallButton({ getFirefoxButton, downloadURL: '' });
@@ -326,7 +326,7 @@ describe(__filename, () => {
       mockFetch({ jsonData: addon });
 
       await _updateAddonCard(card, {
-        userAgent: userAgentsByPlatform.mac.firefox69,
+        userAgent: userAgentsByPlatform.mac.firefox129,
       });
 
       expectDisabledInstallButton({
@@ -338,17 +338,19 @@ describe(__filename, () => {
     it('enables the install button when add-on is recommended for Firefox', async () => {
       const addon = {
         ...tabbyAddon,
-        promoted: {
-          apps: ['firefox'],
-          category: 'recommended',
-        },
+        promoted: [
+          {
+            apps: ['firefox'],
+            category: 'recommended',
+          },
+        ],
       };
       const card = await loadStaticAddonCardInDocument({ addon });
       const getFirefoxButton = card.querySelector('.GetFirefoxButton');
       mockFetch({ jsonData: addon });
 
       await _updateAddonCard(card, {
-        userAgent: userAgentsByPlatform.mac.firefox69,
+        userAgent: userAgentsByPlatform.mac.firefox129,
       });
 
       expectEnabledInstallButton({ getFirefoxButton });
@@ -362,7 +364,7 @@ describe(__filename, () => {
         mockFetch({ jsonData: addon });
 
         await _updateAddonCard(card, {
-          userAgent: userAgentsByPlatform.android.firefox70,
+          userAgent: userAgentsByPlatform.android.firefox130,
         });
 
         expectEnabledInstallButton({ getFirefoxButton });
@@ -371,17 +373,19 @@ describe(__filename, () => {
       it('enables the install button when add-on is not recommended for Android', async () => {
         const addon = {
           ...tabbyAddon,
-          promoted: {
-            apps: ['firefox'],
-            category: 'recommended',
-          },
+          promoted: [
+            {
+              apps: ['firefox'],
+              category: 'recommended',
+            },
+          ],
         };
         const card = await loadStaticAddonCardInDocument({ addon });
         const getFirefoxButton = card.querySelector('.GetFirefoxButton');
         mockFetch({ jsonData: addon });
 
         await _updateAddonCard(card, {
-          userAgent: userAgentsByPlatform.android.firefox70,
+          userAgent: userAgentsByPlatform.android.firefox130,
         });
 
         expectEnabledInstallButton({ getFirefoxButton });
@@ -390,17 +394,19 @@ describe(__filename, () => {
       it('enables the install button when add-on is promoted for Android but not recommended', async () => {
         const addon = {
           ...tabbyAddon,
-          promoted: {
-            apps: ['android'],
-            category: 'line',
-          },
+          promoted: [
+            {
+              apps: ['android'],
+              category: 'line',
+            },
+          ],
         };
         const card = await loadStaticAddonCardInDocument({ addon });
         const getFirefoxButton = card.querySelector('.GetFirefoxButton');
         mockFetch({ jsonData: addon });
 
         await _updateAddonCard(card, {
-          userAgent: userAgentsByPlatform.android.firefox70,
+          userAgent: userAgentsByPlatform.android.firefox130,
         });
 
         expectEnabledInstallButton({ getFirefoxButton });
@@ -413,17 +419,19 @@ describe(__filename, () => {
             ...tabbyAddon.current_version,
             compatibility: {},
           },
-          promoted: {
-            apps: ['android'],
-            category: 'recommended',
-          },
+          promoted: [
+            {
+              apps: ['android'],
+              category: 'recommended',
+            },
+          ],
         };
         const card = await loadStaticAddonCardInDocument({ addon });
         const getFirefoxButton = card.querySelector('.GetFirefoxButton');
         mockFetch({ jsonData: addon });
 
         await _updateAddonCard(card, {
-          userAgent: userAgentsByPlatform.android.firefox70,
+          userAgent: userAgentsByPlatform.android.firefox130,
         });
 
         expectDisabledInstallButton({
@@ -437,7 +445,7 @@ describe(__filename, () => {
           ...tabbyAddon,
           current_version: {
             ...tabbyAddon.current_version,
-            compatibility: null,
+            compatibility: {},
           },
         };
         const card = await loadStaticAddonCardInDocument({ addon });
@@ -445,7 +453,7 @@ describe(__filename, () => {
         mockFetch({ jsonData: addon });
 
         await _updateAddonCard(card, {
-          userAgent: userAgentsByPlatform.mac.firefox69,
+          userAgent: userAgentsByPlatform.mac.firefox129,
         });
 
         expectDisabledInstallButton({
@@ -458,17 +466,19 @@ describe(__filename, () => {
         const addon = {
           ...tabbyAddon,
           type: 'statictheme',
-          promoted: {
-            apps: ['android'],
-            category: 'recommended',
-          },
+          promoted: [
+            {
+              apps: ['android'],
+              category: 'recommended',
+            },
+          ],
         };
         const card = await loadStaticAddonCardInDocument({ addon });
         const getFirefoxButton = card.querySelector('.GetFirefoxButton');
         mockFetch({ jsonData: addon });
 
         await _updateAddonCard(card, {
-          userAgent: userAgentsByPlatform.android.firefox70,
+          userAgent: userAgentsByPlatform.android.firefox130,
         });
 
         expectDisabledInstallButton({
@@ -480,17 +490,19 @@ describe(__filename, () => {
       it('enables the install button when add-on is recommended for Android', async () => {
         const addon = {
           ...tabbyAddon,
-          promoted: {
-            apps: ['android'],
-            category: 'recommended',
-          },
+          promoted: [
+            {
+              apps: ['android'],
+              category: 'recommended',
+            },
+          ],
         };
         const card = await loadStaticAddonCardInDocument({ addon });
         const getFirefoxButton = card.querySelector('.GetFirefoxButton');
         mockFetch({ jsonData: addon });
 
         await _updateAddonCard(card, {
-          userAgent: userAgentsByPlatform.android.firefox70,
+          userAgent: userAgentsByPlatform.android.firefox130,
         });
 
         expectEnabledInstallButton({ getFirefoxButton });
@@ -531,10 +543,12 @@ describe(__filename, () => {
               hash,
             },
           },
-          promoted: {
-            apps: ['android'],
-            category: 'recommended',
-          },
+          promoted: [
+            {
+              apps: ['android'],
+              category: 'recommended',
+            },
+          ],
         };
         // Render the static addon-card card, which makes 1 API call.
         const card = await loadStaticAddonCardInDocument({ addon });
@@ -545,7 +559,7 @@ describe(__filename, () => {
 
         // Update the add-on card.
         await _updateAddonCard(card, {
-          userAgent: userAgentsByPlatform.mac.firefox69,
+          userAgent: userAgentsByPlatform.mac.firefox129,
         });
 
         return {
@@ -650,7 +664,7 @@ describe(__filename, () => {
             ...tabbyAddon.current_version,
             compatibility: {
               firefox: {
-                min: '80.0',
+                min: '130.0',
                 max: '*',
               },
             },
@@ -661,7 +675,7 @@ describe(__filename, () => {
         mockFetch({ jsonData: addon });
 
         await _updateAddonCard(card, {
-          userAgent: userAgentsByPlatform.mac.firefox69,
+          userAgent: userAgentsByPlatform.mac.firefox129,
         });
 
         expectDisabledInstallButton({
@@ -683,7 +697,7 @@ describe(__filename, () => {
         mockFetch({ jsonData: addon });
 
         await _updateAddonCard(card, {
-          userAgent: userAgentsByPlatform.mac.firefox69,
+          userAgent: userAgentsByPlatform.mac.firefox129,
         });
 
         expectDisabledInstallButton({
@@ -710,7 +724,7 @@ describe(__filename, () => {
         mockFetch({ jsonData: addon });
 
         await _updateAddonCard(card, {
-          userAgent: userAgentsByPlatform.mac.firefox69,
+          userAgent: userAgentsByPlatform.mac.firefox129,
         });
 
         expectEnabledInstallButton({ getFirefoxButton });

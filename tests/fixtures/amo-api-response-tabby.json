@@ -84,12 +84,14 @@
     "en-US": "tabby cat"
   },
   "previews": [],
-  "promoted": {
-    "apps": [
-      "firefox"
-    ],
-    "category": "recommended"
-  },
+  "promoted": [
+    {
+      "apps": [
+        "firefox"
+      ],
+      "category": "recommended"
+    }
+  ],
   "ratings": {
     "average": 4.5,
     "bayesian_average": 4.359503454586003,
