@@ -64,7 +64,7 @@
     "prettier": "^2.8.8",
     "pretty-quick": "^3.1.0",
     "rimraf": "^5.0.7",
-    "sass-embedded": "^1.83.4",
+    "sass-embedded": "^1.91.0",
     "string-replace-async": "^2.0.0",
     "stylelint": "^15.11.0",
     "stylelint-config-standard-scss": "^11.1.0",
