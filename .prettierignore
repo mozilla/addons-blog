@@ -9,6 +9,8 @@
 /tests/fixtures/
 /vendor/
 # exclude these files
+/codecov
+/src/assets/fonts/LICENSE
 *.lock
 # Allow files we want to process
 !*.js

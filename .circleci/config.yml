@@ -52,7 +52,7 @@ references:
 jobs:
   test-wptheme:
     docker:
-      - image: cimg/php:8.2-node
+      - image: cimg/php:8.4-node
     steps:
       - checkout
       - node/install:
