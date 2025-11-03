@@ -18,7 +18,7 @@ final class WordPressThemeTest extends DOMTestCase
 
         if (!is_file(self::$BUILD_DIR . '/style.css')) {
             throw new \RuntimeException(
-                'You should run `yarn build:wptheme` first'
+                'You should run `yarn build:wptheme` first',
             );
         }
 
@@ -32,27 +32,27 @@ final class WordPressThemeTest extends DOMTestCase
 
         $this->assertStringContainsString(
             "<body data-base-api-url=\"$AMO_BASE_URL\">",
-            $html
+            $html,
         );
         $this->assertStringContainsString(
             '<title>some title - Firefox Add-ons Blog</title>',
-            $html
+            $html,
         );
         $this->assertStringContainsString(
             "background-image: url('thumbnail.jpg');",
-            $html
+            $html,
         );
         $this->assertSelectEquals(
             '.blogpost-content-wrapper',
             'some content',
             1,
-            $html
+            $html,
         );
         $this->assertSelectEquals('.author', 'some author', 1, $html);
         $this->assertSelectCount('.Footer', 1, $html);
         $this->assertStringContainsString(
             'src="/path/to/template/dir/blog/assets/js/bundle.js',
-            $html
+            $html,
         );
         $this->assertSelectCount('.Header', 0, $html);
 
@@ -62,16 +62,16 @@ final class WordPressThemeTest extends DOMTestCase
                     'utm_source=twitter',
                     'utm_medium=social',
                     'utm_campaign=amo_blog_share',
-                ])
+                ]),
             ),
-            $html
+            $html,
         );
         $this->assertSelectCount('.share-pocket-link', 1, $html);
 
         $this->assertSelectCount('.blogpost-breadcrumb', 1, $html);
         $this->assertStringContainsString(
             '<a href="/">Firefox Add-ons Blog</a>',
-            $html
+            $html,
         );
 
         // This should not be generated when `config.is_wordpress_theme` is set
@@ -91,23 +91,23 @@ final class WordPressThemeTest extends DOMTestCase
 
         $this->assertStringContainsString(
             "<body data-base-api-url=\"$AMO_BASE_URL\">",
-            $html
+            $html,
         );
         $this->assertStringContainsString(
             '<title>Firefox Add-ons Blog</title>',
-            $html
+            $html,
         );
         $this->assertSelectEquals('.blog-entry-title', 'some title', 2, $html);
         $this->assertSelectEquals(
             '.blog-entry-excerpt',
             'some excerpt',
             2,
-            $html
+            $html,
         );
         $this->assertSelectCount('.Footer', 1, $html);
         $this->assertStringContainsString(
             'src="/path/to/template/dir/blog/assets/js/bundle.js',
-            $html
+            $html,
         );
         $this->assertSelectCount('.Header', 1, $html);
 
@@ -131,7 +131,7 @@ final class WordPressThemeTest extends DOMTestCase
 
             if ($options !== ['post']) {
                 throw new \InvalidArgumentException(
-                    'invalid options for "post-thumbnails"'
+                    'invalid options for "post-thumbnails"',
                 );
             }
         }

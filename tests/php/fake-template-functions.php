@@ -34,7 +34,7 @@ function get_the_content(): string
 
 function get_the_time($format): string
 {
-    return (new \DateTime())->format($format);
+    return new \DateTime()->format($format);
 }
 
 function get_the_author(): string
@@ -64,7 +64,7 @@ function get_the_excerpt(): string
 
 function get_the_modified_date($format): string
 {
-    return (new \DateTime())->format($format);
+    return new \DateTime()->format($format);
 }
 
 function get_avatar_url($id, $args = []): string
