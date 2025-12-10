@@ -1,3 +1,5 @@
+@use 'inc/variables';
+
 .blogpost-nav {
   width: 100%;
   background: #eee;
@@ -8,7 +10,7 @@
     text-align: center;
     padding: 3em 10px;
     overflow: hidden;
-    max-width: $max-content-width;
+    max-width: variables.$max-content-width;
   }
 
   a {
@@ -19,7 +21,7 @@
     &:active,
     &:focus {
       p {
-        color: $link-color;
+        color: variables.$link-color;
         text-decoration: underline;
       }
 
@@ -64,7 +66,7 @@
   span,
   time,
   p {
-    color: $black;
+    color: variables.$black;
     margin: 0.35em;
   }
 

@@ -1,3 +1,6 @@
+@use 'inc/mixins';
+@use 'inc/variables';
+
 $article-l-width: 324px;
 $article-xxl-width: 424px;
 $article-padding: 19px;
@@ -14,11 +17,11 @@ $excerpt-margin: 14px;
   margin: 0;
   padding: 0;
 
-  @include respond-to(l) {
+  @include mixins.respond-to(l) {
     grid-template-columns: repeat(auto-fit, minmax($article-l-width, 1fr));
   }
 
-  @include respond-to(xxl) {
+  @include mixins.respond-to(xxl) {
     grid-template-columns: repeat(3, $article-xxl-width);
   }
 }
@@ -43,7 +46,7 @@ $excerpt-margin: 14px;
     width: 100%;
   }
 
-  @include respond-to(l) {
+  @include mixins.respond-to(l) {
     height: auto;
     max-height: $max-featured-image-height;
   }
@@ -56,7 +59,7 @@ $excerpt-margin: 14px;
 }
 
 .blog-entry-title {
-  font-size: $heading-xs-font-size;
+  font-size: variables.$heading-xs-font-size;
   margin-bottom: 7px;
 }
 
@@ -68,8 +71,8 @@ $excerpt-margin: 14px;
 }
 
 .blog-entry-excerpt {
-  font-size: $body-sm-font-size;
-  line-height: $body-sm-line-height;
+  font-size: variables.$body-sm-font-size;
+  line-height: variables.$body-sm-line-height;
   margin-top: $excerpt-margin;
 
   & > *:first-child {
@@ -82,8 +85,8 @@ $excerpt-margin: 14px;
 }
 
 .blog-entry-read-more-link {
-  border-bottom: 3px solid $link-color;
-  color: $link-color;
+  border-bottom: 3px solid variables.$link-color;
+  color: variables.$link-color;
   font-weight: 600;
   text-decoration: none;
 

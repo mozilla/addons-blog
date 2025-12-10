@@ -1,6 +1,10 @@
+@use 'sass:map';
+
+@use 'variables';
+
 @mixin respond-to($breakpoint) {
-  @if map-has-key($breakpoints, $breakpoint) {
-    @media #{map-get($breakpoints, $breakpoint)} {
+  @if map.has-key(variables.$breakpoints, $breakpoint) {
+    @media #{map.get(variables.$breakpoints, $breakpoint)} {
       @content;
     }
   } @else {
