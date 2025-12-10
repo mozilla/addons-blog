@@ -1,22 +1,19 @@
+@use 'sass:meta';
+
 // Put font style at the top of the generated CSS file.
-@import '../fonts/inter';
-@import '../fonts/inter-subset';
+@use '../fonts/inter';
+@use '../fonts/inter-subset';
 
 // Normalization, vars, mixins and fonts.
-@import 'normalize.css/normalize';
+@use 'normalize.css/normalize';
 
-// We have to disable the rule below because, without an extension, sass does
-// not know whether to load the .scss or .css file.
-// stylelint-disable-next-line scss/at-import-partial-extension
-@import 'photon-colors/photon-colors.scss';
+@use 'inc/variables';
+@use 'inc/mixins';
 
-@import './inc/variables';
-@import './inc/mixins';
-
-@import './header';
-@import './blogposts';
-@import './blog';
-@import './blog-utils-fixes';
+@use 'header';
+@use 'blogposts';
+@use 'blog';
+@use 'blog-utils-fixes';
 
 * {
   box-sizing: border-box;
@@ -34,23 +31,23 @@ body {
 }
 
 body {
-  @include font-regular;
+  @include mixins.font-regular;
 
-  background: $white;
+  background: variables.$white;
   display: flex;
   flex-direction: column;
-  font-size: $body-sm-font-size;
-  line-height: $body-sm-line-height;
+  font-size: variables.$body-sm-font-size;
+  line-height: variables.$body-sm-line-height;
 }
 
 main {
   align-self: center;
-  max-width: $max-content-width;
+  max-width: variables.$max-content-width;
   flex: 1 0 auto;
-  padding: $default-padding;
+  padding: variables.$default-padding;
 
-  @include respond-to(l) {
-    padding: 40px $default-padding;
+  @include mixins.respond-to(l) {
+    padding: 40px variables.$default-padding;
   }
 }
 
@@ -68,5 +65,4 @@ main {
 // Import at the end to avoid side-effects caused by the CSS in this project.
 // The file we're importing is built from addons-frontend-blog-utils package by
 // sass:build.
-/* stylelint-disable-next-line no-invalid-position-at-import-rule */
-@import 'addons-frontend-blog-utils.style';
+@include meta.load-css('addons-frontend-blog-utils.style');

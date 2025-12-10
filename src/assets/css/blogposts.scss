@@ -1,4 +1,7 @@
-@import './blogpost-nav';
+@use 'sass:color';
+@use 'blogpost-nav';
+@use 'inc/mixins';
+@use 'inc/variables';
 
 $pull-quote-color: #4e1a6a;
 $breadcrumb-text-color: #52525e;
@@ -7,7 +10,7 @@ $breadcrumb-text-color: #52525e;
   display: grid;
   width: 100%;
 
-  @include respond-to(xl) {
+  @include mixins.respond-to(xl) {
     grid-template-columns: minmax(30%, 335px) minmax(auto, 765px);
     max-width: 1100px;
   }
@@ -48,14 +51,14 @@ $breadcrumb-text-color: #52525e;
     a:hover,
     a:focus,
     a:active {
-      color: $link-color;
+      color: variables.$link-color;
       text-decoration: none;
     }
   }
 
-  @include respond-to(xl) {
+  @include mixins.respond-to(xl) {
     margin: 10px 0 50px;
-    padding: 0 $default-margin;
+    padding: 0 variables.$default-margin;
   }
 }
 
@@ -63,9 +66,9 @@ $breadcrumb-text-color: #52525e;
   grid-column: 1;
   grid-row: 2;
 
-  @include respond-to(xl) {
+  @include mixins.respond-to(xl) {
     grid-column: 2;
-    padding: 0 $default-margin;
+    padding: 0 variables.$default-margin;
   }
 }
 
@@ -86,26 +89,26 @@ $breadcrumb-text-color: #52525e;
   }
 
   h2 {
-    font-size: $heading-md-font-size;
-    line-height: $heading-md-line-height;
+    font-size: variables.$heading-md-font-size;
+    line-height: variables.$heading-md-line-height;
     margin-bottom: 0;
   }
 
   h3 {
-    font-size: $heading-sm-font-size;
-    line-height: $heading-sm-line-height;
+    font-size: variables.$heading-sm-font-size;
+    line-height: variables.$heading-sm-line-height;
     margin-bottom: 0;
   }
 
   h4 {
-    font-size: $heading-xs-font-size;
-    line-height: $heading-xs-line-height;
+    font-size: variables.$heading-xs-font-size;
+    line-height: variables.$heading-xs-line-height;
     margin-bottom: 0;
   }
 
   h5 {
-    font-size: $heading-xxs-font-size;
-    line-height: $heading-xxs-line-height;
+    font-size: variables.$heading-xxs-font-size;
+    line-height: variables.$heading-xxs-line-height;
   }
 
   li,
@@ -115,7 +118,7 @@ $breadcrumb-text-color: #52525e;
   }
 
   img {
-    box-shadow: 0 1px 1px transparentize($black, 0.9);
+    box-shadow: 0 1px 1px color.adjust(variables.$black, $alpha: -0.9);
     height: auto;
     max-width: 100%;
   }
@@ -127,7 +130,7 @@ $breadcrumb-text-color: #52525e;
   a:active {
     // stylelint-disable-next-line selector-class-pattern
     &:not(.Button) {
-      color: $link-color;
+      color: variables.$link-color;
     }
   }
 
@@ -140,12 +143,12 @@ $breadcrumb-text-color: #52525e;
   }
 
   .wp-block-pullquote {
-    @include font-bold;
+    @include mixins.font-bold;
 
     border-left: 3px solid $pull-quote-color;
     color: $pull-quote-color;
-    font-size: $heading-xs-font-size;
-    line-height: $heading-xs-line-height;
+    font-size: variables.$heading-xs-font-size;
+    line-height: variables.$heading-xs-line-height;
     margin: 16px 0;
     padding-left: 8px;
     text-transform: uppercase;
@@ -158,7 +161,7 @@ $breadcrumb-text-color: #52525e;
       margin: 0;
     }
 
-    @include respond-to(xxl) {
+    @include mixins.respond-to(xxl) {
       float: right;
       margin-bottom: 24px;
       margin-left: 36px;
@@ -167,7 +170,7 @@ $breadcrumb-text-color: #52525e;
     }
   }
 
-  @include respond-to(l) {
+  @include mixins.respond-to(l) {
     max-width: 625px;
   }
 }
@@ -175,13 +178,13 @@ $breadcrumb-text-color: #52525e;
 .blogpost-sidebar {
   grid-column: 1;
   grid-row: 3;
-  margin: $default-margin auto;
+  margin: variables.$default-margin auto;
   width: 100%;
 
-  @include respond-to(xl) {
+  @include mixins.respond-to(xl) {
     grid-row: 2;
     margin: 0 auto;
-    padding: 0 $default-padding;
+    padding: 0 variables.$default-padding;
   }
 }
 
@@ -227,7 +230,7 @@ $breadcrumb-text-color: #52525e;
   .share-twitter-link {
     background: #1da1f2 url('../img/twitter.svg') 6px center no-repeat;
     border-color: #0d95e8;
-    color: $white;
+    color: variables.$white;
     margin-right: 5px;
 
     &:hover,
@@ -263,7 +266,7 @@ $breadcrumb-text-color: #52525e;
     transition: background-color 100ms ease-in-out;
   }
 
-  @include respond-to(xl) {
+  @include mixins.respond-to(xl) {
     text-align: left;
 
     .blogpost-meta-share-social {

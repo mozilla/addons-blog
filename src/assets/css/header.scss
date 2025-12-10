@@ -1,5 +1,10 @@
+@use 'inc/mixins';
+@use 'inc/variables';
+
+@use 'sass:color';
+
 .header {
-  background-color: $dark-blue;
+  background-color: variables.$dark-blue;
   background-repeat: no-repeat;
   background-size: cover;
   height: 100%;
@@ -7,7 +12,7 @@
 }
 
 .header-overlay {
-  background-color: transparentize($black, 0.5);
+  background-color: color.adjust(variables.$black, $alpha: -0.5);
   height: 100%;
 
   // stylelint-disable-next-line selector-class-pattern
@@ -41,16 +46,16 @@
   display: block;
   height: $small-height;
   margin: 20px auto;
-  outline-color: $white;
+  outline-color: variables.$white;
   width: $small-width;
 
-  @include respond-to(l) {
+  @include mixins.respond-to(l) {
     margin: 0 0 0 48px;
   }
 }
 
 .header-title {
-  color: $white;
+  color: variables.$white;
   font-size: 5vh;
   line-height: 1.2;
   margin: 0 auto;
@@ -59,15 +64,15 @@
   text-transform: uppercase;
   width: 70%;
 
-  @include respond-to(m-height) {
+  @include mixins.respond-to(m-height) {
     width: 90%;
   }
 
-  @include respond-to(l) {
+  @include mixins.respond-to(l) {
     font-size: 54px;
   }
 
-  @include respond-to(xxl) {
+  @include mixins.respond-to(xxl) {
     font-size: 72px;
     margin-top: -16px;
     width: 100%;
