@@ -3,7 +3,7 @@
 const path = require('path');
 
 const fetch = require('node-fetch');
-const flatcache = require('flat-cache');
+const { create } = require('flat-cache');
 
 const AMO_PROD_BASE_URL = 'https://addons.mozilla.org';
 const AMO_BASE_URL = process.env.AMO_BASE_URL || AMO_PROD_BASE_URL;
@@ -124,19 +124,22 @@ async function fetchData(type, endPoint) {
     console.debug('Cache is disabled');
   }
 
-  const cache = flatcache.load(type, path.resolve(__dirname, '../cache'));
+  const cache = create({
+    cacheId: type,
+    cacheDir: path.resolve(__dirname, '../cache'),
+  });
   const date = new Date();
   // Key set to today's date so at most we should only be fetching everything
   // once per day.
   const key = `${date.getUTCFullYear()}-${
     date.getUTCMonth() + 1
   }-${date.getUTCDate()}`;
-  const cachedData = cache.getKey(key);
+  const cachedData = cache.get(key);
 
   if (noCache || !cachedData) {
     const numPages = await getNumPages(url);
     const allData = await fetchAll({ numPages, endPoint: url, type });
-    cache.setKey(key, allData);
+    cache.set(key, allData);
     cache.save();
     return allData;
   }
