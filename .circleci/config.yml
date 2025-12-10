@@ -2,7 +2,7 @@ version: 2.1
 
 orbs:
   codecov: codecov/codecov@3.2.4
-  node: circleci/node@7.0.0
+  node: circleci/node@7.2.1
 
 references:
   attach_deploy_workspace: &attach_deploy_workspace
@@ -15,7 +15,7 @@ references:
 
   node_prod_container: &node_prod_container
     docker:
-      - image: cimg/node:20.18
+      - image: cimg/node:20.19
 
   install_aws_cli: &install_aws_cli
     run:
