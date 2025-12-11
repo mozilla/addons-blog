@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.0.0",
-    "@11ty/eleventy-plugin-rss": "^1.1.1",
+    "@11ty/eleventy-plugin-rss": "^2.0.4",
     "@prettier/plugin-php": "^0.24.0",
     "acorn-walk": "^8.3.4",
     "addons-frontend-blog-utils": "^0.36.0",
