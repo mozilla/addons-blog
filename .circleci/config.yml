@@ -15,7 +15,7 @@ references:
 
   node_prod_container: &node_prod_container
     docker:
-      - image: cimg/node:20.19
+      - image: cimg/node:22.22
 
   install_aws_cli: &install_aws_cli
     run:
@@ -57,7 +57,7 @@ jobs:
       - checkout
       - node/install:
           install-yarn: true
-          node-version: "20.18"
+          node-version: "22.22"
       - *restore_build_cache
       - *run_yarn_install
       - *save_build_cache
