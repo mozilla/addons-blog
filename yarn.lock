@@ -2184,7 +2184,7 @@ buffer-from@^1.0.0:
   resolved "https://registry.yarnpkg.com/buffer-from/-/buffer-from-1.1.2.tgz#2b146a6fd72e80b4f55d255f35ed59a3a9a41bd5"
   integrity sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==
 
-cacheable@^2.3.3:
+cacheable@^2.3.4:
   version "2.3.4"
   resolved "https://registry.yarnpkg.com/cacheable/-/cacheable-2.3.4.tgz#8d8114c01aa603d2441e4d8fd57ac6a25a585177"
   integrity sha512-djgxybDbw9fL/ZWMI3+CE8ZilNxcwFkVtDc1gJ+IlOSSWkSMPQabhV/XCHTQ6pwwN6aivXPZ43omTooZiX06Ew==
@@ -3569,16 +3569,16 @@ flat-cache@^3.0.4, flat-cache@^3.1.1:
     keyv "^4.5.3"
     rimraf "^3.0.2"
 
-flat-cache@^6.1.21:
-  version "6.1.21"
-  resolved "https://registry.yarnpkg.com/flat-cache/-/flat-cache-6.1.21.tgz#e90970e698a1355f7c2428c451aa503adb777306"
-  integrity sha512-2u7cJfSf7Th7NxEk/VzQjnPoglok2YCsevS7TSbJjcDQWJPbqUUnSYtriHSvtnq+fRZHy1s0ugk4ApnQyhPGoQ==
+flat-cache@^6.1.22:
+  version "6.1.22"
+  resolved "https://registry.yarnpkg.com/flat-cache/-/flat-cache-6.1.22.tgz#e9f31d567179bb5f0f2fc011e6f89af2cc94f918"
+  integrity sha512-N2dnzVJIphnNsjHcrxGW7DePckJ6haPrSFqpsBUhHYgwtKGVq4JrBGielEGD2fCVnsGm1zlBVZ8wGhkyuetgug==
   dependencies:
-    cacheable "^2.3.3"
-    flatted "^3.4.1"
+    cacheable "^2.3.4"
+    flatted "^3.4.2"
     hookified "^1.15.0"
 
-flatted@^3.2.9, flatted@^3.4.1:
+flatted@^3.2.9, flatted@^3.4.2:
   version "3.4.2"
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.4.2.tgz#f5c23c107f0f37de8dbdf24f13722b3b98d52726"
   integrity sha512-PjDse7RzhcPkIJwy5t7KPWQSZ9cAbzQXcafsetQoD7sOJRQlGikNbx7yZp2OotDnJyrDcbyRq3Ttb18iYOqkxA==
