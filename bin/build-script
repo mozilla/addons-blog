@@ -5,7 +5,6 @@
  * Minification is run for production builds separately
  */
 
-const fetch = require('node-fetch');
 const fs = require('fs-extra');
 const isProduction = process.env.ELEVENTY_ENV === 'production';
 

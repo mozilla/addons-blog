@@ -3,7 +3,6 @@
 const path = require('path');
 const util = require('util');
 
-const fetch = require('node-fetch');
 const fs = require('fs-extra');
 const postcss = require('postcss');
 const postcssURL = require('postcss-url');

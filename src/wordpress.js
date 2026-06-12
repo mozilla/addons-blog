@@ -2,7 +2,6 @@
 
 const path = require('path');
 
-const fetch = require('node-fetch');
 const { create } = require('flat-cache');
 
 const AMO_PROD_BASE_URL = 'https://addons.mozilla.org';
