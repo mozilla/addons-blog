@@ -20,8 +20,6 @@
     getFirefoxButton,
     isIncompatible,
   }) => {
-    getFirefoxButton.querySelector('.GetFirefoxButton-callout').remove();
-
     const button = getFirefoxButton.querySelector('.GetFirefoxButton-button');
     const isStaticTheme = addon.type === 'statictheme';
 
