@@ -1,7 +1,7 @@
 node_modules
 package.json
 README.md
-yarn-error.log
-yarn.lock
+npm-debug.log
+package-lock.json
 .eslintrc.js
 .DS_Store

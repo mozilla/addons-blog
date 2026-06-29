@@ -32,22 +32,21 @@ references:
 
   restore_build_cache: &restore_build_cache
     restore_cache:
-      name: restore yarn package cache
+      name: restore npm package cache
       keys:
-        - yarn-packages-{{ checksum "yarn.lock" }}
+        - npm-packages-{{ checksum "package-lock.json" }}
 
-  run_yarn_install: &run_yarn_install
+  run_npm_install: &run_npm_install
     run:
       name: install dependencies
-      # See: https://github.com/mozilla/addons-frontend/issues/3034
-      command: yarn install --pure-lockfile
+      command: npm ci
 
   save_build_cache: &save_build_cache
     save_cache:
-      name: save yarn package cache
-      key: yarn-packages-{{ checksum "yarn.lock" }}
+      name: save npm package cache
+      key: npm-packages-{{ checksum "package-lock.json" }}
       paths:
-        - ~/.cache/yarn
+        - ~/.npm
 
 jobs:
   test-wptheme:
@@ -56,13 +55,12 @@ jobs:
     steps:
       - checkout
       - node/install:
-          install-yarn: true
           node-version: "22.22"
       - *restore_build_cache
-      - *run_yarn_install
+      - *run_npm_install
       - *save_build_cache
-      - run: yarn build:wptheme
-      - run: yarn lint:php
+      - run: npm run build:wptheme
+      - run: npm run lint:php
       - run:
           name: run phpunit
           command: |
@@ -79,18 +77,18 @@ jobs:
     steps:
       - checkout
       - *restore_build_cache
-      - *run_yarn_install
+      - *run_npm_install
       - *save_build_cache
-      - run: yarn test-ci
+      - run: npm run test-ci
       - codecov/upload
-      - run: yarn prettier-ci
-      - run: yarn lint:js
-      - run: yarn lint:scss
+      - run: npm run prettier-ci
+      - run: npm run lint:js
+      - run: npm run lint:scss
       - run:
           name: build assets
           command: |
-            yarn sass:build
-            yarn script:build
+            npm run sass:build
+            npm run script:build
             bin/asset-pipeline
 
   build-blog-dev:
@@ -98,10 +96,10 @@ jobs:
     steps:
       - checkout
       - *restore_build_cache
-      - *run_yarn_install
+      - *run_npm_install
       - *save_build_cache
-      - run: yarn build:production
-      - run: yarn test-build
+      - run: npm run build:production
+      - run: npm run test-build
       - *persist_deploy_workspace
     environment:
       # See: https://github.com/mozilla/addons-blog/issues/351
@@ -117,18 +115,18 @@ jobs:
             LATEST_TAG=$(git describe --tags --abbrev=0 --match='20*.*.*-stage')
             echo "Latest tag is: $LATEST_TAG"
             git checkout "$LATEST_TAG"
-      - *run_yarn_install
-      - run: yarn build:production
-      - run: yarn test-build
+      - *run_npm_install
+      - run: npm run build:production
+      - run: npm run test-build
       - *persist_deploy_workspace
 
   build-blog-prod:
     <<: *node_prod_container
     steps:
       - checkout
-      - *run_yarn_install
-      - run: yarn build:production
-      - run: yarn test-build
+      - *run_npm_install
+      - run: npm run build:production
+      - run: npm run test-build
       - *persist_deploy_workspace
 
   deploy-dev:

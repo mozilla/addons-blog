@@ -16,7 +16,7 @@ describe(__filename, () => {
   beforeEach(() => {
     if (!fs.existsSync(DIST_DIR)) {
       throw new Error(
-        `"${DIST_DIR}" not found. You must run 'yarn build:production' first.`
+        `"${DIST_DIR}" not found. You must run 'npm run build:production' first.`
       );
     }
   });
