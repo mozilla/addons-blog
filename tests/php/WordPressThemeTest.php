@@ -18,7 +18,7 @@ final class WordPressThemeTest extends DOMTestCase
 
         if (!is_file(self::$BUILD_DIR . '/style.css')) {
             throw new \RuntimeException(
-                'You should run `yarn build:wptheme` first',
+                'You should run `npm run build:wptheme` first',
             );
         }
 
