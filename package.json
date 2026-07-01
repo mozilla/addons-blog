@@ -65,7 +65,7 @@
     "sass-embedded": "^1.100.0",
     "string-replace-async": "^2.0.0",
     "stylelint": "^15.11.0",
-    "stylelint-config-standard-scss": "^11.1.0",
+    "stylelint-config-standard-scss": "^17.0.0",
     "terser": "5.48.0",
     "ua-parser-js": "^1.0.41",
     "url-parse": "^1.5.1",
