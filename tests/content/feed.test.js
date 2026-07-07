@@ -1,11 +1,5 @@
 const path = require('path');
 
-const {
-  absoluteUrl,
-  convertHtmlToAbsoluteUrls,
-  dateToRfc3339,
-} = require('@11ty/eleventy-plugin-rss');
-
 const { createNunjucksEnvironment } = require('../../src/nunjucks');
 const { createPost } = require('../../src/wordpress');
 const {
@@ -28,32 +22,41 @@ describe(__filename, () => {
   // We have to fake some filters used in the template.
   nunjucksEnvironment.addFilter('url', (val) => val);
   nunjucksEnvironment.addFilter('getAuthor', (val) => val);
-  // Add filters provided by eleventy-plugin-rss.
-  nunjucksEnvironment.addFilter('dateToRfc3339', dateToRfc3339);
-  nunjucksEnvironment.addFilter('absoluteUrl', absoluteUrl);
-  // Ugh. Unfortunately, the Eleventy does not expose this logic so we have to
-  // copy it :/
-  nunjucksEnvironment.addFilter(
-    'htmlToAbsoluteUrls',
-    (htmlContent, base, callback) => {
-      if (!htmlContent) {
-        callback(null, '');
-        return;
-      }
 
-      const posthtmlOptions = {
-        // default PostHTML render options
-        closingSingleTag: 'slash',
-      };
+  beforeAll(async () => {
+    // `@11ty/eleventy-plugin-rss` is ESM-only, so we have to load it with a
+    // dynamic import (which requires Jest to run with
+    // `--experimental-vm-modules`, see the `test` script).
+    const { absoluteUrl, convertHtmlToAbsoluteUrls, dateToRfc3339 } =
+      await import('@11ty/eleventy-plugin-rss');
 
-      convertHtmlToAbsoluteUrls(htmlContent, base, posthtmlOptions).then(
-        (html) => {
-          callback(null, html);
+    // Add filters provided by eleventy-plugin-rss.
+    nunjucksEnvironment.addFilter('dateToRfc3339', dateToRfc3339);
+    nunjucksEnvironment.addFilter('absoluteUrl', absoluteUrl);
+    // Ugh. Unfortunately, the Eleventy does not expose this logic so we have to
+    // copy it :/
+    nunjucksEnvironment.addFilter(
+      'htmlToAbsoluteUrls',
+      (htmlContent, base, callback) => {
+        if (!htmlContent) {
+          callback(null, '');
+          return;
         }
-      );
-    },
-    true
-  );
+
+        const posthtmlOptions = {
+          // default PostHTML render options
+          closingSingleTag: 'slash',
+        };
+
+        convertHtmlToAbsoluteUrls(htmlContent, base, posthtmlOptions).then(
+          (html) => {
+            callback(null, html);
+          }
+        );
+      },
+      true
+    );
+  });
 
   it('renders a valid Atom feed', async () => {
     const content = '<p>ok</p><script></script>';
