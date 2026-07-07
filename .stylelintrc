@@ -22,10 +22,8 @@
         "use",
       ],
     }],
-    "declaration-colon-newline-after": null,
     "function-url-quotes": ["always"],
     "function-disallowed-list": ["random"],
-    "indentation": null,
     "max-nesting-depth": [5, {
       "ignore": ["blockless-at-rules"],
     }],
@@ -38,8 +36,6 @@
         "after-comment"
       ]
     }],
-    "string-quotes": null,
-    "value-list-comma-newline-after": null,
     "scss/comment-no-empty": null,
     "scss/no-global-function-names": null,
   }
