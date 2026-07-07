@@ -12,7 +12,7 @@ $excerpt-margin: 14px;
 
 .blog-entries {
   display: grid;
-  grid-gap: 22px;
+  gap: 22px;
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -55,7 +55,7 @@ $excerpt-margin: 14px;
 .blog-entry-title,
 .blog-entry-excerpt,
 .blog-entry-date {
-  padding: 0 $article-padding 0;
+  padding: 0 $article-padding;
 }
 
 .blog-entry-title {

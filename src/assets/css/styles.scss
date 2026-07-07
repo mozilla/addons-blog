@@ -22,6 +22,7 @@
   // Safari. MDN says `word-break: break-word` "has the same effect as
   // word-break: normal and overflow-wrap: anywhere, regardless of the actual
   // value of the overflow-wrap property".
+  // stylelint-disable-next-line declaration-property-value-keyword-no-deprecated
   word-break: break-word;
 }
 
@@ -53,6 +54,7 @@ main {
 
 .visually-hidden {
   border: 0;
+  // stylelint-disable-next-line property-no-deprecated
   clip: rect(0 0 0 0);
   height: 1px;
   margin: -1px;
