@@ -1,7 +1,7 @@
 const path = require('path');
 
 const fs = require('fs-extra');
-const pluginRss = require('@11ty/eleventy-plugin-rss');
+const { default: pluginRss } = require('@11ty/eleventy-plugin-rss');
 
 const {
   convertToJsDate,
