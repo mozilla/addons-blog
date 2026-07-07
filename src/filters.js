@@ -69,7 +69,7 @@ const makeBetterSafe = ({ markAsSafe }) => {
           try {
             // eslint-disable-next-line no-param-reassign
             node.textContent = JSON.stringify(JSON.parse(node.textContent));
-          } catch (e) {
+          } catch {
             // Remove invalid content if it cannot be parsed as JSON.
             // eslint-disable-next-line no-param-reassign
             node.textContent = '';

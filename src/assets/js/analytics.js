@@ -1,4 +1,4 @@
-/* global document, navigator, window, ga */
+/* global document, window, ga */
 (function analytics() {
   const GA_TRACKING_ID = 'UA-36116321-7';
   const GA4_TRACKING_ID = 'G-B9CY1C9VBC';
