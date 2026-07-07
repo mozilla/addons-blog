@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-/* global document, window, navigator */
+/* global document, window */
 const nodeCrypto = require('crypto');
 
 const { buildStaticAddonCard } = require('addons-frontend-blog-utils/web');

@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-/* global document, window, navigator */
+/* global document, window */
 const fs = require('fs');
 
 const { amoTracking } = require('../../src/assets/js/analytics');

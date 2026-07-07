@@ -1,5 +1,5 @@
 /* eslint no-console: 0 */
-/* global window, document, UAParser, navigator, mozCompare */
+/* global window, document, UAParser, mozCompare */
 (function dynamicAddonCards() {
   // For amoTracking:
   const GET_FIREFOX_BUTTON_CLICK_ACTION = 'download-firefox-click';
@@ -24,7 +24,6 @@
     const isStaticTheme = addon.type === 'statictheme';
 
     button.classList.add('Button--action');
-    // eslint-disable-next-line no-param-reassign
     button.innerText = isStaticTheme ? 'Install Theme' : 'Add to Firefox';
     button.setAttribute('href', downloadURL || '');
 
