@@ -9,6 +9,7 @@
 /tests/fixtures/
 /vendor/
 # exclude these files
+/CODEOWNERS
 /codecov
 /src/assets/fonts/LICENSE
 *.lock
