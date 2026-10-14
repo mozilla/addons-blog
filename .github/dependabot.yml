@@ -16,6 +16,19 @@ updates:
     open-pull-requests-limit: 99
     cooldown:
       default-days: 7
+    ignore:
+      # https://github.com/mozilla/addons-blog/issues/1018
+      - dependency-name: eslint
+        versions:
+          - ">= 10"
+      # https://github.com/mozilla/addons-blog/issues/1019
+      - dependency-name: string-replace-async
+        versions:
+          - ">= 3"
+      # https://github.com/mozilla/addons-blog/issues/1020
+      - dependency-name: posthtml-postcss
+        versions:
+          - ">= 1"
   - package-ecosystem: "composer"
     directory: "/"
     schedule:
