@@ -1,3 +1,6 @@
+/**
+ * @jest-environment jsdom
+ */
 const {
   convertToJsDate,
   getAuthor,

@@ -1,8 +1,10 @@
+/**
+ * @jest-environment jsdom
+ */
 /* eslint  jest/no-standalone-expect: 0 */
+/* global DOMParser */
 const path = require('path');
 const fs = require('fs');
-
-const { JSDOM } = require('jsdom');
 
 const { AMO_BASE_URL } = require('../src/wordpress');
 
@@ -57,10 +59,11 @@ describe(__filename, () => {
   maybeIt('has a a css', () => {
     // Grab the index page
     const html = getPostHTML('');
-    const dom = new JSDOM(html);
-    const stylesheetUrl = dom.window.document.querySelector(
-      'link[rel=stylesheet]'
-    ).href;
+    const document = new DOMParser().parseFromString(html, 'text/html');
+    // .getAttribute() returns the raw relative href, rather than the jsom env base url
+    const stylesheetUrl = document
+      .querySelector('link[rel=stylesheet]')
+      .getAttribute('href');
 
     expect(stylesheetUrl).toMatch(/^\/blog\/.*$/);
     expect(fs.existsSync(path.join(DIST_DIR, stylesheetUrl))).toEqual(true);
