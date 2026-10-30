@@ -1,3 +1,6 @@
+/**
+ * @jest-environment jsdom
+ */
 const path = require('path');
 
 const { createNunjucksEnvironment } = require('../../src/nunjucks');
